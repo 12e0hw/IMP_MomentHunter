@@ -26,19 +26,29 @@ public class DataManager : MonoBehaviour
     public int CurrentHealth => _currentHealth;
 
     [Header("Game Settings")]
-    [SerializeField] [Range(0, 100)] private int _masterVolumeLevel = 80; // Volume range changed to 0~100
+    [SerializeField] [Range(0, 100)] private int _bgmVolumeLevel = 80; // BGM volume range 0~100
+    [SerializeField] [Range(0, 100)] private int _sfxVolumeLevel = 80; // SFX volume range 0~100
     /// <summary>
-    /// Master volume as float (0-1) for audio systems
+    /// BGM volume as float (0-1) for audio systems
     /// </summary>
-    private float _masterVolume => _masterVolumeLevel / 100f; // Convert to 0~1 range
+    private float _bgmVolume => _bgmVolumeLevel / 100f; // Convert to 0~1 range
+    /// <summary>
+    /// SFX volume as float (0-1) for audio systems
+    /// </summary>
+    private float _sfxVolume => _sfxVolumeLevel / 100f; // Convert to 0~1 range
 
     [Header("UI Components")]
     [SerializeField] private MissionText _missionText;
 
     /// <summary>
-    /// Event triggered when master volume changes, passes the new volume as float (0-1)
+    /// Event triggered when BGM volume changes, passes the new volume as float (0-1)
     /// </summary>
-    public static event Action<float> OnMasterVolumeChanged;
+    public static event Action<float> OnBgmVolumeChanged;
+    
+    /// <summary>
+    /// Event triggered when SFX volume changes, passes the new volume as float (0-1)
+    /// </summary>
+    public static event Action<float> OnSfxVolumeChanged;
     
     /// <summary>
     /// Initialize singleton instance and set up scene loading events
@@ -84,8 +94,9 @@ public class DataManager : MonoBehaviour
         FindMissionText();
         UpdateHealthUI();
         
-        // Broadcast current volume to all AudioManagers in the new scene
-        OnMasterVolumeChanged?.Invoke(_masterVolume);
+        // Broadcast current volumes to all AudioManagers in the new scene
+        OnBgmVolumeChanged?.Invoke(_bgmVolume);
+        OnSfxVolumeChanged?.Invoke(_sfxVolume);
     }
     
     /// <summary>
@@ -106,24 +117,32 @@ public class DataManager : MonoBehaviour
     /// </summary>
     private void OnValidate()
     {
-        int previousVolumeLevel = _masterVolumeLevel;
+        int previousBgmVolumeLevel = _bgmVolumeLevel;
+        int previousSfxVolumeLevel = _sfxVolumeLevel;
         
         // Clamp health to valid range
         _currentHealth = Mathf.Clamp(_currentHealth, 0, MAX_HEALTH);
 
-        // Clamp volume to valid range (0~100)
-        _masterVolumeLevel = Mathf.Clamp(_masterVolumeLevel, 0, 100);
+        // Clamp volumes to valid range (0~100)
+        _bgmVolumeLevel = Mathf.Clamp(_bgmVolumeLevel, 0, 100);
+        _sfxVolumeLevel = Mathf.Clamp(_sfxVolumeLevel, 0, 100);
         
         // Only update UI during runtime
         if (Application.isPlaying)
         {
             UpdateHealthUI();
             
-            // Trigger volume change event if volume was modified
-            if (previousVolumeLevel != _masterVolumeLevel)
+            // Trigger volume change events if volumes were modified
+            if (previousBgmVolumeLevel != _bgmVolumeLevel)
             {
-                OnMasterVolumeChanged?.Invoke(_masterVolume);
-                Debug.Log($"Master volume set to {_masterVolumeLevel}%. (Float: {_masterVolume:F2})");
+                OnBgmVolumeChanged?.Invoke(_bgmVolume);
+                Debug.Log($"BGM volume set to {_bgmVolumeLevel}%. (Float: {_bgmVolume:F2})");
+            }
+            
+            if (previousSfxVolumeLevel != _sfxVolumeLevel)
+            {
+                OnSfxVolumeChanged?.Invoke(_sfxVolume);
+                Debug.Log($"SFX volume set to {_sfxVolumeLevel}%. (Float: {_sfxVolume:F2})");
             }
         }
     }
@@ -149,7 +168,8 @@ public class DataManager : MonoBehaviour
         if (Data == this)
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
-            OnMasterVolumeChanged = null; // Clear all event subscribers
+            OnBgmVolumeChanged = null; // Clear all event subscribers
+            OnSfxVolumeChanged = null; // Clear all event subscribers
         }
     }
 
@@ -171,41 +191,79 @@ public class DataManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Sets the master volume level and notifies all audio systems
+    /// Sets the BGM volume level and notifies all audio systems
     /// </summary>
     /// <param name="volumeLevel">Volume level as integer (0-100)</param>
-    public void SetMasterVolume(int volumeLevel)
+    public void SetBgmVolume(int volumeLevel)
     {
         int newVolumeLevel = Mathf.Clamp(volumeLevel, 0, 100);
 
         // Only trigger event if volume actually changed
-        if (_masterVolumeLevel != newVolumeLevel)
+        if (_bgmVolumeLevel != newVolumeLevel)
         {
-            _masterVolumeLevel = newVolumeLevel;
+            _bgmVolumeLevel = newVolumeLevel;
 
             // Notify all AudioManagers of volume change (convert to 0~1 range)
-            OnMasterVolumeChanged?.Invoke(_masterVolume);
+            OnBgmVolumeChanged?.Invoke(_bgmVolume);
 
-            Debug.Log($"Master volume set to {_masterVolumeLevel}%. (Float: {_masterVolume:F2})");
+            Debug.Log($"BGM volume set to {_bgmVolumeLevel}%. (Float: {_bgmVolume:F2})");
+        }
+    }
+    
+    /// <summary>
+    /// Sets the SFX volume level and notifies all audio systems
+    /// </summary>
+    /// <param name="volumeLevel">Volume level as integer (0-100)</param>
+    public void SetSfxVolume(int volumeLevel)
+    {
+        int newVolumeLevel = Mathf.Clamp(volumeLevel, 0, 100);
+
+        // Only trigger event if volume actually changed
+        if (_sfxVolumeLevel != newVolumeLevel)
+        {
+            _sfxVolumeLevel = newVolumeLevel;
+
+            // Notify all AudioManagers of volume change (convert to 0~1 range)
+            OnSfxVolumeChanged?.Invoke(_sfxVolume);
+
+            Debug.Log($"SFX volume set to {_sfxVolumeLevel}%. (Float: {_sfxVolume:F2})");
         }
     }
 
     /// <summary>
-    /// Gets the current master volume as float (0-1)
+    /// Gets the current BGM volume as float (0-1)
     /// </summary>
-    /// <returns>Master volume as float between 0 and 1</returns>
-    public float GetMasterVolume()
+    /// <returns>BGM volume as float between 0 and 1</returns>
+    public float GetBgmVolume()
     {
-        return _masterVolume;
+        return _bgmVolume;
     }
     
     /// <summary>
-    /// Gets the current master volume level as integer (0-100)
+    /// Gets the current SFX volume as float (0-1)
     /// </summary>
-    /// <returns>Master volume level as integer between 0 and 100</returns>
-    public int GetMasterVolumeLevel()
+    /// <returns>SFX volume as float between 0 and 1</returns>
+    public float GetSfxVolume()
     {
-        return _masterVolumeLevel;
+        return _sfxVolume;
+    }
+    
+    /// <summary>
+    /// Gets the current BGM volume level as integer (0-100)
+    /// </summary>
+    /// <returns>BGM volume level as integer between 0 and 100</returns>
+    public int GetBgmVolumeLevel()
+    {
+        return _bgmVolumeLevel;
+    }
+    
+    /// <summary>
+    /// Gets the current SFX volume level as integer (0-100)
+    /// </summary>
+    /// <returns>SFX volume level as integer between 0 and 100</returns>
+    public int GetSfxVolumeLevel()
+    {
+        return _sfxVolumeLevel;
     }
 
     /// <summary>

@@ -23,6 +23,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private int _backgroundMusicClipId = 0;
     [SerializeField] private bool _loopBackgroundMusic = true;
     
+    [Header("Audio Type")]
+    [SerializeField] private bool _isBgmSource = false; // true for BGM, false for SFX
+    
     /// <summary>
     /// Initialize the AudioManager instance and set up DontDestroyOnLoad if enabled
     /// </summary>
@@ -59,14 +62,21 @@ public class AudioManager : MonoBehaviour
         // Get AudioSource component if not assigned in inspector
         if (!_audioSource) _audioSource = GetComponent<AudioSource>();
         
-        // Subscribe to DataManager's volume change events
-        DataManager.OnMasterVolumeChanged += OnMasterVolumeChanged;
+        // Subscribe to appropriate volume change events based on audio type
+        if (_isBgmSource)
+        {
+            DataManager.OnBgmVolumeChanged += OnVolumeChanged;
+        }
+        else
+        {
+            DataManager.OnSfxVolumeChanged += OnVolumeChanged;
+        }
         
-        // Apply current master volume immediately
-        ApplyMasterVolume();
+        // Apply current volume immediately
+        ApplyCurrentVolume();
         
         // Only play background music if this is the BGM instance and auto-play is enabled
-        if (_autoPlayOnStart && BGMInstance == this)
+        if (_autoPlayOnStart && BGMInstance == this && _isBgmSource)
         {
             PlayBackgroundMusic();
         }
@@ -78,7 +88,14 @@ public class AudioManager : MonoBehaviour
     void OnDestroy()
     {
         // Unsubscribe from events to prevent memory leaks
-        DataManager.OnMasterVolumeChanged -= OnMasterVolumeChanged;
+        if (_isBgmSource)
+        {
+            DataManager.OnBgmVolumeChanged -= OnVolumeChanged;
+        }
+        else
+        {
+            DataManager.OnSfxVolumeChanged -= OnVolumeChanged;
+        }
         
         // Reset BGMInstance to null if this was the active instance
         if (BGMInstance == this)
@@ -101,11 +118,11 @@ public class AudioManager : MonoBehaviour
         // Only update during runtime and when AudioSource is available and enabled
         if (Application.isPlaying && IsAudioSourceReady())
         {
-            // Apply master volume immediately
-            ApplyMasterVolume();
+            // Apply current volume immediately
+            ApplyCurrentVolume();
             
-            // Handle auto-play setting changes
-            if (_autoPlayOnStart && !_audioSource.isPlaying)
+            // Handle auto-play setting changes (only for BGM)
+            if (_autoPlayOnStart && _isBgmSource && !_audioSource.isPlaying)
             {
                 PlayBackgroundMusic();
             }
@@ -117,12 +134,12 @@ public class AudioManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Event handler for master volume changes from DataManager
+    /// Event handler for volume changes from DataManager
     /// </summary>
     /// <param name="newVolume">The new volume value</param>
-    private void OnMasterVolumeChanged(float newVolume)
+    private void OnVolumeChanged(float newVolume)
     {
-        ApplyMasterVolume();
+        ApplyCurrentVolume();
     }
     
     /// <summary>
@@ -148,8 +165,8 @@ public class AudioManager : MonoBehaviour
         _audioSource.clip = _audioClips[_backgroundMusicClipId];
         _audioSource.loop = _loopBackgroundMusic;
         
-        // Apply DataManager's master volume
-        ApplyMasterVolume();
+        // Apply appropriate volume based on audio type
+        ApplyCurrentVolume();
         
         _audioSource.Play();
         
@@ -180,8 +197,8 @@ public class AudioManager : MonoBehaviour
         _audioSource.clip = _audioClips[clipId];
         _audioSource.loop = false; // Regular audio clips don't loop
         
-        // Apply DataManager's master volume
-        ApplyMasterVolume();
+        // Apply appropriate volume based on audio type
+        ApplyCurrentVolume();
         
         _audioSource.Play();
     }
@@ -207,8 +224,8 @@ public class AudioManager : MonoBehaviour
             return;
         }
         
-        // Get current master volume and play one-shot
-        float volumeScale = GetMasterVolume();
+        // Get current volume and play one-shot
+        float volumeScale = GetCurrentVolume();
         _audioSource.PlayOneShot(_audioClips[clipId], volumeScale);
     }
     
@@ -246,27 +263,27 @@ public class AudioManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Retrieves the master volume from DataManager
+    /// Retrieves the appropriate volume from DataManager based on audio type
     /// </summary>
-    /// <returns>Master volume value, or 1.0 if DataManager is unavailable</returns>
-    private float GetMasterVolume()
+    /// <returns>Volume value, or 1.0 if DataManager is unavailable</returns>
+    private float GetCurrentVolume()
     {
         if (DataManager.Data)
         {
-            return DataManager.Data.GetMasterVolume();
+            return _isBgmSource ? DataManager.Data.GetBgmVolume() : DataManager.Data.GetSfxVolume();
         }
         
         return 1f; // Return default value 1.0 if DataManager is not available
     }
     
     /// <summary>
-    /// Applies the current master volume to the AudioSource
+    /// Applies the current appropriate volume to the AudioSource
     /// </summary>
-    private void ApplyMasterVolume()
+    private void ApplyCurrentVolume()
     {
         if (IsAudioSourceReady())
         {
-            _audioSource.volume = GetMasterVolume();
+            _audioSource.volume = GetCurrentVolume();
         }
     }
 }

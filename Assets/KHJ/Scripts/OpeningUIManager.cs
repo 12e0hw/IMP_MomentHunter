@@ -27,8 +27,10 @@ public class OpeningUIManager : MonoBehaviour
     
     // Internal components for settings and quit UI
     [Header("Settings UI Components")]
-    [SerializeField] private Slider _soundSlider;         // Sound volume slider
-    [SerializeField] private Text _soundValueText;       // Sound value display text (optional)
+    [SerializeField] private Slider _bgmSlider;           // BGM volume slider
+    [SerializeField] private Slider _sfxSlider;           // SFX volume slider
+    // [SerializeField] private Text _bgmValueText;          // BGM value display text (optional)
+    // [SerializeField] private Text _sfxValueText;          // SFX value display text (optional)
     
     [Header("Quit UI Components")]
     [SerializeField] private Button _mainBackButton;      // Return to main button
@@ -74,9 +76,10 @@ public class OpeningUIManager : MonoBehaviour
     private GameObject _currentHoveredUI = null;
     
     /// <summary>
-    /// Flag to check if slider event listener is registered
+    /// Flags to check if slider event listeners are registered
     /// </summary>
-    private bool _sliderListenerRegistered = false;
+    private bool _bgmSliderListenerRegistered = false;
+    private bool _sfxSliderListenerRegistered = false;
     
     /// <summary>
     /// Initialize UI state and VR input systems
@@ -106,43 +109,79 @@ public class OpeningUIManager : MonoBehaviour
     /// </summary>
     private void SetupSliderEvents()
     {
-        if (_soundSlider && !_sliderListenerRegistered)
+        // BGM Slider setup
+        if (_bgmSlider && !_bgmSliderListenerRegistered)
         {
-            // Use Unity's default slider event system
-            _soundSlider.onValueChanged.AddListener(OnSoundSliderValueChanged);
-            _sliderListenerRegistered = true;
+            _bgmSlider.onValueChanged.AddListener(OnBgmSliderValueChanged);
+            _bgmSliderListenerRegistered = true;
             
             // Configure slider (0~1 range, continuous values)
-            _soundSlider.minValue = 0f;
-            _soundSlider.maxValue = 1f;
-            _soundSlider.wholeNumbers = false; // Use continuous values for smooth operation
+            _bgmSlider.minValue = 0f;
+            _bgmSlider.maxValue = 1f;
+            _bgmSlider.wholeNumbers = false;
             
-            Debug.Log("Sound slider events setup completed");
+            Debug.Log("BGM slider events setup completed");
+        }
+        
+        // SFX Slider setup
+        if (_sfxSlider && !_sfxSliderListenerRegistered)
+        {
+            _sfxSlider.onValueChanged.AddListener(OnSfxSliderValueChanged);
+            _sfxSliderListenerRegistered = true;
+            
+            // Configure slider (0~1 range, continuous values)
+            _sfxSlider.minValue = 0f;
+            _sfxSlider.maxValue = 1f;
+            _sfxSlider.wholeNumbers = false;
+            
+            Debug.Log("SFX slider events setup completed");
         }
     }
     
     /// <summary>
-    /// Called whenever slider value changes (including during drag)
+    /// Called whenever BGM slider value changes (including during drag)
     /// </summary>
     /// <param name="value">New slider value (0-1)</param>
-    private void OnSoundSliderValueChanged(float value)
+    private void OnBgmSliderValueChanged(float value)
     {
-        // Called whenever slider value changes (real-time during drag)
         int volumeLevel = Mathf.RoundToInt(value * 100f);
         
-        // Set volume in DataManager
+        // Set BGM volume in DataManager
         if (DataManager.Data)
         {
-            DataManager.Data.SetMasterVolume(volumeLevel);
+            DataManager.Data.SetBgmVolume(volumeLevel);
         }
         
         // Optional: Display volume value as text
-        if (_soundValueText)
+        // if (_bgmValueText)
+        // {
+        //     _bgmValueText.text = volumeLevel.ToString() + "%";
+        // }
+        
+        Debug.Log($"BGM volume updated to: {volumeLevel}% (Slider value: {value:F2})");
+    }
+    
+    /// <summary>
+    /// Called whenever SFX slider value changes (including during drag)
+    /// </summary>
+    /// <param name="value">New slider value (0-1)</param>
+    private void OnSfxSliderValueChanged(float value)
+    {
+        int volumeLevel = Mathf.RoundToInt(value * 100f);
+        
+        // Set SFX volume in DataManager
+        if (DataManager.Data)
         {
-            _soundValueText.text = volumeLevel.ToString() + "%";
+            DataManager.Data.SetSfxVolume(volumeLevel);
         }
         
-        Debug.Log($"Sound volume updated to: {volumeLevel}% (Slider value: {value:F2})");
+        // Optional: Display volume value as text
+        // if (_sfxValueText)
+        // {
+        //     _sfxValueText.text = volumeLevel.ToString() + "%";
+        // }
+        
+        Debug.Log($"SFX volume updated to: {volumeLevel}% (Slider value: {value:F2})");
     }
     
     /// <summary>
@@ -328,20 +367,21 @@ public class OpeningUIManager : MonoBehaviour
     /// <summary>
     /// Update slider value based on right ray position when A button/trigger is pressed
     /// </summary>
+    /// <param name="targetSlider">Target slider to update</param>
     /// <returns>True if slider was successfully updated</returns>
-    private bool UpdateSliderFromRaycast()
+    private bool UpdateSliderFromRaycast(Slider targetSlider)
     {
+        if (!targetSlider)
+        {
+            Debug.LogWarning("Target slider is null");
+            return false;
+        }
+        
         // Get hit point from right ray
         if (_rightRayInteractor && _rightRayInteractor.TryGetCurrentUIRaycastResult(out RaycastResult raycastResult))
         {
-            if (!_soundSlider) 
-            {
-                Debug.LogWarning("Sound slider is null");
-                return false;
-            }
-            
             // Get slider's RectTransform
-            RectTransform sliderRect = _soundSlider.GetComponent<RectTransform>();
+            RectTransform sliderRect = targetSlider.GetComponent<RectTransform>();
             if (!sliderRect) 
             {
                 Debug.LogWarning("Slider RectTransform is null");
@@ -357,10 +397,11 @@ public class OpeningUIManager : MonoBehaviour
                 Rect rect = sliderRect.rect;
                 float normalizedValue = Mathf.Clamp01((localPoint.x - rect.xMin) / rect.width);
                 
-                // Set slider value (OnSoundSliderValueChanged will be called automatically)
-                _soundSlider.value = normalizedValue;
+                // Set slider value (appropriate OnSliderValueChanged will be called automatically)
+                targetSlider.value = normalizedValue;
                 
-                Debug.Log($"Slider updated from button press: {normalizedValue:F2} (Volume level: {Mathf.RoundToInt(normalizedValue * 100f)}%)");
+                string sliderType = (targetSlider == _bgmSlider) ? "BGM" : "SFX";
+                Debug.Log($"{sliderType} slider updated from button press: {normalizedValue:F2} (Volume level: {Mathf.RoundToInt(normalizedValue * 100f)}%)");
                 return true;
             }
             else
@@ -388,13 +429,18 @@ public class OpeningUIManager : MonoBehaviour
         // When popup is open, only allow that popup's UI
         if (_isSettingsPopupActive)
         {
-            // In settings popup, allow all slider-related UI elements
-            bool isSettingsSlider = _soundSlider && 
-                                    (hitObject == _soundSlider.gameObject || 
-                                     hitObject.transform.IsChildOf(_soundSlider.transform) ||
-                                     hitObject.GetComponent<Slider>() == _soundSlider);
+            // In settings popup, allow both BGM and SFX slider-related UI elements
+            bool isBgmSlider = _bgmSlider && 
+                               (hitObject == _bgmSlider.gameObject || 
+                                hitObject.transform.IsChildOf(_bgmSlider.transform) ||
+                                hitObject.GetComponent<Slider>() == _bgmSlider);
+            
+            bool isSfxSlider = _sfxSlider && 
+                               (hitObject == _sfxSlider.gameObject || 
+                                hitObject.transform.IsChildOf(_sfxSlider.transform) ||
+                                hitObject.GetComponent<Slider>() == _sfxSlider);
         
-            return isSettingsSlider;
+            return isBgmSlider || isSfxSlider;
         }
     
         if (_isQuitPopupActive)
@@ -566,12 +612,17 @@ public class OpeningUIManager : MonoBehaviour
     /// <param name="clickedUI">The clicked UI GameObject</param>
     private void HandleSettingsPopupClick(GameObject clickedUI)
     {
-        // Allow A button/trigger interaction with slider
-        if (_soundSlider && (clickedUI == _soundSlider.gameObject || clickedUI.transform.IsChildOf(_soundSlider.transform)))
+        // Check BGM slider interaction
+        if (_bgmSlider && (clickedUI == _bgmSlider.gameObject || clickedUI.transform.IsChildOf(_bgmSlider.transform)))
         {
-            Debug.Log("Sound slider button interaction");
-            // Set slider value based on right ray position with A button/trigger
-            UpdateSliderFromRaycast();
+            Debug.Log("BGM slider button interaction");
+            UpdateSliderFromRaycast(_bgmSlider);
+        }
+        // Check SFX slider interaction
+        else if (_sfxSlider && (clickedUI == _sfxSlider.gameObject || clickedUI.transform.IsChildOf(_sfxSlider.transform)))
+        {
+            Debug.Log("SFX slider button interaction");
+            UpdateSliderFromRaycast(_sfxSlider);
         }
     }
     
@@ -616,7 +667,7 @@ public class OpeningUIManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Open the settings popup and initialize slider value
+    /// Open the settings popup and initialize slider values
     /// </summary>
     private void OpenSettingsPopup()
     {
@@ -625,29 +676,46 @@ public class OpeningUIManager : MonoBehaviour
             _settingsPopupUI.SetActive(true);
             _isSettingsPopupActive = true;
             
-            // Reflect current volume in slider when opening settings popup
-            UpdateSoundSliderValue();
+            // Reflect current volumes in sliders when opening settings popup
+            UpdateSliderValues();
             
             Debug.Log("Settings popup opened");
         }
     }
     
     /// <summary>
-    /// Update slider value to match current DataManager volume setting
+    /// Update slider values to match current DataManager volume settings
     /// </summary>
-    private void UpdateSoundSliderValue()
+    private void UpdateSliderValues()
     {
-        if (_soundSlider && DataManager.Data)
+        if (DataManager.Data)
         {
-            // Set DataManager's master volume level (0~100) to slider (0~1)
-            float sliderValue = DataManager.Data.GetMasterVolumeLevel() / 100f;
-            _soundSlider.value = sliderValue;
-            Debug.Log($"Sound slider value updated to: {_soundSlider.value} (Volume Level: {DataManager.Data.GetMasterVolumeLevel()}%)");
-            
-            // Update text as well
-            if (_soundValueText)
+            // Update BGM slider
+            if (_bgmSlider)
             {
-                _soundValueText.text = DataManager.Data.GetMasterVolumeLevel().ToString() + "%";
+                float bgmSliderValue = DataManager.Data.GetBgmVolumeLevel() / 100f;
+                _bgmSlider.value = bgmSliderValue;
+                Debug.Log($"BGM slider value updated to: {_bgmSlider.value} (Volume Level: {DataManager.Data.GetBgmVolumeLevel()}%)");
+                
+                // Update BGM text
+                // if (_bgmValueText)
+                // {
+                //     _bgmValueText.text = DataManager.Data.GetBgmVolumeLevel().ToString() + "%";
+                // }
+            }
+            
+            // Update SFX slider
+            if (_sfxSlider)
+            {
+                float sfxSliderValue = DataManager.Data.GetSfxVolumeLevel() / 100f;
+                _sfxSlider.value = sfxSliderValue;
+                Debug.Log($"SFX slider value updated to: {_sfxSlider.value} (Volume Level: {DataManager.Data.GetSfxVolumeLevel()}%)");
+                
+                // Update SFX text
+                // if (_sfxValueText)
+                // {
+                //     _sfxValueText.text = DataManager.Data.GetSfxVolumeLevel().ToString() + "%";
+                // }
             }
         }
     }
@@ -787,10 +855,15 @@ public class OpeningUIManager : MonoBehaviour
     /// </summary>
     private void OnDestroy()
     {
-        // Unsubscribe slider event listener
-        if (_soundSlider && _sliderListenerRegistered)
+        // Unsubscribe slider event listeners
+        if (_bgmSlider && _bgmSliderListenerRegistered)
         {
-            _soundSlider.onValueChanged.RemoveListener(OnSoundSliderValueChanged);
+            _bgmSlider.onValueChanged.RemoveListener(OnBgmSliderValueChanged);
+        }
+        
+        if (_sfxSlider && _sfxSliderListenerRegistered)
+        {
+            _sfxSlider.onValueChanged.RemoveListener(OnSfxSliderValueChanged);
         }
         
         // Prevent duplicate unsubscription since DisableAllInputActions already handled it

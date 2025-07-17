@@ -84,7 +84,7 @@ public class WristUIManager : MonoBehaviour
         BGMSlider.minValue = 0;
         BGMSlider.maxValue = 100;
         BGMSlider.wholeNumbers = true;
-        if (dataManager != null) BGMValue = Mathf.RoundToInt(dataManager.GetMasterVolume() * 100f);
+        if (dataManager != null) BGMValue = Mathf.RoundToInt(dataManager.GetBgmVolume() * 100f);
         else BGMValue = 100;
         BGMSlider.value = BGMValue;
         BGMSlider.onValueChanged.AddListener(OnBGMSliderValueChanged);
@@ -297,7 +297,7 @@ public class WristUIManager : MonoBehaviour
         if (dataManager != null)
         {
             if (isDebug) Debug.Log("dataManager found.");
-            dataManager.SetMasterVolume(BGMValue);
+            dataManager.SetBgmVolume(BGMValue);
         }
         else
         {
