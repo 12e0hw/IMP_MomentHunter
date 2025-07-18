@@ -94,7 +94,8 @@ public class WristUIManager : MonoBehaviour
         SFXSlider.minValue = 0;
         SFXSlider.maxValue = 100;
         SFXSlider.wholeNumbers = true;
-        SFXValue = 100;
+        if (dataManager != null) SFXValue = Mathf.RoundToInt(dataManager.GetSfxVolume() * 100f);
+        else SFXValue = 100;
         SFXSlider.value = SFXValue;
         SFXSlider.onValueChanged.AddListener(OnSFXSliderValueChanged);
         OnSFXSliderValueChanged(SFXValue);
@@ -311,6 +312,15 @@ public class WristUIManager : MonoBehaviour
         SFXValue = Mathf.RoundToInt(value);
         if (SFXText != null)
             SFXText.text = SFXValue.ToString();
+        if (dataManager != null)
+        {
+            if (isDebug) Debug.Log("dataManager found.");
+            dataManager.SetBgmVolume(SFXValue);
+        }
+        else
+        {
+            if (isDebug) Debug.LogWarning("dataManager not found");
+        }
     }
 
     // Opens the main back UI
