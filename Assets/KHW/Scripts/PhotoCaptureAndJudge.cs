@@ -37,19 +37,8 @@ public class PhotoCaptureAndJudge : MonoBehaviour
     public float maxJudgeDistance = 5f;   // Max judge distance
     public LayerMask TargetLayer;   // Layer to detect
 
-    [Header("Save Settings")]
-    public bool savePhotoToFile = true;
-    public string saveFolder = "Photos";   // Folder path
-
     void Start()
     {
-        if (savePhotoToFile)
-        {
-            string path = Path.Combine(Application.persistentDataPath, saveFolder);
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            saveFolder = path;   // For Quest build
-        }
-
         audioSource = GetComponent<AudioSource>();   // Get audio source
     }
 
@@ -175,14 +164,6 @@ public class PhotoCaptureAndJudge : MonoBehaviour
         // Disable capture cam
         captureCam.enabled = false;
         RenderTexture.active = null;
-
-        // Save to file
-        if (savePhotoToFile)
-        {
-            string file = Path.Combine(saveFolder,
-                $"Photo_{System.DateTime.Now:yyyyMMdd_HHmmss}.png");
-            File.WriteAllBytes(file, tex.EncodeToPNG());
-        }
 
         // Show captured photo in UI
         if (DisplayCanvas != null)
