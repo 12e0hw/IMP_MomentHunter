@@ -1,20 +1,22 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class TutorialManager : MonoBehaviour
 {
     // Tutorial steps
-    public enum Step { None, Teleport, Move, GrabLeft, GrabRight, TakePhoto, AllDone }
+    public enum Step { None, Move, Turn, Teleport, GrabLeft, GrabRight, TakePhoto, AllDone }
     public Step Current { get; private set; }   // Current tutorial step
     
     public static TutorialManager Instance;   // Singleton instance
     void Awake() => Instance = this;
-    
+
 
 
     [Header("Step UI")]
-    public GameObject teleportUI;
     public GameObject moveUI;
+    public GameObject turnUI;
+    public GameObject teleportUI;
     public GameObject leftGrabUI;
     public GameObject rightGrabUI;
     public GameObject photoUI;
@@ -57,13 +59,26 @@ public class TutorialManager : MonoBehaviour
 
         audioSrc.PlayOneShot(successClip);  // Play success sound
 
-        // Step 2: Teleport
+        // Step 2: Turn
+        Current = Step.Turn;
+        // teleportTriggerZoneObject.SetActive(true);
+        turnUI.SetActive(true);
+    }
+    public void OnTurnDone()
+    {
+        if (Current != Step.Teleport) return;
+
+        // Hide teleport step UI
+        // teleportTriggerZoneObject.SetActive(false);
+        turnUI.SetActive(false);
+
+        audioSrc.PlayOneShot(successClip);  // Play success sound
+        // Step 3: Teleport
         Current = Step.Teleport;
         teleportTriggerZoneObject.SetActive(true);
         teleportUI.SetActive(true);
     }
 
-    // Called when Teleport is completed
     public void OnTeleportDone()
     {
         if (Current != Step.Teleport) return;
@@ -74,13 +89,12 @@ public class TutorialManager : MonoBehaviour
 
         audioSrc.PlayOneShot(successClip);  // Play success sound
 
-        // Step 3: Left grab
+        // Step 4: Left grab
         Current = Step.GrabLeft;
         leftGrabDetectorObject.SetActive(true);
         leftGrabUI.SetActive(true);
     }
 
-    // Called when Left grab is completed
     public void OnLeftGrabDone()
     {
         if (Current != Step.GrabLeft) return;
@@ -91,12 +105,11 @@ public class TutorialManager : MonoBehaviour
 
         audioSrc.PlayOneShot(successClip);   // Play success sound
 
-        // Step 4: Right grab
+        // Step 5: Right grab
         Current = Step.GrabRight;
         rightGrabUI.SetActive(true);
     }
 
-    // Called when Right grab is completed
     public void OnRightGrabDone()
     {
         if (Current != Step.GrabRight) return;
@@ -106,7 +119,7 @@ public class TutorialManager : MonoBehaviour
 
         audioSrc.PlayOneShot(successClip);   // Play success sound
 
-        // Step 5: Take photo
+        // Step 6: Take photo
         Current = Step.TakePhoto;
         photoUI.SetActive(true);
     }

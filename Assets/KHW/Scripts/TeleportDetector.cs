@@ -1,5 +1,5 @@
 using UnityEngine;
-public class TeleportArrivalDetector : MonoBehaviour
+public class TeleportDetector : MonoBehaviour
 {
     public Transform xrOrigin;    // XR Origin (VR player)
     public float detectRadius = 0.5f;   // Detection radius
