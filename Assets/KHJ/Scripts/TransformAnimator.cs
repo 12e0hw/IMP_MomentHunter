@@ -1,6 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Animates transform properties (position, rotation, scale) over time.
+/// Supports smooth transitions from start values to target values with customizable duration.
+/// </summary>
 public class TransformAnimator : MonoBehaviour
 {
     [Header("Animation Settings")]
@@ -10,38 +14,56 @@ public class TransformAnimator : MonoBehaviour
     [SerializeField] private Vector3 targetScale = Vector3.one;
     
     [Header("Key Settings")]
-    [SerializeField] private GameObject keyPrefab;
+    [SerializeField] private MeshRenderer keyMesh;
     
+    /// <summary>
+    /// Starting position for animation (local space)
+    /// </summary>
     private Vector3 startPosition;
+    /// <summary>
+    /// Starting rotation for animation (local space)
+    /// </summary>
     private Vector3 startRotation;
+    /// <summary>
+    /// Starting scale for animation (local space)
+    /// </summary>
     private Vector3 startScale;
     
+    /// <summary>
+    /// Store initial transform values on start
+    /// </summary>
     private void Start()
     {
-        startPosition = transform.localPosition;    // localPosition으로 변경
-        startRotation = transform.localEulerAngles; // localEulerAngles로 변경
+        startPosition = transform.localPosition;    // Use localPosition
+        startRotation = transform.localEulerAngles; // Use localEulerAngles
         startScale = transform.localScale;
     }
     
     /// <summary>
-    /// 설정된 타겟으로 애니메이션
+    /// Starts animation to configured target values
     /// </summary>
     public void AnimateTransform()
     {
-        if (keyPrefab) keyPrefab.SetActive(false);
+        // Deactivate key prefab if assigned
+        if (keyMesh) keyMesh.enabled = false;
         
         StartCoroutine(DoAnimation());
     }
     
+    /// <summary>
+    /// Coroutine that performs the smooth animation over time
+    /// </summary>
+    /// <returns>Coroutine enumerator</returns>
     private IEnumerator DoAnimation()
     {
         float elapsedTime = 0f;
-        Vector3 positionDelta = targetPosition - startPosition;
         
+        // Animate over duration
         while (elapsedTime < duration)
         {
             float t = elapsedTime / duration;
         
+            // Lerp all transform properties
             transform.localPosition = Vector3.Lerp(startPosition, targetPosition, t);    
             transform.localEulerAngles = Vector3.Lerp(startRotation, targetRotation, t); 
             transform.localScale = Vector3.Lerp(startScale, targetScale, t);
@@ -50,7 +72,7 @@ public class TransformAnimator : MonoBehaviour
             yield return null;
         }
     
-        // 정확한 최종값 설정
+        // Set exact final values to avoid floating point precision issues
         transform.localPosition = targetPosition;    
         transform.localEulerAngles = targetRotation; 
         transform.localScale = targetScale;

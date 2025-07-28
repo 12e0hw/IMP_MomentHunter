@@ -84,7 +84,7 @@ public class WristUIManager : MonoBehaviour
         BGMSlider.minValue = 0;
         BGMSlider.maxValue = 100;
         BGMSlider.wholeNumbers = true;
-        if (dataManager != null) BGMValue = Mathf.RoundToInt(dataManager.GetMasterVolume() * 100f);
+        if (dataManager != null) BGMValue = Mathf.RoundToInt(dataManager.GetBgmVolume() * 100f);
         else BGMValue = 100;
         BGMSlider.value = BGMValue;
         BGMSlider.onValueChanged.AddListener(OnBGMSliderValueChanged);
@@ -94,7 +94,8 @@ public class WristUIManager : MonoBehaviour
         SFXSlider.minValue = 0;
         SFXSlider.maxValue = 100;
         SFXSlider.wholeNumbers = true;
-        SFXValue = 100;
+        if (dataManager != null) SFXValue = Mathf.RoundToInt(dataManager.GetSfxVolume() * 100f);
+        else SFXValue = 100;
         SFXSlider.value = SFXValue;
         SFXSlider.onValueChanged.AddListener(OnSFXSliderValueChanged);
         OnSFXSliderValueChanged(SFXValue);
@@ -297,7 +298,7 @@ public class WristUIManager : MonoBehaviour
         if (dataManager != null)
         {
             if (isDebug) Debug.Log("dataManager found.");
-            dataManager.SetMasterVolume(BGMValue);
+            dataManager.SetBgmVolume(BGMValue);
         }
         else
         {
@@ -311,6 +312,15 @@ public class WristUIManager : MonoBehaviour
         SFXValue = Mathf.RoundToInt(value);
         if (SFXText != null)
             SFXText.text = SFXValue.ToString();
+        if (dataManager != null)
+        {
+            if (isDebug) Debug.Log("dataManager found.");
+            dataManager.SetBgmVolume(SFXValue);
+        }
+        else
+        {
+            if (isDebug) Debug.LogWarning("dataManager not found");
+        }
     }
 
     // Opens the main back UI
