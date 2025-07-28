@@ -25,7 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -373,18 +373,6 @@ PrefabInstance:
       value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 1696098083433222755, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1696098083433222755, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1696098083433222755, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1696098083433222755, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -436,37 +424,9 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1275006817}
-    - target: {fileID: 4203026427938925150, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
-      propertyPath: m_RenderMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4203026427938925150, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5915630379808395295, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1920
-      objectReference: {fileID: 0}
-    - target: {fileID: 5915630379808395295, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1080
-      objectReference: {fileID: 0}
-    - target: {fileID: 5915630379808395295, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6436366446836870919, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
       propertyPath: m_Name
       value: Ending_Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 6436366446836870919, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6571158927906943541, guid: 42db7b2aee71d6f4287a11dd913d7eeb, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
