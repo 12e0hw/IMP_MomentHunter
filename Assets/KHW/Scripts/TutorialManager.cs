@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.XR.Interaction.Toolkit;
+using System;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -10,8 +11,7 @@ public class TutorialManager : MonoBehaviour
     
     public static TutorialManager Instance;   // Singleton instance
     void Awake() => Instance = this;
-
-
+    public TeleportJumpDetector teleportJumpDetector;
 
     [Header("Step UI")]
     public GameObject moveUI;
@@ -77,6 +77,7 @@ public class TutorialManager : MonoBehaviour
         Current = Step.Teleport;
         teleportTriggerZoneObject.SetActive(true);
         teleportUI.SetActive(true);
+        teleportJumpDetector.EnableDetector(true);
     }
 
     public void OnTeleportDone()
@@ -135,5 +136,18 @@ public class TutorialManager : MonoBehaviour
         // All done
         Current = Step.AllDone;
         tutorialCanvas.SetActive(false);   // Hide tutorial canvas
+    }
+
+    internal void OnGrabDone()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class TeleportJumpDetector
+{
+    internal void EnableDetector(bool v)
+    {
+        throw new NotImplementedException();
     }
 }
