@@ -46,13 +46,13 @@ public class GameManager : MonoBehaviour
     /// Event triggered when mission state changes
     /// </summary>
     public static event Action<MissionState> OnMissionStateChanged;
-    
+
     [SerializeField] private GameState _gameState = GameState.Intro;
     /// <summary>
     /// Current game state
     /// </summary>
     public GameState GameState => _gameState;
-    
+
     [SerializeField] private MissionState _missionState = MissionState.None;
     /// <summary>
     /// Current mission state
@@ -66,16 +66,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _failUI;
 
     [SerializeField] private AudioSource _failSound;
-    
+
     [Header("UI Settings")]
     [SerializeField] private bool _isMainCanvasActive = true;
-    
+
     [Header("Scene Configuration")]
 #if UNITY_EDITOR
     [SerializeField] private List<SceneAsset> _sceneAssets = new List<SceneAsset>(); // Scene asset list for editor
 #endif
     [SerializeField] private List<string> _sceneNames = new List<string>(); // Scene name list for build
-    
+
     [Header("Mission Object Settings")]
     [SerializeField, HideInInspector] private List<int> _missionObjectCounts = new List<int>(); // Hidden from inspector
     /// <summary>
@@ -91,11 +91,11 @@ public class GameManager : MonoBehaviour
     /// Current count of captured mission objects
     /// </summary>
     private int _currentMissionObjectCount = 0;
-    
+
     // Flags for scene initialization
     private bool _shouldInitializeScene0Load = false;
     private bool _isDead = false;
-    
+
     /// <summary>
     /// Initialize the AudioManager instance and set up DontDestroyOnLoad if enabled
     /// </summary>
@@ -109,10 +109,10 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-        
+
         // Subscribe to scene loading events
         SceneManager.sceneLoaded += OnSceneLoaded;
-        
+
         // Copy read-only array to list for runtime use
         _missionObjectCounts = new List<int>(missionObjectCountsReadOnly);
     }
@@ -124,11 +124,11 @@ public class GameManager : MonoBehaviour
     {
         SetMainCanvasActive(true);
         if (_failUI) _failUI.SetActive(false);
-        
+
         // Handle victory state transition with delay
         if (_gameState == GameState.Victory) StartCoroutine(TransitionToSceneWithDelay(0, 10f));
     }
-    
+
     /// <summary>
     /// Clean up event subscriptions when destroyed
     /// </summary>
@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
         // Avoid redundant state changes
         if (_gameState == newGameState)
             return;
-        
+
         this._gameState = newGameState;
 
         // Handle state-specific logic
@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour
                 if (_failUI) _failUI.SetActive(true);
                 if (_failSound) _failSound.Play();
                 SetMissionState(MissionState.Ending);
-                
+
                 // Return to main scene after delay
                 StartCoroutine(TransitionToSceneWithDelay(0, 6f));
                 break;
@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-    
+
     /// <summary>
     /// Coroutine to transition to a scene after a specified delay
     /// </summary>
@@ -208,18 +208,18 @@ public class GameManager : MonoBehaviour
         // Avoid redundant state changes
         if (_missionState == newMissionState)
             return;
-        
+
         this._missionState = newMissionState;
-        
+
         // Reset mission object count when mission state changes
         ResetMissionObjectCount();
 
         // Notify listeners of mission state change
         OnMissionStateChanged?.Invoke(_missionState);
-        
+
         // Update mission text UI
         if (_missionText) _missionText.UpdateMissionText();
-        
+
         // Handle mission-specific logic
         switch (_missionState)
         {
@@ -260,7 +260,7 @@ public class GameManager : MonoBehaviour
         int nextIndex = ((int)_missionState + 1) % System.Enum.GetValues(typeof(MissionState)).Length;
         SetMissionState((MissionState)nextIndex);
     }
-    
+
     /// <summary>
     /// Updates the mission object count and checks for mission completion
     /// </summary>
@@ -268,16 +268,16 @@ public class GameManager : MonoBehaviour
     public void SetMissionObjectCount(int capturedCount)
     {
         _currentMissionObjectCount = capturedCount;
-        
+
         int currentMissionIndex = (int)_missionState;
-        
+
         // Validate mission index range
         if (currentMissionIndex >= 0 && currentMissionIndex < _missionObjectCounts.Count)
         {
             int requiredCount = _missionObjectCounts[currentMissionIndex];
-            
+
             Debug.Log($"Mission object count updated: {_currentMissionObjectCount}/{requiredCount}");
-            
+
             // Check if mission is completed
             if (_currentMissionObjectCount == requiredCount)
             {
@@ -301,7 +301,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning($"Mission index out of range: {currentMissionIndex}");
         }
     }
-    
+
     /// <summary>
     /// Returns the appropriate feedback index for the given mission state
     /// </summary>
@@ -328,7 +328,7 @@ public class GameManager : MonoBehaviour
     {
         _currentMissionObjectCount = 0;
     }
-    
+
 #if UNITY_EDITOR
     /// <summary>
     /// Called when values are changed in the editor - syncs scene assets with scene names
@@ -344,7 +344,7 @@ public class GameManager : MonoBehaviour
                 _sceneNames.Add(sceneAsset.name);
             }
         }
-        
+
         // Update inspector display array for mission object counts
         var missionNames = System.Enum.GetNames(typeof(MissionState));
         _missionObjectDisplay = new string[missionObjectCountsReadOnly.Length];
@@ -352,11 +352,11 @@ public class GameManager : MonoBehaviour
         {
             _missionObjectDisplay[i] = $"{missionNames[i]}: {missionObjectCountsReadOnly[i]}";
         }
-        
+
         // Update main canvas state in editor
         if (_mainCanvas)
         {
-            UnityEditor.EditorApplication.delayCall += () => 
+            UnityEditor.EditorApplication.delayCall += () =>
             {
                 if (_mainCanvas)
                     _mainCanvas.enabled = _isMainCanvasActive;
@@ -364,7 +364,7 @@ public class GameManager : MonoBehaviour
         }
     }
 #endif
-    
+
     /// <summary>
     /// Transitions to the specified scene by index
     /// </summary>
@@ -383,7 +383,7 @@ public class GameManager : MonoBehaviour
         {
             _shouldInitializeScene0Load = true;
             Initialize();
-            
+
             // Destroy persistent AudioManager when returning to Scene 0
             if (AudioManager.BGMInstance)
             {
@@ -392,7 +392,7 @@ public class GameManager : MonoBehaviour
                 // BGMInstance will be set to null in AudioManager's OnDestroy
             }
         }
-        
+
         string targetScene = _sceneNames[sceneIndex];
         SceneManager.LoadScene(targetScene);
     }
@@ -414,10 +414,20 @@ public class GameManager : MonoBehaviour
     {
         // Reset player health through DataManager
         if (DataManager.Data) DataManager.Data.InitializeHealth();
-        
+
         // SetGameState(GameState.Intro);
         // SetMissionState(MissionState.None);
         // SetMainCanvasActive(true);
         // if (_openingUIManager) _openingUIManager.SetPrologueActive(false);
     }
+    
+    // 정답미션 사진저장 확인용
+    public int GetCurrentMissionObjectCount() => _currentMissionObjectCount;
+    public int GetMissionObjectRequirement(int missionIndex)
+    {
+        if (missionIndex >= 0 && missionIndex < _missionObjectCounts.Count)
+            return _missionObjectCounts[missionIndex];
+        else return -1;
+    }
+
 }
