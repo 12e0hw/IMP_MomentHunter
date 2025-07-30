@@ -23458,42 +23458,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 940402899}
-    - target: {fileID: 1826745402718156344, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 9.839303
-      objectReference: {fileID: 0}
-    - target: {fileID: 1826745402718156344, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 5.7461
-      objectReference: {fileID: 0}
-    - target: {fileID: 1826745402718156344, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.99828017
-      objectReference: {fileID: 0}
-    - target: {fileID: 1826745402718156344, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1826745402718156344, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1826745402718156344, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.058623962
-      objectReference: {fileID: 0}
-    - target: {fileID: 1826745402718156344, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -45
-      objectReference: {fileID: 0}
-    - target: {fileID: 1826745402718156344, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 537
-      objectReference: {fileID: 0}
-    - target: {fileID: 1826745402718156344, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 6.722
-      objectReference: {fileID: 0}
     - target: {fileID: 2874704701743649376, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.509845
@@ -23542,14 +23506,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: KHW_Room2
       objectReference: {fileID: 0}
+    - target: {fileID: 5691601899243302098, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
+      propertyPath: m_Name
+      value: Room2 UI Language
+      objectReference: {fileID: 0}
     - target: {fileID: 6218737333007481062, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 940402899}
-    - target: {fileID: 7313189317453794406, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
