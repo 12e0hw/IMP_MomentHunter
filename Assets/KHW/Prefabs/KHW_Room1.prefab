@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1480197980514104425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8964353691030064756}
+  - component: {fileID: 1388559412506734864}
+  m_Layer: 0
+  m_Name: Language
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8964353691030064756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480197980514104425}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2874704701743649376}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1388559412506734864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480197980514104425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3a3c1e41171004e8f2ee07a84badf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  koreanUI:
+  - {fileID: 0}
+  englishUI:
+  - {fileID: 0}
 --- !u!1 &3408424062294793038
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,6 +82,7 @@ Transform:
   - {fileID: 538180620928469420}
   - {fileID: 5101078109196591814}
   - {fileID: 4246494315934353993}
+  - {fileID: 8964353691030064756}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &77830712296417126
@@ -597,6 +646,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tutorial
       objectReference: {fileID: 0}
+    - target: {fileID: 3208115462416142027, guid: c7adcba580442c842989201d089d2367, type: 3}
+      propertyPath: tutorialCanvas
+      value: 
+      objectReference: {fileID: 4732551220364688591}
     - target: {fileID: 5347945746011124684, guid: c7adcba580442c842989201d089d2367, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -678,10 +731,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2245634969083103044, guid: c7adcba580442c842989201d089d2367, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7adcba580442c842989201d089d2367, type: 3}
+--- !u!1 &4732551220364688591 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2870644702523465735, guid: c7adcba580442c842989201d089d2367, type: 3}
+  m_PrefabInstance: {fileID: 7384762538357497032}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7646968650449669630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 892995993391386934, guid: c7adcba580442c842989201d089d2367, type: 3}

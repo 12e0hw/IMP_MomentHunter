@@ -37,6 +37,9 @@ public class PhotoCaptureAndJudge : MonoBehaviour
     public float maxJudgeDistance = 5f;   // Max judge distance
     public LayerMask TargetLayer;   // Layer to detect
 
+    [Header("Photo Board Slots (Per Mission)")]
+    public RawImage[] missionPhotoSlot;  // Mission 슬롯 
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();   // Get audio source
@@ -180,17 +183,49 @@ public class PhotoCaptureAndJudge : MonoBehaviour
             cameraFrameControl.gameObject.SetActive(false);
 
             // Show display
-            DisplayCanvas.gameObject.SetActive(true);  
+            DisplayCanvas.gameObject.SetActive(true);
 
             // Wait display time
             yield return new WaitForSeconds(photoDisplayDuration);
 
             // Restore UI
             GameManager.Instance.SetMainCanvasActive(true);
-            DisplayCanvas.gameObject.SetActive(false);  
+            DisplayCanvas.gameObject.SetActive(false);
             tutorialCanvas.gameObject.SetActive(true);
             cameraFrameControl.gameObject.SetActive(true);
 
+        }
+        
+        // 정답 사진이면 게시판에 표시
+        if (GameManager.Instance != null)
+        {
+            int missionIndex = (int)GameManager.Instance.MissionState;
+            int required = GameManager.Instance.GetMissionObjectRequirement(missionIndex);
+
+            if (GameManager.Instance.GetCurrentMissionObjectCount() == required)
+            {
+                SavePhotoToMissionSlot(tex); // 성공 사진 저장
+            }
+        }
+    }
+
+    void SavePhotoToMissionSlot(Texture2D sourceTex)
+    {
+        if (GameManager.Instance == null) return;
+
+        int missionIndex = (int)GameManager.Instance.MissionState;
+
+        if (missionIndex >= 1 && missionIndex <= 6)
+        {
+            RawImage slot = missionPhotoSlot[missionIndex - 1];
+            if (slot != null)
+            {
+                Texture2D copy = new Texture2D(sourceTex.width, sourceTex.height, sourceTex.format, false);
+                copy.SetPixels(sourceTex.GetPixels());
+                copy.Apply();
+
+                slot.texture = copy;
+            }
         }
     }
 
