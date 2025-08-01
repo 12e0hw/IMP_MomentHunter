@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -151,13 +152,9 @@ public class OpeningUIManager : MonoBehaviour
     /// </summary>
     private void SetupToggleEvents()
     {
-        // Initialize language setting if it doesn't exist
-        if (!PlayerPrefs.HasKey("language"))
-        {
-            PlayerPrefs.SetInt("language", 0); // Set default to Korean (0)
-            PlayerPrefs.Save();
-            Debug.Log("Language preference initialized to Korean (0)");
-        }
+        PlayerPrefs.SetInt("language", 0);
+        PlayerPrefs.Save();
+        Debug.Log("Language forced to Korean (0)");
     
         // Korean Toggle setup
         if (_KoreanToggle && !_koreanToggleListenerRegistered)
@@ -175,7 +172,7 @@ public class OpeningUIManager : MonoBehaviour
             Debug.Log("English toggle events setup completed");
         }
     
-        // Set initial toggle states based on saved preference (이 부분만 남기기)
+        // Set initial toggle states based on saved preference
         int currentLanguage = PlayerPrefs.GetInt("language", 0);
         if (currentLanguage == 0) // Korean
         {
@@ -713,12 +710,11 @@ public class OpeningUIManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Handle play UI button click - switches to prologue canvas
-    /// </summary>
     private void OnPlayUIClicked()
     {
-        SetPrologueActive(true); // Switch to prologue canvas
+        GameManager.Instance.StartFadeTransition(() => {
+            SetPrologueActive(true);
+        });
     }
     
     /// <summary>
