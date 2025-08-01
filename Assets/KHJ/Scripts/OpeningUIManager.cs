@@ -31,6 +31,15 @@ public class OpeningUIManager : MonoBehaviour
     [SerializeField] private Slider _sfxSlider;           // SFX volume slider
     // [SerializeField] private Text _bgmValueText;          // BGM value display text (optional)
     // [SerializeField] private Text _sfxValueText;          // SFX value display text (optional)
+    [SerializeField] private Toggle _KoreanToggle;
+    [SerializeField] private Toggle _EnglishToggle;
+    [SerializeField] private LanguageSelector _languageSelector;
+    
+    /// <summary>
+    /// Flags to check if toggle event listeners are registered
+    /// </summary>
+    private bool _koreanToggleListenerRegistered = false;
+    private bool _englishToggleListenerRegistered = false;
     
     [Header("Quit UI Components")]
     [SerializeField] private Button _mainBackButton;      // Return to main button
@@ -67,8 +76,6 @@ public class OpeningUIManager : MonoBehaviour
     /// </summary>
     private InputAction _aButton;
     private InputAction _yButton;
-    private InputAction _leftTrigger;
-    private InputAction _rightTrigger;
     
     /// <summary>
     /// Currently hovered UI element by ray
@@ -90,6 +97,7 @@ public class OpeningUIManager : MonoBehaviour
         InitializePopupUI();
         SetupVRInputActions();
         SetupSliderEvents(); // Add slider event setup
+        SetupToggleEvents();
     }
     
     /// <summary>
@@ -135,6 +143,137 @@ public class OpeningUIManager : MonoBehaviour
             _sfxSlider.wholeNumbers = false;
             
             Debug.Log("SFX slider events setup completed");
+        }
+    }
+    
+    /// <summary>
+    /// Set up toggle event listeners and initial configuration
+    /// </summary>
+    private void SetupToggleEvents()
+    {
+        // Initialize language setting if it doesn't exist
+        if (!PlayerPrefs.HasKey("language"))
+        {
+            PlayerPrefs.SetInt("language", 0); // Set default to Korean (0)
+            PlayerPrefs.Save();
+            Debug.Log("Language preference initialized to Korean (0)");
+        }
+    
+        // Korean Toggle setup
+        if (_KoreanToggle && !_koreanToggleListenerRegistered)
+        {
+            _KoreanToggle.onValueChanged.AddListener(OnLanguageToggleChanged);
+            _koreanToggleListenerRegistered = true;
+            Debug.Log("Korean toggle events setup completed");
+        }
+
+        // English Toggle setup
+        if (_EnglishToggle && !_englishToggleListenerRegistered)
+        {
+            _EnglishToggle.onValueChanged.AddListener(OnLanguageToggleChanged);
+            _englishToggleListenerRegistered = true;
+            Debug.Log("English toggle events setup completed");
+        }
+    
+        // Set initial toggle states based on saved preference (이 부분만 남기기)
+        int currentLanguage = PlayerPrefs.GetInt("language", 0);
+        if (currentLanguage == 0) // Korean
+        {
+            _KoreanToggle.isOn = true;
+            _EnglishToggle.isOn = false;
+        }
+        else // English
+        {
+            _KoreanToggle.isOn = false;
+            _EnglishToggle.isOn = true;
+        }
+    }
+    
+    /// <summary>
+    /// Called when any language toggle value changes
+    /// </summary>
+    /// <param name="isOn">Toggle state</param>
+    private void OnLanguageToggleChanged(bool isOn)
+    {
+        // This function mainly handles cases where toggles are changed programmatically
+        // Most user interactions are handled directly in HandleSettingsPopupClick
+    
+        if (!isOn) return; // Ignore deactivation events
+    
+        // Safety check - ensure at least one toggle is always active
+        if (_KoreanToggle.isOn)
+        {
+            if (_EnglishToggle.isOn)
+            {
+                _EnglishToggle.isOn = false;
+            }
+        
+            if (_languageSelector)
+            {
+                _languageSelector.SetKorean();
+            }
+        
+            Debug.Log("Language changed to Korean");
+        }
+        else if (_EnglishToggle.isOn)
+        {
+            if (_KoreanToggle.isOn)
+            {
+                _KoreanToggle.isOn = false;
+            }
+        
+            if (_languageSelector)
+            {
+                _languageSelector.SetEnglish();
+            }
+        
+            Debug.Log("Language changed to English");
+        }
+    }
+
+    /// <summary>
+    /// Safely set language toggle states and trigger language change
+    /// </summary>
+    /// <param name="koreanState">Korean toggle state</param>
+    /// <param name="englishState">English toggle state</param>
+    private void SetLanguageToggles(bool koreanState, bool englishState)
+    {
+        // Temporarily remove listeners to prevent recursive calls
+        if (_KoreanToggle && _koreanToggleListenerRegistered)
+        {
+            _KoreanToggle.onValueChanged.RemoveListener(OnLanguageToggleChanged);
+        }
+    
+        if (_EnglishToggle && _englishToggleListenerRegistered)
+        {
+            _EnglishToggle.onValueChanged.RemoveListener(OnLanguageToggleChanged);
+        }
+    
+        // Set toggle states directly
+        if (_KoreanToggle) _KoreanToggle.isOn = koreanState;
+        if (_EnglishToggle) _EnglishToggle.isOn = englishState;
+    
+        // Re-add listeners
+        if (_KoreanToggle && _koreanToggleListenerRegistered)
+        {
+            _KoreanToggle.onValueChanged.AddListener(OnLanguageToggleChanged);
+        }
+    
+        if (_EnglishToggle && _englishToggleListenerRegistered)
+        {
+            _EnglishToggle.onValueChanged.AddListener(OnLanguageToggleChanged);
+        }
+    
+        // Manually trigger language change
+        if (koreanState && _languageSelector)
+        {
+            _languageSelector.SetKorean();
+            Debug.Log("Language changed to Korean");
+        }
+        else if (englishState && _languageSelector)
+        {
+            _languageSelector.SetEnglish();
+            Debug.Log("Language changed to English");
         }
     }
     
@@ -233,46 +372,6 @@ public class OpeningUIManager : MonoBehaviour
         else
         {
             Debug.LogError("XRI Left action map not found!");
-        }
-
-        // Right trigger setup (from XRI Right Interaction Action Map)
-        var rightInteractionMap = _inputActions?.FindActionMap("XRI Right Interaction");
-        if (rightInteractionMap != null)
-        {
-            _rightTrigger = rightInteractionMap.FindAction("Activate");
-            if (_rightTrigger != null)
-            {
-                _rightTrigger.Enable();
-                _rightTrigger.performed += OnRightTriggerPressed;
-            }
-            else
-            {
-                Debug.LogError("Right Activate action not found in XRI Right Interaction!");
-            }
-        }
-        else
-        {
-            Debug.LogError("XRI Right Interaction action map not found!");
-        }
-
-        // Left trigger setup (from XRI Left Interaction Action Map)
-        var leftInteractionMap = _inputActions?.FindActionMap("XRI Left Interaction");
-        if (leftInteractionMap != null)
-        {
-            _leftTrigger = leftInteractionMap.FindAction("Activate");
-            if (_leftTrigger != null)
-            {
-                _leftTrigger.Enable();
-                _leftTrigger.performed += OnLeftTriggerPressed;
-            }
-            else
-            {
-                Debug.LogError("Left Activate action not found in XRI Left Interaction!");
-            }
-        }
-        else
-        {
-            Debug.LogError("XRI Left Interaction action map not found!");
         }
     }
     
@@ -440,7 +539,17 @@ public class OpeningUIManager : MonoBehaviour
                                 hitObject.transform.IsChildOf(_sfxSlider.transform) ||
                                 hitObject.GetComponent<Slider>() == _sfxSlider);
         
-            return isBgmSlider || isSfxSlider;
+            bool isKoreanToggle = _KoreanToggle && 
+                                  (hitObject == _KoreanToggle.gameObject || 
+                                   hitObject.transform.IsChildOf(_KoreanToggle.transform) ||
+                                   hitObject.GetComponent<Toggle>() == _KoreanToggle);
+        
+            bool isEnglishToggle = _EnglishToggle && 
+                                   (hitObject == _EnglishToggle.gameObject || 
+                                    hitObject.transform.IsChildOf(_EnglishToggle.transform) ||
+                                    hitObject.GetComponent<Toggle>() == _EnglishToggle);
+    
+            return isBgmSlider || isSfxSlider || isKoreanToggle || isEnglishToggle;
         }
     
         if (_isQuitPopupActive)
@@ -517,56 +626,6 @@ public class OpeningUIManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Handle left trigger press events
-    /// </summary>
-    /// <param name="context">Input action callback context</param>
-    private void OnLeftTriggerPressed(InputAction.CallbackContext context)
-    {
-        if (_isProcessingInput || Time.time - _lastInputTime < _inputCooldown)
-            return;
-            
-        _isProcessingInput = true;
-        _lastInputTime = Time.time;
-        
-        // Left trigger only checks left ray (doesn't work in prologue)
-        if (!_isPrologueActive)
-        {
-            GameObject leftHitUI = GetRayHitUI(_leftRayInteractor);
-            if (leftHitUI && IsTargetUI(leftHitUI))
-            {
-                HandleUIClick(leftHitUI);
-            }
-        }
-        
-        _isProcessingInput = false;
-    }
-    
-    /// <summary>
-    /// Handle right trigger press events
-    /// </summary>
-    /// <param name="context">Input action callback context</param>
-    private void OnRightTriggerPressed(InputAction.CallbackContext context)
-    {
-        if (_isProcessingInput || Time.time - _lastInputTime < _inputCooldown)
-            return;
-            
-        _isProcessingInput = true;
-        _lastInputTime = Time.time;
-        
-        // Right trigger only checks right ray (doesn't work in prologue)
-        if (!_isPrologueActive)
-        {
-            GameObject rightHitUI = GetRayHitUI(_rightRayInteractor);
-            if (rightHitUI && IsTargetUI(rightHitUI))
-            {
-                HandleUIClick(rightHitUI);
-            }
-        }
-        
-        _isProcessingInput = false;
-    }
-    
-    /// <summary>
     /// Route UI click events to appropriate handlers based on current state
     /// </summary>
     /// <param name="clickedUI">The clicked UI GameObject</param>
@@ -623,6 +682,20 @@ public class OpeningUIManager : MonoBehaviour
         {
             Debug.Log("SFX slider button interaction");
             UpdateSliderFromRaycast(_sfxSlider);
+        }
+        // Check Korean toggle interaction
+        else if (_KoreanToggle && (clickedUI == _KoreanToggle.gameObject || clickedUI.transform.IsChildOf(_KoreanToggle.transform)))
+        {
+            Debug.Log("Korean toggle button interaction");
+            // Force Korean toggle ON and English OFF (bypass Unity's default toggle behavior)
+            SetLanguageToggles(true, false); // Korean ON, English OFF
+        }
+        // Check English toggle interaction
+        else if (_EnglishToggle && (clickedUI == _EnglishToggle.gameObject || clickedUI.transform.IsChildOf(_EnglishToggle.transform)))
+        {
+            Debug.Log("English toggle button interaction");
+            // Force English toggle ON and Korean OFF (bypass Unity's default toggle behavior)
+            SetLanguageToggles(false, true); // Korean OFF, English ON
         }
     }
     
@@ -716,6 +789,22 @@ public class OpeningUIManager : MonoBehaviour
                 // {
                 //     _sfxValueText.text = DataManager.Data.GetSfxVolumeLevel().ToString() + "%";
                 // }
+            }
+            
+            int currentLanguage = PlayerPrefs.GetInt("language", 0); // Default is 0 (Korean)
+            if (_KoreanToggle && _EnglishToggle)
+            {
+                if (currentLanguage == 0) // Korean
+                {
+                    _KoreanToggle.isOn = true;
+                    _EnglishToggle.isOn = false;
+                }
+                else if (currentLanguage == 1) // English
+                {
+                    _KoreanToggle.isOn = false;
+                    _EnglishToggle.isOn = true;
+                }
+                Debug.Log($"Language toggles updated - Current language: {(currentLanguage == 0 ? "Korean" : "English")}");
             }
         }
     }
@@ -825,16 +914,6 @@ public class OpeningUIManager : MonoBehaviour
             _yButton.performed -= OnYButtonPressed;
             _yButton.Disable();
         }
-        if (_leftTrigger != null)
-        {
-            _leftTrigger.performed -= OnLeftTriggerPressed;
-            _leftTrigger.Disable();
-        }
-        if (_rightTrigger != null)
-        {
-            _rightTrigger.performed -= OnRightTriggerPressed;
-            _rightTrigger.Disable();
-        }
         
         Debug.Log("All input actions disabled");
     }
@@ -866,6 +945,16 @@ public class OpeningUIManager : MonoBehaviour
             _sfxSlider.onValueChanged.RemoveListener(OnSfxSliderValueChanged);
         }
         
+        if (_KoreanToggle && _koreanToggleListenerRegistered)
+        {
+            _KoreanToggle.onValueChanged.RemoveListener(OnLanguageToggleChanged);
+        }
+    
+        if (_EnglishToggle && _englishToggleListenerRegistered)
+        {
+            _EnglishToggle.onValueChanged.RemoveListener(OnLanguageToggleChanged);
+        }
+        
         // Prevent duplicate unsubscription since DisableAllInputActions already handled it
         if (!_isQuittingGame)
         {
@@ -876,14 +965,6 @@ public class OpeningUIManager : MonoBehaviour
             if (_yButton != null)
             {
                 _yButton.performed -= OnYButtonPressed;
-            }
-            if (_leftTrigger != null)
-            {
-                _leftTrigger.performed -= OnLeftTriggerPressed;
-            }
-            if (_rightTrigger != null)
-            {
-                _rightTrigger.performed -= OnRightTriggerPressed;
             }
         }
     }
