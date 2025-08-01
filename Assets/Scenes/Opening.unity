@@ -2021,7 +2021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -2273,7 +2273,7 @@ RectTransform:
   m_Father: {fileID: 1278692195}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3371,7 +3371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -4716,7 +4716,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &990083584
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7477,7 +7477,7 @@ RectTransform:
   m_Father: {fileID: 322928075}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7536,7 +7536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1510280640
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8426,7 +8426,7 @@ RectTransform:
   m_Father: {fileID: 924313008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9631,7 +9631,7 @@ RectTransform:
   m_Father: {fileID: 23722112}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10206,7 +10206,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -10549,7 +10549,7 @@ PrefabInstance:
     - target: {fileID: 3352889826358374465, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: _eventSystem
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 193992513}
     - target: {fileID: 3352889826358374465, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: _quitPopupUI
       value: 
@@ -10558,6 +10558,14 @@ PrefabInstance:
       propertyPath: _soundSlider
       value: 
       objectReference: {fileID: 905845707}
+    - target: {fileID: 3352889826358374465, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _KoreanToggle
+      value: 
+      objectReference: {fileID: 690886590}
+    - target: {fileID: 3352889826358374465, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _EnglishToggle
+      value: 
+      objectReference: {fileID: 294247235}
     - target: {fileID: 3352889826358374465, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: _openingCanvas
       value: 
@@ -10578,6 +10586,10 @@ PrefabInstance:
       propertyPath: _graphicRaycaster
       value: 
       objectReference: {fileID: 2135447787}
+    - target: {fileID: 3352889826358374465, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _languageSelector
+      value: 
+      objectReference: {fileID: 3835897229302450882}
     - target: {fileID: 3352889826358374465, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: _trackedRaycaster
       value: 
