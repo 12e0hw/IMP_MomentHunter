@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -709,12 +710,11 @@ public class OpeningUIManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Handle play UI button click - switches to prologue canvas
-    /// </summary>
     private void OnPlayUIClicked()
     {
-        SetPrologueActive(true); // Switch to prologue canvas
+        GameManager.Instance.StartFadeTransition(() => {
+            SetPrologueActive(true);
+        });
     }
     
     /// <summary>

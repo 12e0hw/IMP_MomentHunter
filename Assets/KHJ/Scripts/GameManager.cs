@@ -64,6 +64,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private MissionText _missionText;
     [SerializeField] private OpeningUIManager _openingUIManager;
     [SerializeField] private GameObject _failUI;
+    
+    [Header("Fade System")]
+    [SerializeField] private Animation _fadeUI;
+    [SerializeField] private string _fadeOutClipName = "A_FadeOut";
+    [SerializeField] private string _fadeInClipName = "A_FadeIn";
 
     [SerializeField] private AudioSource _failSound;
 
@@ -122,6 +127,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        // 씬 시작 시 무조건 페이드인으로 시작
+        StartCoroutine(FadeInOnSceneStart());
+        
         SetMainCanvasActive(true);
         if (_failUI) _failUI.SetActive(false);
 
@@ -366,16 +374,27 @@ public class GameManager : MonoBehaviour
 #endif
 
     /// <summary>
-    /// Transitions to the specified scene by index
+    /// Transitions to the specified scene by index (페이드와 함께)
     /// </summary>
     /// <param name="sceneIndex">Index of the target scene in the scene list</param>
     public void TransitionToScene(int sceneIndex)
     {
+        StartCoroutine(TransitionToSceneWithFadeCoroutine(sceneIndex));
+    }
+
+    /// <summary>
+    /// 페이드아웃 → 씬 전환 → 새 씬에서 페이드인
+    /// </summary>
+    private System.Collections.IEnumerator TransitionToSceneWithFadeCoroutine(int sceneIndex)
+    {
+        // 페이드아웃
+        yield return StartCoroutine(FadeOut());
+        
         // Validate scene index
         if (sceneIndex < 0 || sceneIndex >= _sceneNames.Count)
         {
             Debug.LogError($"Invalid scene index: {sceneIndex}. Available scenes: {_sceneNames.Count}");
-            return;
+            yield break;
         }
 
         // Special handling for Scene 0 (main scene)
@@ -389,10 +408,10 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Destroying DontDestroyOnLoad AudioManager when returning to Scene 0");
                 Destroy(AudioManager.BGMInstance.gameObject);
-                // BGMInstance will be set to null in AudioManager's OnDestroy
             }
         }
 
+        // 씬 전환
         string targetScene = _sceneNames[sceneIndex];
         SceneManager.LoadScene(targetScene);
     }
@@ -430,4 +449,105 @@ public class GameManager : MonoBehaviour
         else return -1;
     }
 
+    // ===== FADE SYSTEM =====
+
+    /// <summary>
+    /// 씬 시작 시 페이드인
+    /// </summary>
+    private System.Collections.IEnumerator FadeInOnSceneStart()
+    {
+        yield return new WaitForSeconds(0.1f); // 씬 로드 완료 대기
+        yield return StartCoroutine(FadeIn());
+    }
+
+    /// <summary>
+    /// 같은 씬 내에서 페이드 전환 (프롤로그 등)
+    /// </summary>
+    /// <param name="action">페이드 중간에 실행할 액션</param>
+    public void StartFadeTransition(System.Action action)
+    {
+        StartCoroutine(FadeTransition(action));
+    }
+
+    /// <summary>
+    /// 페이드아웃 → 액션 실행 → 페이드인 (같은 씬 내)
+    /// </summary>
+    private System.Collections.IEnumerator FadeTransition(System.Action action)
+    {
+        // 페이드아웃
+        yield return StartCoroutine(FadeOut());
+        
+        // 액션 실행 (화면 전환 등)
+        action?.Invoke();
+        
+        // 잠시 대기
+        yield return new WaitForSeconds(0.1f);
+        
+        // 페이드인
+        yield return StartCoroutine(FadeIn());
+    }
+
+    /// <summary>
+    /// 페이드아웃 후 씬 로드 (씬 간 전환)
+    /// </summary>
+    private System.Collections.IEnumerator FadeOutAndLoadScene(int sceneIndex)
+    {
+        // 페이드아웃
+        yield return StartCoroutine(FadeOut());
+        
+        // Validate scene index
+        if (sceneIndex < 0 || sceneIndex >= _sceneNames.Count)
+        {
+            Debug.LogError($"Invalid scene index: {sceneIndex}. Available scenes: {_sceneNames.Count}");
+            yield break;
+        }
+
+        // Special handling for Scene 0 (main scene)
+        if (sceneIndex == 0)
+        {
+            _shouldInitializeScene0Load = true;
+            Initialize();
+
+            // Destroy persistent AudioManager when returning to Scene 0
+            if (AudioManager.BGMInstance)
+            {
+                Debug.Log("Destroying DontDestroyOnLoad AudioManager when returning to Scene 0");
+                Destroy(AudioManager.BGMInstance.gameObject);
+            }
+        }
+
+        // 씬 전환 (새 씬에서 자동으로 페이드인 됨)
+        string targetScene = _sceneNames[sceneIndex];
+        SceneManager.LoadScene(targetScene);
+    }
+
+    /// <summary>
+    /// 페이드아웃 애니메이션 재생
+    /// </summary>
+    private System.Collections.IEnumerator FadeOut()
+    {
+        if (!_fadeUI || !_fadeUI.GetClip(_fadeOutClipName)) 
+        {
+            Debug.LogWarning("FadeOut animation not found!");
+            yield break;
+        }
+        
+        _fadeUI.Play(_fadeOutClipName);
+        yield return new WaitForSeconds(_fadeUI.GetClip(_fadeOutClipName).length);
+    }
+
+    /// <summary>
+    /// 페이드인 애니메이션 재생
+    /// </summary>
+    private System.Collections.IEnumerator FadeIn()
+    {
+        if (!_fadeUI || !_fadeUI.GetClip(_fadeInClipName))
+        {
+            Debug.LogWarning("FadeIn animation not found!");
+            yield break;
+        }
+        
+        _fadeUI.Play(_fadeInClipName);
+        yield return new WaitForSeconds(_fadeUI.GetClip(_fadeInClipName).length);
+    }
 }

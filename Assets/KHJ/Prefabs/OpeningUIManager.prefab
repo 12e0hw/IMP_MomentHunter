@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6297958861909424120}
   - component: {fileID: 412017913082392807}
   - component: {fileID: 5174968575064059206}
+  - component: {fileID: 5913910141978290587}
   m_Layer: 0
   m_Name: OpeningUIManager
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7223722913892671828}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 64.47708, y: 19.23021, z: -50.401047}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -51,9 +52,14 @@ MonoBehaviour:
   _quitUI: {fileID: 0}
   _openingCanvas: {fileID: 0}
   _prologueCanvas: {fileID: 0}
+  _fadeUI: {fileID: 0}
   _settingsPopupUI: {fileID: 0}
   _quitPopupUI: {fileID: 0}
-  _soundSlider: {fileID: 0}
+  _bgmSlider: {fileID: 0}
+  _sfxSlider: {fileID: 0}
+  _KoreanToggle: {fileID: 0}
+  _EnglishToggle: {fileID: 0}
+  _languageSelector: {fileID: 0}
   _mainBackButton: {fileID: 0}
   _trackedRaycaster: {fileID: 0}
   _eventSystem: {fileID: 0}
@@ -72,7 +78,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c54c4dff851e6cc409e46c2da19ab627, type: 3}
   m_Resource: {fileID: 8300000, guid: c54c4dff851e6cc409e46c2da19ab627, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -157,3 +163,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5913910141978290587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7223722913892671828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816d96dc36dc7f840ada4d371f50c609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 0
+  _audioSource: {fileID: 5174968575064059206}
+  _audioClips:
+  - {fileID: 8300000, guid: c54c4dff851e6cc409e46c2da19ab627, type: 3}
+  _autoPlayOnStart: 1
+  _backgroundMusicClipId: 0
+  _loopBackgroundMusic: 1
+  _isBgmSource: 1
