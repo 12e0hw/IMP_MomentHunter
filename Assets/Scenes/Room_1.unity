@@ -351,6 +351,30 @@ PrefabInstance:
       propertyPath: cameraFrameControl
       value: 
       objectReference: {fileID: 725647141}
+    - target: {fileID: 4366527343313467721, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: 'missionPhotoPlanes.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1506990182206223639}
+    - target: {fileID: 4366527343313467721, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: 'missionPhotoPlanes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1506990182206223638}
+    - target: {fileID: 4366527343313467721, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: 'missionPhotoPlanes.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1506990182206223637}
+    - target: {fileID: 4366527343313467721, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: 'missionPhotoPlanes.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1506990182206223636}
+    - target: {fileID: 4366527343313467721, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: 'missionPhotoPlanes.Array.data[4]'
+      value: 
+      objectReference: {fileID: 1506990182206223635}
+    - target: {fileID: 4366527343313467721, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: 'missionPhotoPlanes.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1506990182206223634}
     - target: {fileID: 5018032936143846128, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -53027,6 +53051,36 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: acbbb2fc4e72fa34c88eb8a0a377ad5c, type: 3}
+--- !u!23 &1506990182206223634 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8940714455480998893, guid: acbbb2fc4e72fa34c88eb8a0a377ad5c, type: 3}
+  m_PrefabInstance: {fileID: 1506990182206223633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1506990182206223635 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5242269764631159057, guid: acbbb2fc4e72fa34c88eb8a0a377ad5c, type: 3}
+  m_PrefabInstance: {fileID: 1506990182206223633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1506990182206223636 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1011358636120186663, guid: acbbb2fc4e72fa34c88eb8a0a377ad5c, type: 3}
+  m_PrefabInstance: {fileID: 1506990182206223633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1506990182206223637 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3621568423713765003, guid: acbbb2fc4e72fa34c88eb8a0a377ad5c, type: 3}
+  m_PrefabInstance: {fileID: 1506990182206223633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1506990182206223638 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8386203229864464632, guid: acbbb2fc4e72fa34c88eb8a0a377ad5c, type: 3}
+  m_PrefabInstance: {fileID: 1506990182206223633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1506990182206223639 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3006646357623026457, guid: acbbb2fc4e72fa34c88eb8a0a377ad5c, type: 3}
+  m_PrefabInstance: {fileID: 1506990182206223633}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2542792431445834712
 PrefabInstance:
   m_ObjectHideFlags: 0
