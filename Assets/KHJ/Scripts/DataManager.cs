@@ -182,12 +182,18 @@ public class DataManager : MonoBehaviour
         {
             --_currentHealth;
             UpdateHealthUI();
+            Invoke(nameof(PlayUseHealthAnimation), 5f);
         }
         else
         {
             // Trigger defeat state when health is depleted
             if (GameManager.Instance) GameManager.Instance.SetGameState(GameState.Defeat);
         }
+    }
+    
+    private void PlayUseHealthAnimation()
+    {
+        _missionText.PlayUseHealthAnim();
     }
     
     /// <summary>

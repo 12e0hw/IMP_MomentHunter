@@ -38,7 +38,7 @@ public class PhotoCaptureAndJudge : MonoBehaviour
     public LayerMask TargetLayer;   // Layer to detect
 
     [Header("Photo Board Slots (Per Mission)")]
-    public RawImage[] missionPhotoSlot;  // Mission 슬롯 
+    public MeshRenderer[] missionPhotoPlanes;  // Mission 슬롯 
 
     void Start()
     {
@@ -204,12 +204,12 @@ public class PhotoCaptureAndJudge : MonoBehaviour
 
             if (GameManager.Instance.GetCurrentMissionObjectCount() == required)
             {
-                SavePhotoToMissionSlot(tex); // 성공 사진 저장
+                SavePhotoToMissionPlane(tex); 
             }
         }
     }
 
-    void SavePhotoToMissionSlot(Texture2D sourceTex)
+    void SavePhotoToMissionPlane(Texture2D sourceTex)
     {
         if (GameManager.Instance == null) return;
 
@@ -217,14 +217,14 @@ public class PhotoCaptureAndJudge : MonoBehaviour
 
         if (missionIndex >= 1 && missionIndex <= 6)
         {
-            RawImage slot = missionPhotoSlot[missionIndex - 1];
-            if (slot != null)
+            MeshRenderer targetPlane = missionPhotoPlanes[missionIndex - 1];
+            if (targetPlane != null)
             {
                 Texture2D copy = new Texture2D(sourceTex.width, sourceTex.height, sourceTex.format, false);
                 copy.SetPixels(sourceTex.GetPixels());
                 copy.Apply();
 
-                slot.texture = copy;
+                targetPlane.material.mainTexture = copy;
             }
         }
     }

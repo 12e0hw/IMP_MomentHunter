@@ -581,6 +581,7 @@ public class OpeningUIManager : MonoBehaviour
         
         if (_isPrologueActive)
         {
+            if (GameManager.Instance.AudioManager) GameManager.Instance.AudioManager.PlayAudio(0);
             // In prologue, A button advances to next scene (only A button works in prologue)
             GameManager.Instance.TransitionToScene(1);
         }

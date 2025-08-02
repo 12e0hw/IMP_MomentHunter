@@ -70,7 +70,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string _fadeOutClipName = "A_FadeOut";
     [SerializeField] private string _fadeInClipName = "A_FadeIn";
 
-    [SerializeField] private AudioSource _failSound;
+    [Header("Audio Components")]
+    [SerializeField] public AudioManager AudioManager;
 
     [Header("UI Settings")]
     [SerializeField] private bool _isMainCanvasActive = true;
@@ -127,9 +128,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        // 씬 시작 시 무조건 페이드인으로 시작
-        StartCoroutine(FadeInOnSceneStart());
-        
         SetMainCanvasActive(true);
         if (_failUI) _failUI.SetActive(false);
 
@@ -159,6 +157,9 @@ public class GameManager : MonoBehaviour
             _shouldInitializeScene0Load = false;
             Initialize();
         }
+        
+        // 씬 시작 시 무조건 페이드인으로 시작
+        StartCoroutine(FadeInOnSceneStart());
     }
 
     /// <summary>
@@ -184,7 +185,7 @@ public class GameManager : MonoBehaviour
                 _isDead = true;
                 Debug.Log("Defeat");
                 if (_failUI) _failUI.SetActive(true);
-                if (_failSound) _failSound.Play();
+                if (AudioManager) AudioManager.PlayAudio(1);
                 SetMissionState(MissionState.Ending);
 
                 // Return to main scene after delay
@@ -204,7 +205,8 @@ public class GameManager : MonoBehaviour
     private System.Collections.IEnumerator TransitionToSceneWithDelay(int sceneIndex, float delay)
     {
         yield return new WaitForSeconds(delay);
-        TransitionToScene(sceneIndex);
+
+        yield return StartCoroutine(TransitionToSceneWithFadeCoroutine(sceneIndex));
     }
 
     /// <summary>

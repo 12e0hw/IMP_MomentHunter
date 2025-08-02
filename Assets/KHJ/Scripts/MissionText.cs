@@ -15,6 +15,7 @@ public class MissionText : MonoBehaviour
     [SerializeField] private GameObject _pin;                // Pin object
     [SerializeField] private GameObject _missionTitle;       // MissionTitle object
     [SerializeField] private GameObject _missionContents;    // MissionContents object
+    [SerializeField] private Animation _useHealthAnim;
     
     [Header("Mission GameObject Arrays")]
     [SerializeField] private GameObject[] _missionTitleObjects;    // Mission title game objects
@@ -125,7 +126,14 @@ public class MissionText : MonoBehaviour
     {
         if (!DataManager.Data) return;
 
+        if (DataManager.Data.CurrentHealth <= 3) _healthText.color = Color.red;
+        else _healthText.color = Color.white;
         _healthText.text = DataManager.Data.CurrentHealth + " / "  + DataManager.Data.MaxHealth;
+    }
+
+    public void PlayUseHealthAnim()
+    {
+        _useHealthAnim.Play("A_UseHealth");
     }
     
     /// <summary>

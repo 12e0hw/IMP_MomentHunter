@@ -10742,6 +10742,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KHW_Opening
       objectReference: {fileID: 0}
+    - target: {fileID: 6059995512252182560, guid: aa8a825cf806009419f28289386e0113, type: 3}
+      propertyPath: switcher
+      value: 
+      objectReference: {fileID: 3835897229302450884}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
