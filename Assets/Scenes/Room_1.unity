@@ -367,6 +367,22 @@ PrefabInstance:
       propertyPath: cameraUI
       value: 
       objectReference: {fileID: 441416566}
+    - target: {fileID: 7910057609943376751, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 7910057609943376751, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993456681263363407, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 7993456681263363407, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.12
+      objectReference: {fileID: 0}
     - target: {fileID: 8313212464490817877, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
