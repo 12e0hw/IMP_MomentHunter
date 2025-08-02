@@ -105,6 +105,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -7686439534161066371, guid: db4e0e197544f5941a15bb3417d0a440, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6511212746633087897}
+    - targetCorrespondingSourceObject: {fileID: -7686439534161066371, guid: db4e0e197544f5941a15bb3417d0a440, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6580469943597128859}
   m_SourcePrefab: {fileID: 100100000, guid: db4e0e197544f5941a15bb3417d0a440, type: 3}
 --- !u!1 &5543747808746322908 stripped
 GameObject:
@@ -124,6 +127,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetMissionType: 4
+--- !u!65 &6580469943597128859
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5543747808746322908}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8671018, y: 1.1530604, z: 0.3305215}
+  m_Center: {x: 0.018714413, y: -0.054036688, z: 0.16886519}
 --- !u!1 &6159366714689454320 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: db4e0e197544f5941a15bb3417d0a440, type: 3}
@@ -166,7 +190,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

@@ -205,7 +205,8 @@ public class GameManager : MonoBehaviour
     private System.Collections.IEnumerator TransitionToSceneWithDelay(int sceneIndex, float delay)
     {
         yield return new WaitForSeconds(delay);
-        TransitionToScene(sceneIndex);
+
+        yield return StartCoroutine(TransitionToSceneWithFadeCoroutine(sceneIndex));
     }
 
     /// <summary>

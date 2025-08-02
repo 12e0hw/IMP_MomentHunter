@@ -204,10 +204,12 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   _audioSource: {fileID: 4461977985081970441}
   _audioClips:
+  - {fileID: 8300000, guid: 351544e744b9a794e84abc2c61f778cb, type: 3}
   - {fileID: 8300000, guid: 16fba6d30ed741d4a9fdd6e79ee2f3ac, type: 3}
   _autoPlayOnStart: 0
   _backgroundMusicClipId: 0
-  _loopBackgroundMusic: 1
+  _loopBackgroundMusic: 0
+  _isBgmSource: 0
 --- !u!54 &7184158386967928226
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -282,7 +284,19 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5752661647827094359}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayOneShot
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
       m_Calls: []
@@ -392,4 +406,4 @@ CapsuleCollider:
   m_Radius: 0.2700476
   m_Height: 0.57955694
   m_Direction: 1
-  m_Center: {x: 0.0019334711, y: 0.030456722, z: 0.015905535}
+  m_Center: {x: -0.001933471, y: 0.030456722, z: 0.015905535}
