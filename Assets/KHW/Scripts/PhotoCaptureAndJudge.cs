@@ -122,7 +122,7 @@ public class PhotoCaptureAndJudge : MonoBehaviour
 
                     // Judge targets
                     int count = JudgeMultipleTargets();
-                    // Debug.Log($"pass target count : {count}");
+                    Debug.Log($"pass target count : {count}");
                     
                     // KHJ: Send count to GameManager
                     if (GameManager.Instance)
