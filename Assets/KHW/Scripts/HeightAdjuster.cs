@@ -5,14 +5,13 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class HeightAdjuster : MonoBehaviour
 {
-    [Header("필수 설정")]
     public XROrigin xrOrigin;  
     public InputActionReference leftStickMove; 
 
     [Header("이동 설정")]
     public float moveSpeed = 1.0f;
-    public float minY = 0.5f;   
-    public float maxY = 2.5f;  
+    public float minY = 0.3f;   
+    public float maxY = 1.8f;  
 
     void Update()
     {
