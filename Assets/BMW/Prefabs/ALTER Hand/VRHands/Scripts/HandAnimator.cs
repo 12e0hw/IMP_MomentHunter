@@ -93,7 +93,7 @@ public class HandAnimator : MonoBehaviour
 
         controllerActionGrip.action.canceled -= GripAction_canceled;
         controllerActionTrigger.action.canceled -= TriggerAction_canceled;
-        controllerActionPrimary.action.performed -= PrimaryAction_canceled;
+        controllerActionPrimary.action.canceled -= PrimaryAction_canceled;
     }
 
     private void GripAction_performed(InputAction.CallbackContext obj)
