@@ -171,11 +171,16 @@ public class PhotoCaptureAndJudge : MonoBehaviour
         // Show captured photo in UI
         if (DisplayCanvas != null)
         {
-            var photoRawImage = DisplayCanvas.transform.Find("CapturedPhoto").GetComponent<RawImage>();
-            if (photoRawImage != null)
-            {
-                photoRawImage.texture = tex;
-            }
+            var photoRawImage = DisplayCanvas.GetComponentInChildren<RawImage>(true);
+        if (photoRawImage != null)
+        {
+            photoRawImage.texture = tex;
+        }
+        else
+        {
+            Debug.LogError("RawImage not found under");
+        }
+
 
             // Hide other UI
             GameManager.Instance.SetMainCanvasActive(false);
