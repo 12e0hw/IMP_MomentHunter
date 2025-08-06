@@ -6,26 +6,24 @@ using System;
 public class TutorialManager : MonoBehaviour
 {
     // Tutorial steps
-    public enum Step { None, Move, Turn, Teleport, GrabLeft, GrabRight, TakePhoto, AllDone }
+    public enum Step { None, Turn, Move, GrabLeft, GrabRight, TakePhoto, AllDone }
     public Step Current { get; private set; }   // Current tutorial step
     
     public static TutorialManager Instance;   // Singleton instance
     void Awake() => Instance = this;
-    public TeleportJumpDetector teleportJumpDetector;
 
     [Header("Step UI")]
-    public GameObject moveUI;
     public GameObject turnUI;
-    public GameObject teleportUI;
+    public GameObject moveUI;
     public GameObject leftGrabUI;
     public GameObject rightGrabUI;
     public GameObject photoUI;
     public GameObject tutorialCanvas;
 
-    [Header("Trigger Zones")]
+    [Header("Trigger")]
     public GameObject moveTriggerZoneObject;
-    public GameObject teleportTriggerZoneObject;
     public GameObject leftGrabDetectorObject;
+    public TurnDetector turnDetector;
 
     [Header("Success Sound")]
     public AudioSource audioSrc;        
@@ -40,57 +38,33 @@ public class TutorialManager : MonoBehaviour
     // Start tutorial flow
     IEnumerator RunTutorial()
     {
-        // Step 1: Move
-        Current = Step.Move;
-        moveTriggerZoneObject.SetActive(true);
-        moveUI.SetActive(true);
+        Current = Step.Turn;
+        turnUI.SetActive(true);
+        if (turnDetector != null) turnDetector.enabled = true;
 
         yield return null;
     }
 
-    // Called when Move is completed
+    public void OnTurnDone()
+    {
+        if (Current != Step.Turn) return;
+
+        turnUI.SetActive(false);
+        if (turnDetector != null) turnDetector.enabled = false;
+        audioSrc.PlayOneShot(successClip);  
+
+        Current = Step.Move;
+        moveUI.SetActive(true);
+        moveTriggerZoneObject.SetActive(true);
+    }
     public void OnMoveDone()
     {
         if (Current != Step.Move) return;
 
-        // Hide move step UI
-        moveTriggerZoneObject.SetActive(false);
         moveUI.SetActive(false);
-
-        audioSrc.PlayOneShot(successClip);  // Play success sound
-
-        // Step 2: Turn
-        Current = Step.Turn;
-        // teleportTriggerZoneObject.SetActive(true);
-        turnUI.SetActive(true);
-    }
-    public void OnTurnDone()
-    {
-        if (Current != Step.Teleport) return;
-
-        // Hide teleport step UI
-        // teleportTriggerZoneObject.SetActive(false);
-        turnUI.SetActive(false);
-
-        audioSrc.PlayOneShot(successClip);  // Play success sound
-        // Step 3: Teleport
-        Current = Step.Teleport;
-        teleportTriggerZoneObject.SetActive(true);
-        teleportUI.SetActive(true);
-        teleportJumpDetector.EnableDetector(true);
-    }
-
-    public void OnTeleportDone()
-    {
-        if (Current != Step.Teleport) return;
-
-        // Hide teleport step UI
-        teleportTriggerZoneObject.SetActive(false);
-        teleportUI.SetActive(false);
-
-        audioSrc.PlayOneShot(successClip);  // Play success sound
-
-        // Step 4: Left grab
+        moveTriggerZoneObject.SetActive(false);
+        audioSrc.PlayOneShot(successClip);  
+        
         Current = Step.GrabLeft;
         leftGrabDetectorObject.SetActive(true);
         leftGrabUI.SetActive(true);
@@ -100,13 +74,10 @@ public class TutorialManager : MonoBehaviour
     {
         if (Current != Step.GrabLeft) return;
 
-        // Hide left grab step UI
         leftGrabDetectorObject.SetActive(false);
         leftGrabUI.SetActive(false);
+        audioSrc.PlayOneShot(successClip);  
 
-        audioSrc.PlayOneShot(successClip);   // Play success sound
-
-        // Step 5: Right grab
         Current = Step.GrabRight;
         rightGrabUI.SetActive(true);
     }
@@ -115,12 +86,9 @@ public class TutorialManager : MonoBehaviour
     {
         if (Current != Step.GrabRight) return;
 
-        // Hide right grab step UI
         rightGrabUI.SetActive(false);
+        audioSrc.PlayOneShot(successClip);   
 
-        audioSrc.PlayOneShot(successClip);   // Play success sound
-
-        // Step 6: Take photo
         Current = Step.TakePhoto;
         photoUI.SetActive(true);
     }
@@ -130,24 +98,12 @@ public class TutorialManager : MonoBehaviour
     {
         if (Current != Step.TakePhoto) return;
 
-        photoUI.SetActive(false);   // Hide photo step UI
-        audioSrc.PlayOneShot(successClip);   // Play success sound
+        photoUI.SetActive(false);   
+        audioSrc.PlayOneShot(successClip);   
 
         // All done
         Current = Step.AllDone;
         tutorialCanvas.SetActive(false);   // Hide tutorial canvas
     }
-
-    internal void OnGrabDone()
-    {
-        throw new NotImplementedException();
-    }
 }
 
-public class TeleportJumpDetector
-{
-    internal void EnableDetector(bool v)
-    {
-        throw new NotImplementedException();
-    }
-}

@@ -358,7 +358,8 @@ GameObject:
   - component: {fileID: 2508693795542075743}
   - component: {fileID: 6407177214403178554}
   - component: {fileID: 8273381010245472965}
-  m_Layer: 0
+  - component: {fileID: 5858246856538286092}
+  m_Layer: 6
   m_Name: Cup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -608,3 +609,16 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
+--- !u!114 &5858246856538286092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6078656891318897733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a356ec87eeca244b5904bd5cd6a9c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMissionType: 1
