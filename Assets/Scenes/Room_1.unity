@@ -315,13 +315,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3508271833428797880, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
-      propertyPath: maxY
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3508271833428797880, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
-      propertyPath: minY
-      value: 0.3
+    - target: {fileID: 3063450172270018449, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3557751545267896140, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
       propertyPath: m_AnchorMax.x
@@ -329,6 +325,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3557751545267896140, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3904124014195649845, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: isDebug
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3921598533727149780, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
@@ -399,6 +399,10 @@ PrefabInstance:
       propertyPath: cameraUI
       value: 
       objectReference: {fileID: 441416566}
+    - target: {fileID: 7456580114894596526, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8313212464490817877, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -415,6 +419,10 @@ PrefabInstance:
       propertyPath: CamUI
       value: 
       objectReference: {fileID: 441416566}
+    - target: {fileID: 8413687780492580600, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: isDebug
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29575,7 +29583,7 @@ PrefabInstance:
       objectReference: {fileID: 64148684}
     - target: {fileID: 8772191662380716991, guid: 504628a345f7013479313ce8e873e403, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
