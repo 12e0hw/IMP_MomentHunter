@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class LanguageSwitcher : MonoBehaviour
@@ -7,20 +8,29 @@ public class LanguageSwitcher : MonoBehaviour
 
     public void ApplyLanguage(int lang)
     {
+
         bool isEnglish = (lang == 1);
 
         foreach (GameObject obj in koreanUI)
-            if (obj != null) obj.SetActive(!isEnglish);
+        {
+            if (obj != null)
+            {
+                obj.SetActive(!isEnglish);
+            }
+        }
 
         foreach (GameObject obj in englishUI)
-            if (obj != null) obj.SetActive(isEnglish);
+        {
+            if (obj != null)
+            {
+                obj.SetActive(isEnglish);
+            }
+        }
     }
 
     void Start()
     {
         int lang = PlayerPrefs.GetInt("language", 0);
-        ApplyLanguage(lang); 
+        ApplyLanguage(lang);
     }
-
-
 }
