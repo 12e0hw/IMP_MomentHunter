@@ -19,41 +19,41 @@ public class TeleportDetector : MonoBehaviour
     //     TutorialManager.Instance?.OnTeleportDone();   // Notify TutorialManager
     // }
 
-     public Transform targetCenter;    // 도달해야 하는 위치
-    public float targetRadius = 1f;
+//      public Transform targetCenter;    // 도달해야 하는 위치
+//     public float targetRadius = 1f;
 
-    public float jumpThreshold = 3f;  
-    public float timeWindow = 0.2f;
+//     public float jumpThreshold = 3f;  
+//     public float timeWindow = 0.2f;
 
-    bool isEnabled = false;
-    Vector3 prevPos;
-    float prevTime;
+//     bool isEnabled = false;
+//     Vector3 prevPos;
+//     float prevTime;
 
-    public void EnableDetector(bool enable)
-    {
-        isEnabled = enable;
-        prevPos = transform.position;
-        prevTime = Time.time;
-    }
+//     public void EnableDetector(bool enable)
+//     {
+//         isEnabled = enable;
+//         prevPos = transform.position;
+//         prevTime = Time.time;
+//     }
 
-    void Update()
-    {
-        if (!isEnabled) return;
+//     void Update()
+//     {
+//         if (!isEnabled) return;
 
-        float dist = Vector3.Distance(transform.position, prevPos);
-        float dt = Time.time - prevTime;
+//         float dist = Vector3.Distance(transform.position, prevPos);
+//         float dt = Time.time - prevTime;
 
-        if (dist >= jumpThreshold && dt <= timeWindow)
-        {
-            if (Vector3.Distance(transform.position, targetCenter.position) <= targetRadius)
-            {
-                TutorialManager.Instance?.OnTeleportDone();
-                isEnabled = false;
-            }
-        }
+//         if (dist >= jumpThreshold && dt <= timeWindow)
+//         {
+//             if (Vector3.Distance(transform.position, targetCenter.position) <= targetRadius)
+//             {
+//                 TutorialManager.Instance?.OnTeleportDone();
+//                 isEnabled = false;
+//             }
+//         }
 
-        prevPos = transform.position;
-        prevTime = Time.time;
-    }
-}
+//         prevPos = transform.position;
+//         prevTime = Time.time;
+//     }
+ }
 
