@@ -1,33 +1,31 @@
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class HeightAdjuster : MonoBehaviour
 {
-    public XROrigin xrOrigin;
-    public InputActionReference heightMove;
+    public XROrigin xrOrigin;  
+    public InputActionReference leftStickMove; 
 
     [Header("이동 설정")]
     public float moveSpeed = 1.0f;
-    public float minY = 0.3f;
-    public float maxY = 1.3f;
-    
-    void OnEnable() => heightMove.action.Enable();   // 확실히 켜 줌
-    void OnDisable() => heightMove.action.Disable();
+    public float minY = 0.3f;   
+    public float maxY = 1.8f;  
 
     void Update()
     {
-        if (xrOrigin == null) return;
+        if (xrOrigin == null || leftStickMove == null) return;
 
-        Vector2 stick = heightMove.action.ReadValue<Vector2>();
-        float vertical = stick.y;
+        Vector2 input = leftStickMove.action.ReadValue<Vector2>();
+        float verticalInput = input.y;
 
-        if (Mathf.Abs(vertical) < 0.1f) return;   // 데드존
+        if (Mathf.Abs(verticalInput) > 0.1f)
+        {
+            Vector3 currentPos = xrOrigin.transform.position;
+            float newY = Mathf.Clamp(currentPos.y + verticalInput * moveSpeed * Time.deltaTime, minY, maxY);
 
-        // ── Camera Offset 쪽만 올려서 HMD 보정과 충돌하지 않도록 ──
-        var offsetTf = xrOrigin.CameraFloorOffsetObject.transform;
-        Vector3 p = offsetTf.localPosition;
-        p.y = Mathf.Clamp(p.y + vertical * moveSpeed * Time.deltaTime, minY, maxY);
-        offsetTf.localPosition = p;
+            xrOrigin.transform.position = new Vector3(currentPos.x, newY, currentPos.z);
+        }
     }
- }
+}

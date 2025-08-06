@@ -38,7 +38,6 @@ public class TutorialManager : MonoBehaviour
     // Start tutorial flow
     IEnumerator RunTutorial()
     {
-        Debug.Log("start");
         Current = Step.Turn;
         turnUI.SetActive(true);
         if (turnDetector != null) turnDetector.enabled = true;
@@ -51,6 +50,7 @@ public class TutorialManager : MonoBehaviour
         if (Current != Step.Turn) return;
 
         turnUI.SetActive(false);
+        if (turnDetector != null) turnDetector.enabled = false;
         audioSrc.PlayOneShot(successClip);  
 
         Current = Step.Move;
