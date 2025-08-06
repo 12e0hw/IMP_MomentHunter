@@ -108,7 +108,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992177152169500234}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 4f04638f9de194c40aac8bd662b6ecdd, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 87818785e6af2aa439430f9f242416b1, type: 3}
   m_Controller: {fileID: 9100000, guid: 050de6eea9dc3714e9a8b0b90fca3743, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
@@ -137,6 +137,8 @@ MonoBehaviour:
   controllerActionTrigger: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   controllerActionFirstPrimary: {fileID: -105395610856004534, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   controllerActionSecondPrimary: {fileID: -2570279449637044239, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  controllerActionJoystick: {fileID: 1088205722884804825, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  isRightHand: 1
 --- !u!114 &4767892898742477008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handInteractor: {fileID: 0}
+  isVisual: 0
 --- !u!1 &1231939416422930428
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +400,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6271573414225017425, guid: 4f04638f9de194c40aac8bd662b6ecdd, type: 3}
+  - {fileID: 6271573414225017425, guid: 87818785e6af2aa439430f9f242416b1, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -422,7 +425,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -7313324671967738410, guid: 4f04638f9de194c40aac8bd662b6ecdd, type: 3}
+  m_Mesh: {fileID: -7313324671967738410, guid: 87818785e6af2aa439430f9f242416b1, type: 3}
   m_Bones:
   - {fileID: 5672956901653011768}
   - {fileID: 679063365569545624}
