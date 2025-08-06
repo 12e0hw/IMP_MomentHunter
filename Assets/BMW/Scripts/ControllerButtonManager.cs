@@ -15,18 +15,27 @@ public class ControllerButtonManager : MonoBehaviour
     // Controller CONFIGURATION
     private InputAction YButton;    // Action reference for the Y button (typically left controller)
     private InputAction BButton;    // Action reference for the B button (typically right controller)
+    private InputAction RGripButton;    // Action reference for the RGrip button (typically right controller)
+
+    public bool isYGrap;
 
     // External Script References
     private WristUIManager wristUIManager;               // Reference to Wrist UI manager script
     private PhotoUICloseManager photoUICloseManager;     // Reference to Photo UI close manager script
+    private HandVisibilityToggle handVisibilityToggle;
+    private HandAnimator handAnimator;
 
     void Start()
     {
+        isYGrap = false;
+
         try
         {
             // Find and cache references to UI management scripts in the scene
             wristUIManager = FindAnyObjectByType<WristUIManager>();
             photoUICloseManager = FindAnyObjectByType<PhotoUICloseManager>();
+            handVisibilityToggle = FindAnyObjectByType<HandVisibilityToggle>();
+            handAnimator = FindAnyObjectByType<HandAnimator>();
 
             // Error logging if managers are not found
             if (wristUIManager == null)
@@ -97,6 +106,25 @@ public class ControllerButtonManager : MonoBehaviour
         {
             if (isDebug) Debug.LogError("XRI Right action map not found!");
         }
+
+        var RightGripActionMap = inputActions?.FindActionMap("XRI Right Interaction");
+        if (RightGripActionMap != null)
+        {
+            RGripButton = RightGripActionMap.FindAction("Select");
+            if (RGripButton != null)
+            {
+                RGripButton.Enable();
+                RGripButton.performed += OnRGripButtonPressed;
+            }
+            else
+            {
+                if (isDebug) Debug.LogError("RGripButton action not found!");
+            }
+        }
+        else
+        {
+            if (isDebug) Debug.LogError("XRI Right Interaction action map not found!");
+        }
     }
 
     /*
@@ -112,11 +140,15 @@ public class ControllerButtonManager : MonoBehaviour
         if (photoUICloseManager != null && photoUICloseManager.GetActPhotoUICanvus())
         {
             photoUICloseManager.GetOnYButtonPressed();
+
         }
         // Otherwise, toggle Wrist UI
         else if (wristUIManager != null)
         {
             wristUIManager.GetOnYButtonPressed();
+            //if (!isYGrap) handAnimator.YGrap_performed();
+            //else handAnimator.YGrap_canceled();
+            isYGrap = !isYGrap;
         }
     }
 
@@ -124,11 +156,21 @@ public class ControllerButtonManager : MonoBehaviour
     // - If Wrist UI is active, triggers its back action.
     private void OnBButtonPressed(InputAction.CallbackContext context)
     {
-        if (isDebug) Debug.Log("B  Button Pressed");
+        if (isDebug) Debug.Log("B Button Pressed");
         if (wristUIManager != null && wristUIManager.GetActWristUI())
         {
             wristUIManager.GetOnBButtonPressed();
         }
+    }
+    private void OnRGripButtonPressed(InputAction.CallbackContext context)
+    {
+        if (isDebug) Debug.Log("Right Grip Button Pressed");
+        /*
+        if (handVisibilityToggle != null) {
+            if (handVisibilityToggle.isVisual) handVisibilityToggle.Invisualization();
+            else handVisibilityToggle.Visualization();
+        }
+        */
     }
 
     // Unsubscribes from input action events to prevent memory leaks.
@@ -136,5 +178,6 @@ public class ControllerButtonManager : MonoBehaviour
     {
         if (YButton != null) YButton.performed -= OnYButtonPressed;
         if (BButton != null) BButton.performed -= OnBButtonPressed;
+        if (RGripButton != null) RGripButton.performed -= OnRGripButtonPressed;
     }
 }
