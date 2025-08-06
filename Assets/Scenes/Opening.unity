@@ -10650,12 +10650,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567904883978750787, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5668086678509270633, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2065023179}
     - target: {fileID: 7845619179846872544, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8802101508224316070, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
