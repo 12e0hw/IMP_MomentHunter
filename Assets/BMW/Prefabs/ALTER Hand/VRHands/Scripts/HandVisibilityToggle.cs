@@ -9,34 +9,48 @@ public class HandVisibilityToggle : MonoBehaviour
     [SerializeField] private NearFarInteractor handInteractor;
 
     private SkinnedMeshRenderer handModel;
+    public bool isVisual;
     private bool isGrabbed = false;
 
     private void Start()
     {
         handModel = GetComponentInChildren<SkinnedMeshRenderer>();
-        handInteractor.selectEntered.AddListener(OnGrab);
-        handInteractor.selectExited.AddListener(OnLetGo);
+        if (handInteractor != null) handInteractor.selectEntered.AddListener(OnGrab);
+        if (handInteractor != null) handInteractor.selectExited.AddListener(OnLetGo);
+        isVisual = true;
     }
 
     private void Update()
     {
         if (isGrabbed)
         {
-            if (handInteractor.selectionRegion.Value == NearFarInteractor.Region.Near)
+            if (handInteractor != null && handInteractor.selectionRegion.Value == NearFarInteractor.Region.Near)
             {
-                if (handModel.enabled)
+                if (handModel.enabled && isVisual)
                 {
-                    handModel.enabled = false;
+                    Invisualization();
                 }
             }
         }
         else
         {
-            if (!handModel.enabled)
+            if (!handModel.enabled && !isVisual)
             {
-                handModel.enabled = true;
+                Visualization();
             }
         }
+    }
+
+    public void Visualization()
+    {
+        handModel.enabled = true;
+        isVisual = true;
+    }
+
+    public void Invisualization()
+    {
+        handModel.enabled = false;
+        isVisual = false;
     }
 
     private void OnLetGo(SelectExitEventArgs arg0)

@@ -459,13 +459,22 @@
                     "id": "f6096b3b-7f56-4f4e-b965-446da4fd1231",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
                     "name": "XButton",
                     "type": "Button",
                     "id": "a8d8ee77-d0fa-41da-89f5-ea2166e601ed",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ljoystick",
+                    "type": "Button",
+                    "id": "62b0c08a-d341-4e5b-b046-b1df1d9b0dc9",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -899,6 +908,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "XButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9fbe7a6e-ef2b-486a-b5c1-fc3847a7f37b",
+                    "path": "<XRController>{LeftHand}/{Primary2DAxis}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ljoystick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -1592,13 +1612,22 @@
                     "id": "bd048bb3-40d9-44fb-91e0-e2e76fcbb2b2",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
                     "name": "AButton",
                     "type": "Button",
                     "id": "7a051082-4468-420a-8c03-bd5485811474",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Rjoystick",
+                    "type": "Button",
+                    "id": "c3d7edc3-8600-45a9-b4ba-7698d718a63a",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -2032,6 +2061,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "AButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ec1a2ec7-0c8d-4286-b016-5e5d38dcfe4f",
+                    "path": "<XRController>{RightHand}/{Primary2DAxis}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rjoystick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

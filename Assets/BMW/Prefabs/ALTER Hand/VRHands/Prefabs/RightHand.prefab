@@ -515,7 +515,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2292842192198940497
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -529,6 +529,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -548,7 +549,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerActionGrip: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   controllerActionTrigger: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  controllerActionPrimary: {fileID: -8061240218431744966, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  controllerActionFirstPrimary: {fileID: 6150207863775151246, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  controllerActionSecondPrimary: {fileID: -8349581844803608259, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!114 &978456651658119435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -838,6 +840,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
