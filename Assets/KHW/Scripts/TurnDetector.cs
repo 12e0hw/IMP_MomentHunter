@@ -7,15 +7,13 @@ public class TurnDetector : MonoBehaviour
     public InputActionProperty leftStick;   // (-1~1, -1~1)
 
     [Header("Thresholds")]
-    public float requiredYawDegrees = 90f;  
-    public float requiredPitchDegrees = 45f; 
+    public float requiredYawDegrees = 30f;  
 
-    float accumYaw, accumPitch;
+    float accumYaw;
 
     void OnEnable()
     {
-        leftStick.action.Enable();
-        accumYaw = accumPitch = 0f;
+        accumYaw = 0f;
     }
 
     void OnDisable() => leftStick.action.Disable();
@@ -24,12 +22,10 @@ public class TurnDetector : MonoBehaviour
     {
         Vector2 axis = leftStick.action.ReadValue<Vector2>();
         accumYaw   += Mathf.Abs(axis.x) * 90f * Time.deltaTime;  
-        accumPitch += Mathf.Abs(axis.y) * 90f * Time.deltaTime;
 
-        if (accumYaw >= requiredYawDegrees || accumPitch >= requiredPitchDegrees)
+        if (accumYaw >= requiredYawDegrees)
         {
             TutorialManager.Instance?.OnTurnDone();
-            enabled = false;
         }
     }
 }
