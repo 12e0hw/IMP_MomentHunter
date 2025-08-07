@@ -1336,14 +1336,14 @@ RectTransform:
   m_GameObject: {fileID: 3756700843572123956}
   m_LocalRotation: {x: -0, y: -0, z: 0.05612354, w: 0.9984238}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9.754498, y: 5.565772, z: 1}
+  m_LocalScale: {x: 9.754497, y: 5.565774, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6554176037183200357}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 6.435}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -55, y: 544}
+  m_AnchoredPosition: {x: -54.995464, y: 544.0006}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8329903292478716631
@@ -1681,7 +1681,7 @@ GameObject:
   - component: {fileID: 4240443982338600553}
   - component: {fileID: 6852335830902183602}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: PhotoAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2069,16 +2069,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6737297207249972220}
-  m_LocalRotation: {x: -0.03180391, y: -0.71163625, z: 0.0313343, w: 0.70112807}
-  m_LocalPosition: {x: 0, y: 0, z: 361314}
-  m_LocalScale: {x: 1252.5513, y: 754.9363, z: 124.69566}
+  m_LocalRotation: {x: -0.031803906, y: -0.71163625, z: 0.031334296, w: 0.70112807}
+  m_LocalPosition: {x: 0, y: 0, z: 361313.53}
+  m_LocalScale: {x: 1252.5505, y: 754.93646, z: 124.695656}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8849875581171743349}
   m_LocalEulerAnglesHint: {x: 0, y: -90.852, z: 5.118}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2340, y: 208585.05}
+  m_AnchoredPosition: {x: 2339.9924, y: 208582.6}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8103680298507127282
