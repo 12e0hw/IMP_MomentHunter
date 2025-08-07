@@ -10,11 +10,11 @@ public class MissionText : MonoBehaviour
     [Header("UI Components")]
     [SerializeField] private TMP_Text _healthText;
     
-    [Header("Mission UI Objects")]
-    [SerializeField] private GameObject _missionBG;          // MissionBG object
-    [SerializeField] private GameObject _pin;                // Pin object
-    [SerializeField] private GameObject _missionTitle;       // MissionTitle object
-    [SerializeField] private GameObject _missionContents;    // MissionContents object
+    // [Header("Mission UI Objects")]
+    // [SerializeField] private GameObject _missionBG;          // MissionBG object
+    // [SerializeField] private GameObject _pin;                // Pin object
+    // [SerializeField] private GameObject _missionTitle;       // MissionTitle object
+    // [SerializeField] private GameObject _missionContents;    // MissionContents object
     [SerializeField] private Animation _useHealthAnim;
     
     [Header("Mission GameObject Arrays")]
@@ -53,11 +53,11 @@ public class MissionText : MonoBehaviour
         // Hide mission UI during None and Ending states
         if (currentState == MissionState.None || currentState == MissionState.Ending)
         {
-            SetMissionUIActive(false);
+            // SetMissionUIActive(false);
         }
         else
         {
-            SetMissionUIActive(true);
+            // SetMissionUIActive(true);
             int index = GetObjectIndex(currentState);
             ActivateMissionObjects(index);
         }
@@ -134,13 +134,13 @@ public class MissionText : MonoBehaviour
     /// 미션 UI 전체 표시 여부 제어
     /// </summary>
     /// <param name="isActive">Whether to activate or deactivate mission UI</param>
-    private void SetMissionUIActive(bool isActive)
-    {
-        if (_missionBG) _missionBG.SetActive(isActive);
-        if (_pin) _pin.SetActive(isActive);
-        if (_missionTitle) _missionTitle.SetActive(isActive);
-        if (_missionContents) _missionContents.SetActive(isActive);
-    }
+    // private void SetMissionUIActive(bool isActive)
+    // {
+    //     if (_missionBG) _missionBG.SetActive(isActive);
+    //     if (_pin) _pin.SetActive(isActive);
+    //     if (_missionTitle) _missionTitle.SetActive(isActive);
+    //     if (_missionContents) _missionContents.SetActive(isActive);
+    // }
     
     /// <summary>
     /// Updates the health text display
