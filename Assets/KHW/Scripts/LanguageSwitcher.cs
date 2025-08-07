@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class LanguageSwitcher : MonoBehaviour
 {
-    public GameObject[] koreanUI; // 한글 UI 묶음
-    public GameObject[] englishUI; // 영어 UI 묶음
+    // 항상 켜져 있어야 하는 UI만
+    public GameObject[] koreanUI; 
+    public GameObject[] englishUI;
+
+    public static bool IsEnglish { get; private set; }  // 현재 언어 상태 기억
 
     public void ApplyLanguage(int lang)
     {
