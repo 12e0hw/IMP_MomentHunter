@@ -25,6 +25,7 @@ public class PhotoCaptureAndJudge : MonoBehaviour
     public GameObject CameraFrame;
     public GameObject tutorialCanvas;
     public GameObject cameraFrameControl;
+    public GameObject HintCanvas;
 
     [Header("Render Target")]
     public RenderTexture captureRT;
@@ -39,6 +40,9 @@ public class PhotoCaptureAndJudge : MonoBehaviour
 
     [Header("Photo Board Slots (Per Mission)")]
     public MeshRenderer[] missionPhotoPlanes;  // Mission 슬롯 
+
+    private Texture2D lastCapturedPhoto;
+
 
     void Start()
     {
@@ -104,8 +108,17 @@ public class PhotoCaptureAndJudge : MonoBehaviour
         flashCanvasGroup.alpha = 0f;
     }
 
-    void OnEnable() => triggerButton.action.Enable();   // Enable input
-    void OnDisable() => triggerButton.action.Disable();   // Disable input
+    void OnEnable()
+    {
+        triggerButton.action.Enable();   // Enable input
+        GameManager.OnMissionSuccess += OnMissionSuccess;
+    }
+
+    void OnDisable()
+    {
+        triggerButton.action.Disable();   // Disable input
+        GameManager.OnMissionSuccess -= OnMissionSuccess;
+    }
 
     void Update()
     {
@@ -164,6 +177,8 @@ public class PhotoCaptureAndJudge : MonoBehaviour
         tex.ReadPixels(new Rect(0, 0, captureRT.width, captureRT.height), 0, 0);
         tex.Apply();
 
+        lastCapturedPhoto = tex;
+
         // Disable capture cam
         captureCam.enabled = false;
         RenderTexture.active = null;
@@ -172,20 +187,20 @@ public class PhotoCaptureAndJudge : MonoBehaviour
         if (DisplayCanvas != null)
         {
             var photoRawImage = DisplayCanvas.GetComponentInChildren<RawImage>(true);
-        if (photoRawImage != null)
-        {
-            photoRawImage.texture = tex;
-        }
-        else
-        {
-            Debug.LogError("RawImage not found under");
-        }
-
+            if (photoRawImage != null)
+            {
+                photoRawImage.texture = tex;
+            }
+            else
+            {
+                Debug.LogError("RawImage not found under");
+            }
 
             // Hide other UI
             GameManager.Instance.SetMainCanvasActive(false);
             tutorialCanvas.gameObject.SetActive(false);
             cameraFrameControl.gameObject.SetActive(false);
+            HintCanvas.gameObject.SetActive(false);
 
             // Show display
             DisplayCanvas.gameObject.SetActive(true);
@@ -198,7 +213,7 @@ public class PhotoCaptureAndJudge : MonoBehaviour
             DisplayCanvas.gameObject.SetActive(false);
             tutorialCanvas.gameObject.SetActive(true);
             cameraFrameControl.gameObject.SetActive(true);
-
+            HintCanvas.gameObject.SetActive(true);
         }
         
         // 정답 사진이면 게시판에 표시
@@ -209,7 +224,7 @@ public class PhotoCaptureAndJudge : MonoBehaviour
 
             if (GameManager.Instance.GetCurrentMissionObjectCount() == required)
             {
-                SavePhotoToMissionPlane(tex); 
+                SavePhotoToMissionPlane(tex);
             }
         }
     }
@@ -225,13 +240,46 @@ public class PhotoCaptureAndJudge : MonoBehaviour
             MeshRenderer targetPlane = missionPhotoPlanes[missionIndex - 1];
             if (targetPlane != null)
             {
-                Texture2D copy = new Texture2D(sourceTex.width, sourceTex.height, sourceTex.format, false);
-                copy.SetPixels(sourceTex.GetPixels());
-                copy.Apply();
+                Debug.Log($"Texture applied to Plane {missionIndex}");
 
-                targetPlane.material.mainTexture = copy;
+                Texture2D flipped = FlipTextureBoth(sourceTex);  // 좌우 + 상하 반전
+
+                Material newMat = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+                newMat.SetTexture("_BaseMap", flipped);
+                newMat.SetFloat("_Smoothness", 0);         // 뿌연 느낌 제거
+
+                targetPlane.material = newMat;
             }
         }
+    }
+
+    void OnMissionSuccess()
+    {
+        // 마지막으로 찍은 텍스처를 저장하는 식으로 처리
+        if (lastCapturedPhoto != null)
+        {
+            SavePhotoToMissionPlane(lastCapturedPhoto);
+        }
+    }
+
+    Texture2D FlipTextureBoth(Texture2D original)
+    {
+        int width = original.width;
+        int height = original.height;
+
+        Texture2D flipped = new Texture2D(width, height, original.format, false);
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                Color pixel = original.GetPixel(width - 1 - x, height - 1 - y);
+                flipped.SetPixel(x, y, pixel);
+            }
+        }
+
+        flipped.Apply();
+        return flipped;
     }
 
     // Judge multiple targets

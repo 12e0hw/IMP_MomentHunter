@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private MissionText _missionText;
     [SerializeField] private OpeningUIManager _openingUIManager;
     [SerializeField] private GameObject _failUI;
-    
+
     [Header("Fade System")]
     [SerializeField] private Animation _fadeUI;
     [SerializeField] private string _fadeOutClipName = "A_FadeOut";
@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
             _shouldInitializeScene0Load = false;
             Initialize();
         }
-        
+
         // 씬 시작 시 무조건 페이드인으로 시작
         StartCoroutine(FadeInOnSceneStart());
     }
@@ -213,6 +213,7 @@ public class GameManager : MonoBehaviour
     /// Changes the current mission state and handles mission-specific logic
     /// </summary>
     /// <param name="newMissionState">The new mission state to set</param>
+    public static event Action OnMissionSuccess;
     public void SetMissionState(MissionState newMissionState)
     {
         // Avoid redundant state changes
@@ -294,6 +295,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Mission Clear!");
                 int feedbackIndex = GetMissionFeedbackIndex(_missionState);
                 _missionText.ActivateFeedbackObject(feedbackIndex);
+                OnMissionSuccess?.Invoke();
                 // Decrease health
                 if (DataManager.Data) DataManager.Data.UseHealth();
                 SetNextMissionState();
@@ -391,7 +393,7 @@ public class GameManager : MonoBehaviour
     {
         // 페이드아웃
         yield return StartCoroutine(FadeOut());
-        
+
         // Validate scene index
         if (sceneIndex < 0 || sceneIndex >= _sceneNames.Count)
         {
@@ -441,8 +443,8 @@ public class GameManager : MonoBehaviour
         // SetMainCanvasActive(true);
         // if (_openingUIManager) _openingUIManager.SetPrologueActive(false);
     }
-    
-    // 정답미션 사진저장 확인용
+
+    // ---- 정답미션 사진저장 확인용
     public int GetCurrentMissionObjectCount() => _currentMissionObjectCount;
     public int GetMissionObjectRequirement(int missionIndex)
     {
@@ -478,13 +480,13 @@ public class GameManager : MonoBehaviour
     {
         // 페이드아웃
         yield return StartCoroutine(FadeOut());
-        
+
         // 액션 실행 (화면 전환 등)
         action?.Invoke();
-        
+
         // 잠시 대기
         yield return new WaitForSeconds(0.1f);
-        
+
         // 페이드인
         yield return StartCoroutine(FadeIn());
     }
@@ -496,7 +498,7 @@ public class GameManager : MonoBehaviour
     {
         // 페이드아웃
         yield return StartCoroutine(FadeOut());
-        
+
         // Validate scene index
         if (sceneIndex < 0 || sceneIndex >= _sceneNames.Count)
         {
@@ -528,12 +530,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private System.Collections.IEnumerator FadeOut()
     {
-        if (!_fadeUI || !_fadeUI.GetClip(_fadeOutClipName)) 
+        if (!_fadeUI || !_fadeUI.GetClip(_fadeOutClipName))
         {
             Debug.LogWarning("FadeOut animation not found!");
             yield break;
         }
-        
+
         _fadeUI.Play(_fadeOutClipName);
         yield return new WaitForSeconds(_fadeUI.GetClip(_fadeOutClipName).length);
     }
@@ -548,7 +550,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("FadeIn animation not found!");
             yield break;
         }
-        
+
         _fadeUI.Play(_fadeInClipName);
         yield return new WaitForSeconds(_fadeUI.GetClip(_fadeInClipName).length);
     }
