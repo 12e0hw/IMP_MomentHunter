@@ -138,7 +138,7 @@ MonoBehaviour:
   controllerActionFirstPrimary: {fileID: -105395610856004534, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   controllerActionSecondPrimary: {fileID: -2570279449637044239, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   controllerActionJoystick: {fileID: 1088205722884804825, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  isRightHand: 1
+  isRightHand: 0
 --- !u!114 &4767892898742477008
 MonoBehaviour:
   m_ObjectHideFlags: 0
