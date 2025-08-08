@@ -6,47 +6,40 @@ using UnityEngine.UI;
 
 public class PhotoCaptureAndJudge : MonoBehaviour
 {
-    [Header("Tutorial Settings")]
-    public bool useTutorial = true;   // Use tutorial mode
+    [Header("Tutorial Settings")] public bool useTutorial = true; // Use tutorial mode
 
-    [Header("Flash Effect")]
-    public CanvasGroup flashCanvasGroup;   // Flash effect
+    [Header("Flash Effect")] public CanvasGroup flashCanvasGroup; // Flash effect
     public float flashDuration = 0.2f;
 
-    [Header("Audio")]
-    public AudioClip shutterClip;   // Shutter sound
-    public float startTimeInSeconds = 0f;   // Shutter start time
-    public float playDuration = 2f;    // Shutter play duration
+    [Header("Audio")] public AudioClip shutterClip; // Shutter sound
+    public float startTimeInSeconds = 0f; // Shutter start time
+    public float playDuration = 2f; // Shutter play duration
     private AudioSource audioSource;
 
-    [Header("UI References")]
-    public GameObject DisplayCanvas;   // Photo display canvas
+    [Header("UI References")] public GameObject DisplayCanvas; // Photo display canvas
     public float photoDisplayDuration = 5f;
     public GameObject CameraFrame;
     public GameObject tutorialCanvas;
     public GameObject cameraFrameControl;
     public GameObject HintCanvas;
 
-    [Header("Render Target")]
-    public RenderTexture captureRT;
+    [Header("Render Target")] public RenderTexture captureRT;
 
-    [Header("Input")]
-    public InputActionProperty triggerButton;   // Right hand trigger
+    [Header("Input")] public InputActionProperty triggerButton; // Right hand trigger
 
-    [Header("Camera Settings")]
-    public Camera captureCam;   // Capture camera
-    public float maxJudgeDistance = 5f;   // Max judge distance
-    public LayerMask TargetLayer;   // Layer to detect
+    [Header("Camera Settings")] public Camera captureCam; // Capture camera
+    public float maxJudgeDistance = 5f; // Max judge distance
+    public LayerMask TargetLayer; // Layer to detect
 
     [Header("Photo Board Slots (Per Mission)")]
-    public MeshRenderer[] missionPhotoPlanes;  // Mission 슬롯 
+    public MeshRenderer[] missionPhotoPlanes; // Mission 슬롯 
 
     private Texture2D lastCapturedPhoto;
 
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();   // Get audio source
+        audioSource = GetComponent<AudioSource>(); // Get audio source
     }
 
     // Play shutter sound and flash effect
@@ -56,7 +49,7 @@ public class PhotoCaptureAndJudge : MonoBehaviour
         if (shutterClip != null && audioSource != null)
         {
             audioSource.clip = shutterClip;
-            audioSource.time = startTimeInSeconds; 
+            audioSource.time = startTimeInSeconds;
             audioSource.Play();
 
             // Stop sound after delay
@@ -92,6 +85,7 @@ public class PhotoCaptureAndJudge : MonoBehaviour
             flashCanvasGroup.alpha = Mathf.Lerp(0f, 1f, t / fadeInDuration);
             yield return null;
         }
+
         flashCanvasGroup.alpha = 1f;
 
         // Hold
@@ -105,18 +99,19 @@ public class PhotoCaptureAndJudge : MonoBehaviour
             flashCanvasGroup.alpha = Mathf.Lerp(1f, 0f, t / fadeOutDuration);
             yield return null;
         }
+
         flashCanvasGroup.alpha = 0f;
     }
 
     void OnEnable()
     {
-        triggerButton.action.Enable();   // Enable input
+        triggerButton.action.Enable(); // Enable input
         GameManager.OnMissionSuccess += OnMissionSuccess;
     }
 
     void OnDisable()
     {
-        triggerButton.action.Disable();   // Disable input
+        triggerButton.action.Disable(); // Disable input
         GameManager.OnMissionSuccess -= OnMissionSuccess;
     }
 
@@ -130,13 +125,13 @@ public class PhotoCaptureAndJudge : MonoBehaviour
             {
                 if (DataManager.Data.CurrentHealth > 0)
                 {
-                    PlayShutterEffect();   // Play sound & flash
-                    StartCoroutine(CaptureAndShowPhoto());   // Capture photo
+                    PlayShutterEffect(); // Play sound & flash
+                    StartCoroutine(CaptureAndShowPhoto()); // Capture photo
 
                     // Judge targets
                     int count = JudgeMultipleTargets();
                     Debug.Log($"pass target count : {count}");
-                    
+
                     // KHJ: Send count to GameManager
                     if (GameManager.Instance)
                     {
@@ -150,12 +145,12 @@ public class PhotoCaptureAndJudge : MonoBehaviour
                         DataManager.Data.UseHealth();
                     }
                 }
-                
+
 
                 // Tutorial check
                 if (useTutorial &&
-                   TutorialManager.Instance != null &&
-                   TutorialManager.Instance.Current == TutorialManager.Step.TakePhoto)
+                    TutorialManager.Instance != null &&
+                    TutorialManager.Instance.Current == TutorialManager.Step.TakePhoto)
                 {
                     TutorialManager.Instance.OnTutorialPhotoTaken();
                 }
@@ -215,7 +210,7 @@ public class PhotoCaptureAndJudge : MonoBehaviour
             cameraFrameControl.gameObject.SetActive(true);
             HintCanvas.gameObject.SetActive(true);
         }
-        
+
         // 정답 사진이면 게시판에 표시
         if (GameManager.Instance != null)
         {
@@ -242,11 +237,11 @@ public class PhotoCaptureAndJudge : MonoBehaviour
             {
                 Debug.Log($"Texture applied to Plane {missionIndex}");
 
-                Texture2D flipped = FlipTextureBoth(sourceTex);  // 좌우 + 상하 반전
+                Texture2D flipped = FlipTextureBoth(sourceTex); // 좌우 + 상하 반전
 
                 Material newMat = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
                 newMat.SetTexture("_BaseMap", flipped);
-                newMat.SetFloat("_Smoothness", 0);         // 뿌연 느낌 제거
+                newMat.SetFloat("_Smoothness", 0); // 뿌연 느낌 제거
 
                 targetPlane.material = newMat;
             }
@@ -291,21 +286,31 @@ public class PhotoCaptureAndJudge : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(camPos, maxJudgeDistance, TargetLayer);
 
         int visibleCount = 0;
-        
+        string passTargetNames = ""; // 패스한 타겟 이름들을 저장할 문자열
+
         // Check each collider
         foreach (Collider col in hits)
         {
-            if (!col.CompareTag("MissionTarget")) continue;   // Check tag
+            if (!col.CompareTag("MissionTarget")) continue; // Check tag
 
             // Check if in camera view
             if (IsInView(col.transform))
             {
                 visibleCount++;
-            // #if UNITY_EDITOR
-            //     Debug.Log($"pass target : {col.name}");
-            // #endif
+
+                // 패스한 타겟 이름 추가
+                if (passTargetNames.Length > 0)
+                    passTargetNames += ", ";
+                passTargetNames += col.name;
+
+#if UNITY_EDITOR
+                Debug.Log($"pass target : {col.name}");
+#endif
             }
         }
+
+        // 패스 타겟 개수와 이름들을 함께 출력
+        Debug.Log($"pass target count : {visibleCount}, targets: [{passTargetNames}]");
 
         return visibleCount; // Return visible target count
     }
@@ -317,5 +322,4 @@ public class PhotoCaptureAndJudge : MonoBehaviour
         // Check Z>0 and viewport inside (0~1)
         return vPos.z > 0f && vPos.x is >= 0f and <= 1f && vPos.y is >= 0f and <= 1f;
     }
-
 }
