@@ -46864,7 +46864,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 351628989175743330, guid: 81fc856e350b3d74b924a6341f4bfed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 4393889874336323435, guid: 81fc856e350b3d74b924a6341f4bfed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 8442208032013964361, guid: 81fc856e350b3d74b924a6341f4bfed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 4700799088517587295, guid: 81fc856e350b3d74b924a6341f4bfed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 7449375969166082825, guid: 81fc856e350b3d74b924a6341f4bfed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 8563003716530935956, guid: 81fc856e350b3d74b924a6341f4bfed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 8585379073804326925, guid: 81fc856e350b3d74b924a6341f4bfed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 7653101080354704107, guid: 81fc856e350b3d74b924a6341f4bfed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 7580638729988075166, guid: 81fc856e350b3d74b924a6341f4bfed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 8542164453977405048, guid: 81fc856e350b3d74b924a6341f4bfed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 81fc856e350b3d74b924a6341f4bfed8, type: 3}
 --- !u!1 &1760459870 stripped
 GameObject:
