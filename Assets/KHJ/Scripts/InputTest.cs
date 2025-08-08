@@ -16,5 +16,9 @@ public class InputTest : MonoBehaviour
         {
             GameManager.Instance.SetNextMissionState();
         }
+        else if (Keyboard.current.xKey.wasPressedThisFrame)
+        {
+            Debug.Log($"[PlayerPrefs] language: {PlayerPrefs.GetInt("language", -1)}");
+        }
     }
 }

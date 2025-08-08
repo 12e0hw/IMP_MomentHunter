@@ -133,6 +133,8 @@ public class GameManager : MonoBehaviour
 
         // Handle victory state transition with delay
         if (_gameState == GameState.Victory) StartCoroutine(TransitionToSceneWithDelay(0, 10f));
+        
+        if(_missionText) _missionText.ActivateHintObject(0);
     }
 
     /// <summary>
@@ -244,8 +246,10 @@ public class GameManager : MonoBehaviour
                 SetGameState(GameState.Room1);
                 break;
             case MissionState.Mission2:
+                _missionText.ActivateHintObject(1);
                 break;
             case MissionState.Mission3:
+                _missionText.ActivateHintObject(2);
                 break;
             case MissionState.Mission4:
                 // Transition to Room2 with delay
@@ -253,8 +257,10 @@ public class GameManager : MonoBehaviour
                 SetGameState(GameState.Room2);
                 break;
             case MissionState.Mission5:
+                _missionText.ActivateHintObject(1);
                 break;
             case MissionState.Mission6:
+                _missionText.ActivateHintObject(2);
                 break;
             case MissionState.Ending:
                 // Only set victory if player is not dead

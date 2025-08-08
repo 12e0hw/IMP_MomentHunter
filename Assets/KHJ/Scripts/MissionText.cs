@@ -29,6 +29,19 @@ public class MissionText : MonoBehaviour
     [SerializeField] private GameObject[] _feedback_K;
     [SerializeField] private GameObject[] _feedback_E;
     
+    [Header("Hint GameObject Arrays")]
+    [SerializeField] private GameObject[] _hint_K;  // 한국어 힌트 배열
+    [SerializeField] private GameObject[] _hint_E;  // 영어 힌트 배열
+    
+    /// <summary>
+    /// Currently active hint objects for billboard rotation
+    /// </summary>
+    private GameObject[] _currentActiveHints;
+    
+    [Header("Billboard Settings")]
+    [SerializeField] private bool _enableHintBillboard = true;  // 힌트 빌보드 활성화 여부
+    [SerializeField] private Transform _playerCamera;           // VR 카메라
+    
     /// <summary>
     /// Initialize mission UI and health display on start
     /// </summary>
@@ -38,6 +51,45 @@ public class MissionText : MonoBehaviour
 
         if (!DataManager.Data) return;
         UpdateHealthText(DataManager.Data.CurrentHealth);
+        
+        // if (!_playerCamera) Debug.LogError("Player Camera is null");
+    }
+    
+    // /// <summary>
+    // /// Update billboard rotation for active hints
+    // /// </summary>
+    // private void Update()
+    // {
+    //     if (_enableHintBillboard && _playerCamera && _currentActiveHints != null)
+    //     {
+    //         UpdateHintBillboard();
+    //     }
+    // }
+    
+    /// <summary>
+    /// Update billboard rotation for all active hint objects
+    /// </summary>
+    private void UpdateHintBillboard()
+    {
+        if (_currentActiveHints == null) return;
+        
+        foreach (GameObject hint in _currentActiveHints)
+        {
+            if (hint && hint.activeInHierarchy)
+            {
+                // 힌트 UI가 항상 플레이어를 바라보도록 회전
+                Vector3 directionToPlayer = _playerCamera.position - hint.transform.position;
+                
+                // Y축 회전만 적용 (수평 회전만)
+                directionToPlayer.y = 0;
+                
+                if (directionToPlayer != Vector3.zero)
+                {
+                    Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+                    hint.transform.rotation = lookRotation;
+                }
+            }
+        }
     }
     
     /// <summary>
@@ -54,6 +106,7 @@ public class MissionText : MonoBehaviour
         if (currentState == MissionState.None || currentState == MissionState.Ending)
         {
             // SetMissionUIActive(false);
+            _currentActiveHints = null; // 빌보드 업데이트 중지
         }
         else
         {
@@ -93,13 +146,33 @@ public class MissionText : MonoBehaviour
         //     }
         // }
         
-        var targetArray = LanguageSwitcher.IsEnglish ? _missionContent_E : _missionContent_K;
+        bool isEnglish = LanguageSwitcher.IsEnglish;
+        var targetArray = isEnglish ? _missionContent_E : _missionContent_K;
 
         for (int i = 0; i < targetArray.Length; i++)
         {
             if (targetArray[i])
                 targetArray[i].SetActive(i == index);
         }
+    }
+    
+    /// <summary>
+    /// Activates/deactivates hint objects by index
+    /// </summary>
+    /// <param name="index">Index of the hint object to activate</param>
+    public void ActivateHintObject(int index)
+    {
+        bool isEnglish = LanguageSwitcher.IsEnglish;
+        var targetArray = isEnglish ? _hint_E : _hint_K;
+        
+        for (int i = 0; i < targetArray.Length; i++)
+        {
+            if (targetArray[i])
+                targetArray[i].SetActive(i == index);
+        }
+        
+        // 빌보드를 위한 현재 활성 힌트 배열 업데이트
+        _currentActiveHints = targetArray;
     }
 
     /// <summary>
@@ -119,7 +192,8 @@ public class MissionText : MonoBehaviour
         //     }
         // }
         
-        var targetArray = LanguageSwitcher.IsEnglish ? _feedback_E : _feedback_K;
+        bool isEnglish = LanguageSwitcher.IsEnglish;
+        var targetArray = isEnglish ? _feedback_E : _feedback_K;
 
         for (int i = 0; i < targetArray.Length; i++)
         {
