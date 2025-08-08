@@ -21,7 +21,7 @@ public class HandAnimator : MonoBehaviour
     private GameObject vrGloveObject;
     private bool isVisual;
 
-    private ControllerButtonManager controllerButtonManager;
+    private WristUIManager wristUIManager;
 
     #region Method 2 Parameters
 
@@ -78,7 +78,7 @@ public class HandAnimator : MonoBehaviour
     private void Start()
     {
         this.handAnimator = GetComponent<Animator>();
-        controllerButtonManager = FindAnyObjectByType<ControllerButtonManager>();
+        wristUIManager = FindAnyObjectByType<WristUIManager>();
         vrGloveObject = transform.Find("vr_glove_right_slim")?.gameObject;
         isVisual = true;
     }
@@ -156,7 +156,7 @@ public class HandAnimator : MonoBehaviour
         {
             SetFingerAnimationValues(grippingFingers, 1.0f);
             AnimateActionInput(grippingFingers);
-            if (isVisual && !controllerButtonManager.isYGrap) Invisualization();
+            if (isVisual && !wristUIManager.isYGrap) Invisualization();
         }
     }
 

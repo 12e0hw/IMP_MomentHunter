@@ -17,8 +17,6 @@ public class ControllerButtonManager : MonoBehaviour
     private InputAction BButton;    // Action reference for the B button (typically right controller)
     private InputAction RGripButton;    // Action reference for the RGrip button (typically right controller)
 
-    public bool isYGrap;
-
     // External Script References
     private WristUIManager wristUIManager;               // Reference to Wrist UI manager script
     private PhotoUICloseManager photoUICloseManager;     // Reference to Photo UI close manager script
@@ -27,7 +25,6 @@ public class ControllerButtonManager : MonoBehaviour
 
     void Start()
     {
-        isYGrap = false;
 
         try
         {
@@ -148,7 +145,6 @@ public class ControllerButtonManager : MonoBehaviour
             wristUIManager.GetOnYButtonPressed();
             //if (!isYGrap) handAnimator.YGrap_performed();
             //else handAnimator.YGrap_canceled();
-            isYGrap = !isYGrap;
         }
     }
 

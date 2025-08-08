@@ -30,6 +30,8 @@ public class WristUIManager : MonoBehaviour
     private string SelectedMenu; // Current selected menu/button
 
     [SerializeField] private Animator animator;
+    private Coroutine closeUICoroutine = null;
+    public bool isYGrap;
 
     // Interactor Component References
     [Header("InteractorComponents")]
@@ -75,6 +77,7 @@ public class WristUIManager : MonoBehaviour
         isTutorialUI = false;
         isAudioUI = false;
         isMainBackUI = false;
+        isYGrap = false;
 
         // Set initial UI active states
         if (WristUI != null) WristUI.SetActive(isWristUI);
@@ -197,6 +200,8 @@ public class WristUIManager : MonoBehaviour
     private void OpenAction()
     {
         SelectedMenu = "OpenButton";
+        
+        isYGrap = true;
         isWristUI = true;
         WristUI.SetActive(isWristUI);
         ToggleUIRayInteractor();
@@ -206,7 +211,13 @@ public class WristUIManager : MonoBehaviour
         ResetAction();
 
         animator.SetTrigger("WristOpen");
-        StartCoroutine(DelayedActionCoroutine(0.8f));
+        if (closeUICoroutine != null)
+        {
+            StopCoroutine(closeUICoroutine);
+            closeUICoroutine = null;
+        }
+        closeUICoroutine = StartCoroutine(DelayedActionCoroutine(0.8f));
+
 
         if (isDebug) Debug.Log("The WristUI has been activated.");
     }
@@ -220,22 +231,14 @@ public class WristUIManager : MonoBehaviour
         else if (isTutorialUI) animator.SetTrigger("TutorialClose");
         else if (isAudioUI) animator.SetTrigger("AudioClose");
         else if (isMainBackUI) animator.SetTrigger("MainBackClose");
-        StartCoroutine(DelayedActionCoroutine(1.8f));
 
-        isWristUI = false;
-        WristUI.SetActive(isWristUI);
-        isTutorialUI = false;
-        TutorialUI.SetActive(isTutorialUI);
-        isAudioUI = false;
-        AudioUI.SetActive(isAudioUI);
-        isMainBackUI = false;
-        MainBackUI.SetActive(isMainBackUI);
+        if (closeUICoroutine != null)
+        {
+            StopCoroutine(closeUICoroutine);
+            closeUICoroutine = null;
+        }
+        closeUICoroutine = StartCoroutine(CloseDelayedUI(0.8f));
 
-        ToggleUIRayInteractor();
-        ToggleInteractor();
-        ToggleCamera();
-
-        if (isDebug) Debug.Log("The WristUI has been disabled.");
     }
 
     // Goes back to the main wrist UI from sub-UIs
@@ -334,7 +337,7 @@ public class WristUIManager : MonoBehaviour
         if (dataManager != null)
         {
             if (isDebug) Debug.Log("dataManager found.");
-            dataManager.SetBgmVolume(SFXValue);
+            dataManager.SetSfxVolume(SFXValue);
         }
         else
         {
@@ -592,10 +595,35 @@ public class WristUIManager : MonoBehaviour
         }
     }
 
-    private IEnumerator DelayedActionCoroutine(float delaySeconds)
+    private IEnumerator DelayedActionCoroutine(float delay)
     {
-        yield return new WaitForSeconds(delaySeconds);
+        yield return new WaitForSeconds(delay);
+
+        closeUICoroutine = null;
 
         if (isDebug) Debug.Log("reaction");
+    }
+
+    private IEnumerator CloseDelayedUI(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        closeUICoroutine = null;
+
+        isWristUI = false;
+        WristUI.SetActive(isWristUI);
+        isTutorialUI = false;
+        TutorialUI.SetActive(isTutorialUI);
+        isAudioUI = false;
+        AudioUI.SetActive(isAudioUI);
+        isMainBackUI = false;
+        MainBackUI.SetActive(isMainBackUI);
+
+        ToggleUIRayInteractor();
+        ToggleInteractor();
+        ToggleCamera();
+        isYGrap = false;
+
+        if (isDebug) Debug.Log("The WristUI has been disabled.");
     }
 }
