@@ -28,6 +28,8 @@ public class WristUIManager : MonoBehaviour
 
     private string SelectedMenu; // Current selected menu/button
 
+    [SerializeField] private Animator animator;
+
     // Interactor Component References
     [Header("InteractorComponents")]
     [SerializeField] private GameObject rightController; // Right VR controller
@@ -192,6 +194,7 @@ public class WristUIManager : MonoBehaviour
         SelectedMenu = "OpenButton";
         isWristUI = true;
         WristUI.SetActive(isWristUI);
+        animator.SetTrigger("Open");
         ToggleUIRayInteractor();
         ToggleInteractor();
         ToggleCamera();
@@ -207,6 +210,7 @@ public class WristUIManager : MonoBehaviour
 
         isWristUI = false;
         WristUI.SetActive(isWristUI);
+        animator.SetTrigger("Close");
         isTutorialUI = false;
         TutorialUI.SetActive(isTutorialUI);
         isAudioUI = false;

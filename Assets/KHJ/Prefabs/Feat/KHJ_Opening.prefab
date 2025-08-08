@@ -684,7 +684,7 @@ PrefabInstance:
     - target: {fileID: 5913910141978290587, guid: 876ed52895a86a846935251032040e52, type: 3}
       propertyPath: '_audioClips.Array.data[0]'
       value: 
-      objectReference: {fileID: 8300000, guid: eecbc9e60995174438d6c17256a95016, type: 3}
+      objectReference: {fileID: 8300000, guid: c54c4dff851e6cc409e46c2da19ab627, type: 3}
     - target: {fileID: 5913910141978290587, guid: 876ed52895a86a846935251032040e52, type: 3}
       propertyPath: '_audioClips.Array.data[1]'
       value: 
@@ -968,11 +968,11 @@ PrefabInstance:
     - target: {fileID: 1609768380819280723, guid: 7b480211ffdd9bd40910b7242d9171d3, type: 3}
       propertyPath: m_Resource
       value: 
-      objectReference: {fileID: 8300000, guid: 5944d6132f8f32d47a57c8c766296cde, type: 3}
+      objectReference: {fileID: 8300000, guid: 34f5099bbae339e41b9a64721312c06f, type: 3}
     - target: {fileID: 1609768380819280723, guid: 7b480211ffdd9bd40910b7242d9171d3, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 5944d6132f8f32d47a57c8c766296cde, type: 3}
+      objectReference: {fileID: 8300000, guid: 34f5099bbae339e41b9a64721312c06f, type: 3}
     - target: {fileID: 3647386402798826931, guid: 7b480211ffdd9bd40910b7242d9171d3, type: 3}
       propertyPath: _fadeUI
       value: 
@@ -1083,7 +1083,7 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   _audioSource: {fileID: 6911994648294211521}
   _audioClips:
-  - {fileID: 8300000, guid: 5944d6132f8f32d47a57c8c766296cde, type: 3}
+  - {fileID: 8300000, guid: 34f5099bbae339e41b9a64721312c06f, type: 3}
   - {fileID: 8300000, guid: 895407400812a49459e09455ca4709f1, type: 3}
   _autoPlayOnStart: 0
   _backgroundMusicClipId: 0

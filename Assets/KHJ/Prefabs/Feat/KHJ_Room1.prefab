@@ -763,6 +763,30 @@ PrefabInstance:
       propertyPath: _useHealthAnim
       value: 
       objectReference: {fileID: 7649129851322599513}
+    - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _hint_E.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _hint_K.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _feedback_E.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _feedback_K.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _missionContent_E.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _missionContent_K.Array.size
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7897008411829155153, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -57.310997
@@ -860,6 +884,10 @@ PrefabInstance:
     - {fileID: 5696985514178978290, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
     - {fileID: 325840787298511970, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
     - {fileID: 3707935527313891612, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+    - {fileID: 5123338261319368846, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+    - {fileID: 6229664448399522446, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+    - {fileID: 574371211563839496, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+    - {fileID: 1674178081146851416, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4108806557613635430, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       insertIndex: -1

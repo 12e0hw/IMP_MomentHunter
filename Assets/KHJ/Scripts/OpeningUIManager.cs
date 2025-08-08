@@ -152,11 +152,29 @@ public class OpeningUIManager : MonoBehaviour
     /// </summary>
     private void SetupToggleEvents()
     {
-        PlayerPrefs.SetInt("language", 0);
-        PlayerPrefs.Save();
-        Debug.Log("Language forced to Korean (0)");
+        // 먼저 영어 토글을 확실히 false로 설정
+        if (_EnglishToggle) _EnglishToggle.isOn = false;
     
-        // Korean Toggle setup
+        // 강제로 한국어 설정
+        if (_languageSelector)
+        {
+            _languageSelector.SetKorean();
+        }
+
+        // Toggle 상태 명확히 설정 (영어 먼저, 한국어 나중에)
+        int currentLanguage = PlayerPrefs.GetInt("language", 0);
+        if (currentLanguage == 0) // Korean
+        {
+            if (_EnglishToggle) _EnglishToggle.isOn = false;  // 영어 먼저 false
+            if (_KoreanToggle) _KoreanToggle.isOn = true;     // 한국어 나중에 true
+        }
+        else // English
+        {
+            if (_KoreanToggle) _KoreanToggle.isOn = false;    // 한국어 먼저 false
+            if (_EnglishToggle) _EnglishToggle.isOn = true;   // 영어 나중에 true
+        }
+
+        // 그 다음에 이벤트 리스너 등록
         if (_KoreanToggle && !_koreanToggleListenerRegistered)
         {
             _KoreanToggle.onValueChanged.AddListener(OnLanguageToggleChanged);
@@ -164,25 +182,11 @@ public class OpeningUIManager : MonoBehaviour
             Debug.Log("Korean toggle events setup completed");
         }
 
-        // English Toggle setup
         if (_EnglishToggle && !_englishToggleListenerRegistered)
         {
             _EnglishToggle.onValueChanged.AddListener(OnLanguageToggleChanged);
             _englishToggleListenerRegistered = true;
             Debug.Log("English toggle events setup completed");
-        }
-    
-        // Set initial toggle states based on saved preference
-        int currentLanguage = PlayerPrefs.GetInt("language", 0);
-        if (currentLanguage == 0) // Korean
-        {
-            _KoreanToggle.isOn = true;
-            _EnglishToggle.isOn = false;
-        }
-        else // English
-        {
-            _KoreanToggle.isOn = false;
-            _EnglishToggle.isOn = true;
         }
     }
     
