@@ -145,7 +145,7 @@ MonoBehaviour:
   _dontDestroyOnLoad: 1
   _audioSource: {fileID: 6046976372577302008}
   _audioClips:
-  - {fileID: 8300000, guid: 11e222ac65d6d3040ada94d8b9452574, type: 3}
+  - {fileID: 8300000, guid: eecbc9e60995174438d6c17256a95016, type: 3}
   _autoPlayOnStart: 1
   _backgroundMusicClipId: 0
   _loopBackgroundMusic: 1
