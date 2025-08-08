@@ -15,16 +15,16 @@ public class WristUIManager : MonoBehaviour
     [Header("UIComponents")]
     [SerializeField] private GameObject WristCanvus; // Parent canvas for wrist UI
     [SerializeField] private GameObject WristUI;     // Main wrist UI panel
-    [SerializeField] private GameObject TutorialUI;  // Tutorial UI panel
-                     private GameObject Tutorial1Page; // First tutorial page
-                     private GameObject Tutorial2Page; // Second tutorial page
-    [SerializeField] private TextMeshProUGUI TutorialPageText; // Tutorial page indicator text
+    [SerializeField] private GameObject ManualUI;  // Manual UI panel
+                     private GameObject Manual1Page; // First Manual page
+                     private GameObject Manual2Page; // Second Manual page
+    [SerializeField] private TextMeshProUGUI ManualPageText; // Manual page indicator text
     [SerializeField] private GameObject AudioUI;     // Audio settings UI panel
     [SerializeField] private TextMeshProUGUI BGMText; // Background music volume text
     [SerializeField] private Slider BGMSlider;        // BGM volume slider
     [SerializeField] private TextMeshProUGUI SFXText; // SFX volume text
     [SerializeField] private Slider SFXSlider;        // SFX volume slider
-    [SerializeField] private GameObject MainBackUI;   // Main back UI panel
+    [SerializeField] private GameObject HomeBackUI;   // Main back UI panel
     [SerializeField] private GameObject CamUI;        // Camera UI element
 
     private string SelectedMenu; // Current selected menu/button
@@ -50,10 +50,10 @@ public class WristUIManager : MonoBehaviour
     [Header("Debug Log")]
     [SerializeField] private bool isDebug = true; // Enable debug logging
     private bool isWristUI;      // Wrist UI active state
-    private bool isTutorialUI;   // Tutorial UI active state
+    private bool isManualUI;   // Manual UI active state
     private bool isAudioUI;      // Audio UI active state
-    private bool isMainBackUI;   // Main back UI active state
-    private int pagesNum;        // Current tutorial page number
+    private bool isHomeBackUI;   // Main back UI active state
+    private int pagesNum;        // Current Manual page number
     private int BGMValue;        // Current BGM value (0-100)
     private int SFXValue;        // Current SFX value (0-100)
 
@@ -74,16 +74,16 @@ public class WristUIManager : MonoBehaviour
 
         // Initialize UI state flags
         isWristUI = false;
-        isTutorialUI = false;
+        isManualUI = false;
         isAudioUI = false;
-        isMainBackUI = false;
+        isHomeBackUI = false;
         isYGrap = false;
 
         // Set initial UI active states
         if (WristUI != null) WristUI.SetActive(isWristUI);
-        if (TutorialUI != null) TutorialUI.SetActive(isTutorialUI);
+        if (ManualUI != null) ManualUI.SetActive(isManualUI);
         if (AudioUI != null) AudioUI.SetActive(isAudioUI);
-        if (MainBackUI != null) MainBackUI.SetActive(isMainBackUI);
+        if (HomeBackUI != null) HomeBackUI.SetActive(isHomeBackUI);
         if (uiRayInteractor != null) uiRayInteractor.SetActive(isWristUI);
 
         // Initialize BGM slider
@@ -109,10 +109,10 @@ public class WristUIManager : MonoBehaviour
         ResetAction(); // Reset menu selection
     }
 
-    // Returns true if any sub-UI (tutorial, audio, main back) is active
+    // Returns true if any sub-UI (Manual, audio, main back) is active
     public bool GetActWristUI()
     {
-        if (isTutorialUI || isAudioUI || isMainBackUI) { return true; }
+        if (isManualUI || isAudioUI || isHomeBackUI) { return true; }
         else { return false; }
     }
 
@@ -120,7 +120,7 @@ public class WristUIManager : MonoBehaviour
     public void GetOnYButtonPressed()
     {
         if (isDebug) Debug.Log("WristUI Called");
-        if (isWristUI || isTutorialUI || isAudioUI || isMainBackUI) {
+        if (isWristUI || isManualUI || isAudioUI || isHomeBackUI) {
             CloseAction();
         }
         else {
@@ -131,7 +131,7 @@ public class WristUIManager : MonoBehaviour
     // Called when the B button is pressed: goes back within sub-UIs
     public void GetOnBButtonPressed()
     {
-        if (isTutorialUI || isAudioUI || isMainBackUI) { BackAction(); }
+        if (isManualUI || isAudioUI || isHomeBackUI) { BackAction(); }
     }
 
     // Handles menu button clicks
@@ -159,8 +159,8 @@ public class WristUIManager : MonoBehaviour
             case "BackButton":
                 BackAction();
                 break;
-            case "TutorialUIButton":
-                TutorialUIAction();
+            case "ManualUIButton":
+                ManualUIAction();
                 break;
             case "PreButton":
                 TurningPageAction();
@@ -171,11 +171,11 @@ public class WristUIManager : MonoBehaviour
             case "AudioUIButton":
                 AudioUIAction();
                 break;
-            case "MainBackUIButton":
-                MainBackUIAction();
+            case "HomeBackUIButton":
+                HomeBackUIAction();
                 break;
-            case "MainBackButton":
-                MainBackAction();
+            case "HomeBackButton":
+                HomeBackAction();
                 break;
             default:
                 if (isDebug) Debug.LogError("Unknown menu: " + SelectedMenu);
@@ -228,9 +228,9 @@ public class WristUIManager : MonoBehaviour
         SelectedMenu = "CloseButton";
 
         if (isWristUI) animator.SetTrigger("WristClose");
-        else if (isTutorialUI) animator.SetTrigger("TutorialClose");
+        else if (isManualUI) animator.SetTrigger("ManualClose");
         else if (isAudioUI) animator.SetTrigger("AudioClose");
-        else if (isMainBackUI) animator.SetTrigger("MainBackClose");
+        else if (isHomeBackUI) animator.SetTrigger("HomeBackClose");
 
         if (closeUICoroutine != null)
         {
@@ -246,12 +246,12 @@ public class WristUIManager : MonoBehaviour
     {
         SelectedMenu = "BackButton";
         
-        isTutorialUI = false;
-        TutorialUI.SetActive(isTutorialUI);
+        isManualUI = false;
+        ManualUI.SetActive(isManualUI);
         isAudioUI = false;
         AudioUI.SetActive(isAudioUI);
-        isMainBackUI = false;
-        MainBackUI.SetActive(isMainBackUI);
+        isHomeBackUI = false;
+        HomeBackUI.SetActive(isHomeBackUI);
         isWristUI = true;
         WristUI.SetActive(isWristUI);
 
@@ -260,23 +260,23 @@ public class WristUIManager : MonoBehaviour
         if (isDebug) Debug.Log("The Back Menu has been activated.");
     }
 
-    // Opens the tutorial UI and shows the first page
-    private void TutorialUIAction()
+    // Opens the Manual UI and shows the first page
+    private void ManualUIAction()
     {
-        SelectedMenu = "TutorialUIButton";
-        if (isDebug) Debug.Log("The Tutorial Menu has been activated.");
+        SelectedMenu = "ManualUIButton";
+        if (isDebug) Debug.Log("The Manual Menu has been activated.");
         pagesNum = 1;
         isWristUI = false;
         WristUI.SetActive(isWristUI);
-        isTutorialUI = true;
-        TutorialUI.SetActive(isTutorialUI);
+        isManualUI = true;
+        ManualUI.SetActive(isManualUI);
 
-        TutorialPageText.text = pagesNum.ToString();
-        Tutorial2Page.SetActive(false);
-        Tutorial1Page.SetActive(true);
+        ManualPageText.text = pagesNum.ToString();
+        Manual2Page.SetActive(false);
+        Manual1Page.SetActive(true);
     }
 
-    // Handles tutorial page turning logic
+    // Handles Manual page turning logic
     private void TurningPageAction()
     {
         SelectedMenu = "TurningPageButton";
@@ -286,17 +286,17 @@ public class WristUIManager : MonoBehaviour
         switch (pagesNum)
         {
             case 2:
-                Tutorial1Page.SetActive(false);
-                Tutorial2Page.SetActive(true);
+                Manual1Page.SetActive(false);
+                Manual2Page.SetActive(true);
                 break;
             case 1:
             default:
                 pagesNum = 1;
-                Tutorial2Page.SetActive(false);
-                Tutorial1Page.SetActive(true);
+                Manual2Page.SetActive(false);
+                Manual1Page.SetActive(true);
                 break;
         }
-        TutorialPageText.text = pagesNum.ToString();
+        ManualPageText.text = pagesNum.ToString();
     }
 
     // Opens the audio settings UI
@@ -346,19 +346,19 @@ public class WristUIManager : MonoBehaviour
     }
 
     // Opens the main back UI
-    private void MainBackUIAction()
+    private void HomeBackUIAction()
     {
-        SelectedMenu = "MainBackUIButton";
-        if (isDebug) Debug.Log("The MainBack Menu has been activated.");
+        SelectedMenu = "HomeBackUIButton";
+        if (isDebug) Debug.Log("The HomeBack Menu has been activated.");
 
         isWristUI = false;
         WristUI.SetActive(isWristUI);
-        isMainBackUI = true;
-        MainBackUI.SetActive(isMainBackUI);
+        isHomeBackUI = true;
+        HomeBackUI.SetActive(isHomeBackUI);
     }
 
     // Handles main back button logic (scene transition)
-    private void MainBackAction()
+    private void HomeBackAction()
     {
         if (gameManager != null)
         {
@@ -445,34 +445,34 @@ public class WristUIManager : MonoBehaviour
             if (isDebug) Debug.LogWarning("WristUI not found!");
         }
 
-        if (TutorialUI == null) TutorialUI = WristCanvus.transform.Find("TutorialUI").gameObject;
-        if (TutorialUI != null)
+        if (ManualUI == null) ManualUI = WristCanvus.transform.Find("ManualUI").gameObject;
+        if (ManualUI != null)
         {
-            if (isDebug) Debug.Log("TutorialUI found!");
+            if (isDebug) Debug.Log("ManualUI found!");
 
-            Tutorial1Page = TutorialUI.transform.Find("Tutorial1Page").gameObject;
-            if (Tutorial1Page != null)
+            Manual1Page = ManualUI.transform.Find("Manual1Page").gameObject;
+            if (Manual1Page != null)
             {
-                if (isDebug) Debug.Log("Tutorial1Page found!");
+                if (isDebug) Debug.Log("Manual1Page found!");
             }
             else
             {
-                if (isDebug) Debug.LogWarning("Tutorial1Page not found!");
+                if (isDebug) Debug.LogWarning("Manual1Page not found!");
             }
 
-            Tutorial2Page = TutorialUI.transform.Find("Tutorial2Page").gameObject;
-            if (Tutorial2Page != null)
+            Manual2Page = ManualUI.transform.Find("Manual2Page").gameObject;
+            if (Manual2Page != null)
             {
-                if (isDebug) Debug.Log("Tutorial2Page found!");
+                if (isDebug) Debug.Log("Manual2Page found!");
             }
             else
             {
-                if (isDebug) Debug.LogWarning("Tutorial2Page not found!");
+                if (isDebug) Debug.LogWarning("Manual2Page not found!");
             }
         }
         else
         {
-            if (isDebug) Debug.LogWarning("TutorialUI not found!");
+            if (isDebug) Debug.LogWarning("ManualUI not found!");
         }
 
         if (AudioUI == null) AudioUI = WristCanvus.transform.Find("AudioUI").gameObject;
@@ -485,14 +485,14 @@ public class WristUIManager : MonoBehaviour
             if (isDebug) Debug.LogWarning("AudioUI not found!");
         }
 
-        if (MainBackUI == null) MainBackUI = WristCanvus.transform.Find("MainBackUI").gameObject;
-        if (MainBackUI != null)
+        if (HomeBackUI == null) HomeBackUI = WristCanvus.transform.Find("HomeBackUI").gameObject;
+        if (HomeBackUI != null)
         {
-            if (isDebug) Debug.Log("MainBackUI found!");
+            if (isDebug) Debug.Log("HomeBackUI found!");
         }
         else
         {
-            if (isDebug) Debug.LogWarning("MainBackUI not found!");
+            if (isDebug) Debug.LogWarning("HomeBackUI not found!");
         }
 
         if (CamUI != null)
@@ -612,12 +612,12 @@ public class WristUIManager : MonoBehaviour
 
         isWristUI = false;
         WristUI.SetActive(isWristUI);
-        isTutorialUI = false;
-        TutorialUI.SetActive(isTutorialUI);
+        isManualUI = false;
+        ManualUI.SetActive(isManualUI);
         isAudioUI = false;
         AudioUI.SetActive(isAudioUI);
-        isMainBackUI = false;
-        MainBackUI.SetActive(isMainBackUI);
+        isHomeBackUI = false;
+        HomeBackUI.SetActive(isHomeBackUI);
 
         ToggleUIRayInteractor();
         ToggleInteractor();

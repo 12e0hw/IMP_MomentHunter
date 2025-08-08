@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: TutorialOpen
+    m_ConditionEvent: ManualOpen
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6395372744288932260}
@@ -135,7 +135,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MainBack WaiteState
+  m_Name: HomeBack WaiteState
   m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
@@ -163,7 +163,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WristCanvas_TutorialUI Closing
+  m_Name: WristCanvas_ManualUI Closing
   m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
@@ -220,7 +220,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WristCanvas_MainBackUI Closing
+  m_Name: WristCanvas_HomeBackUI Closing
   m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
@@ -271,7 +271,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: MainBackClose
+    m_ConditionEvent: HomeBackClose
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6030160316656318935}
@@ -296,7 +296,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: MainBackOpen
+    m_ConditionEvent: HomeBackOpen
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7247405982045789900}
@@ -343,7 +343,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: TutorialClose
+    m_ConditionEvent: ManualClose
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6954112147904003201}
@@ -408,7 +408,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: TutorialClose
+  - m_Name: ManualClose
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -420,7 +420,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: MainBackClose
+  - m_Name: HomeBackClose
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -432,7 +432,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: TutorialOpen
+  - m_Name: ManualOpen
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -444,7 +444,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: MainBackOpen
+  - m_Name: HomeBackOpen
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -713,7 +713,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial WaiteState
+  m_Name: Manual WaiteState
   m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
