@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.Windows;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using System.Collections;
 
 public class WristUIManager : MonoBehaviour
 {
@@ -27,6 +28,10 @@ public class WristUIManager : MonoBehaviour
     [SerializeField] private GameObject CamUI;        // Camera UI element
 
     private string SelectedMenu; // Current selected menu/button
+
+    [SerializeField] private Animator animator;
+    private Coroutine closeUICoroutine = null;
+    public bool isYGrap;
 
     // Interactor Component References
     [Header("InteractorComponents")]
@@ -72,6 +77,7 @@ public class WristUIManager : MonoBehaviour
         isTutorialUI = false;
         isAudioUI = false;
         isMainBackUI = false;
+        isYGrap = false;
 
         // Set initial UI active states
         if (WristUI != null) WristUI.SetActive(isWristUI);
@@ -114,8 +120,12 @@ public class WristUIManager : MonoBehaviour
     public void GetOnYButtonPressed()
     {
         if (isDebug) Debug.Log("WristUI Called");
-        if (isWristUI || isTutorialUI || isAudioUI || isMainBackUI) { CloseAction(); }
-        else { OpenAction(); }
+        if (isWristUI || isTutorialUI || isAudioUI || isMainBackUI) {
+            CloseAction();
+        }
+        else {
+            OpenAction();
+        }
     }
 
     // Called when the B button is pressed: goes back within sub-UIs
@@ -190,6 +200,8 @@ public class WristUIManager : MonoBehaviour
     private void OpenAction()
     {
         SelectedMenu = "OpenButton";
+        
+        isYGrap = true;
         isWristUI = true;
         WristUI.SetActive(isWristUI);
         ToggleUIRayInteractor();
@@ -197,6 +209,16 @@ public class WristUIManager : MonoBehaviour
         ToggleCamera();
 
         ResetAction();
+
+        animator.SetTrigger("WristOpen");
+        if (closeUICoroutine != null)
+        {
+            StopCoroutine(closeUICoroutine);
+            closeUICoroutine = null;
+        }
+        closeUICoroutine = StartCoroutine(DelayedActionCoroutine(0.8f));
+
+
         if (isDebug) Debug.Log("The WristUI has been activated.");
     }
 
@@ -205,27 +227,25 @@ public class WristUIManager : MonoBehaviour
     {
         SelectedMenu = "CloseButton";
 
-        isWristUI = false;
-        WristUI.SetActive(isWristUI);
-        isTutorialUI = false;
-        TutorialUI.SetActive(isTutorialUI);
-        isAudioUI = false;
-        AudioUI.SetActive(isAudioUI);
-        isMainBackUI = false;
-        MainBackUI.SetActive(isMainBackUI);
+        if (isWristUI) animator.SetTrigger("WristClose");
+        else if (isTutorialUI) animator.SetTrigger("TutorialClose");
+        else if (isAudioUI) animator.SetTrigger("AudioClose");
+        else if (isMainBackUI) animator.SetTrigger("MainBackClose");
 
-        ToggleUIRayInteractor();
-        ToggleInteractor();
-        ToggleCamera();
+        if (closeUICoroutine != null)
+        {
+            StopCoroutine(closeUICoroutine);
+            closeUICoroutine = null;
+        }
+        closeUICoroutine = StartCoroutine(CloseDelayedUI(0.8f));
 
-        if (isDebug) Debug.Log("The WristUI has been disabled.");
     }
 
     // Goes back to the main wrist UI from sub-UIs
     private void BackAction()
     {
         SelectedMenu = "BackButton";
-
+        
         isTutorialUI = false;
         TutorialUI.SetActive(isTutorialUI);
         isAudioUI = false;
@@ -234,6 +254,8 @@ public class WristUIManager : MonoBehaviour
         MainBackUI.SetActive(isMainBackUI);
         isWristUI = true;
         WristUI.SetActive(isWristUI);
+
+        animator.SetTrigger("WristBack");
 
         if (isDebug) Debug.Log("The Back Menu has been activated.");
     }
@@ -315,7 +337,7 @@ public class WristUIManager : MonoBehaviour
         if (dataManager != null)
         {
             if (isDebug) Debug.Log("dataManager found.");
-            dataManager.SetBgmVolume(SFXValue);
+            dataManager.SetSfxVolume(SFXValue);
         }
         else
         {
@@ -571,5 +593,37 @@ public class WristUIManager : MonoBehaviour
                 if (isDebug) Debug.LogError("Cannot find Camera to modified!");
             }
         }
+    }
+
+    private IEnumerator DelayedActionCoroutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        closeUICoroutine = null;
+
+        if (isDebug) Debug.Log("reaction");
+    }
+
+    private IEnumerator CloseDelayedUI(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        closeUICoroutine = null;
+
+        isWristUI = false;
+        WristUI.SetActive(isWristUI);
+        isTutorialUI = false;
+        TutorialUI.SetActive(isTutorialUI);
+        isAudioUI = false;
+        AudioUI.SetActive(isAudioUI);
+        isMainBackUI = false;
+        MainBackUI.SetActive(isMainBackUI);
+
+        ToggleUIRayInteractor();
+        ToggleInteractor();
+        ToggleCamera();
+        isYGrap = false;
+
+        if (isDebug) Debug.Log("The WristUI has been disabled.");
     }
 }
