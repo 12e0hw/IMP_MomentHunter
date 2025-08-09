@@ -38,10 +38,6 @@ public class MissionText : MonoBehaviour
     /// </summary>
     private GameObject[] _currentActiveHints;
     
-    [Header("Billboard Settings")]
-    [SerializeField] private bool _enableHintBillboard = true;  // 힌트 빌보드 활성화 여부
-    [SerializeField] private Transform _playerCamera;           // VR 카메라
-    
     /// <summary>
     /// Initialize mission UI and health display on start
     /// </summary>
@@ -53,43 +49,6 @@ public class MissionText : MonoBehaviour
         UpdateHealthText(DataManager.Data.CurrentHealth);
         
         // if (!_playerCamera) Debug.LogError("Player Camera is null");
-    }
-    
-    // /// <summary>
-    // /// Update billboard rotation for active hints
-    // /// </summary>
-    // private void Update()
-    // {
-    //     if (_enableHintBillboard && _playerCamera && _currentActiveHints != null)
-    //     {
-    //         UpdateHintBillboard();
-    //     }
-    // }
-    
-    /// <summary>
-    /// Update billboard rotation for all active hint objects
-    /// </summary>
-    private void UpdateHintBillboard()
-    {
-        if (_currentActiveHints == null) return;
-        
-        foreach (GameObject hint in _currentActiveHints)
-        {
-            if (hint && hint.activeInHierarchy)
-            {
-                // 힌트 UI가 항상 플레이어를 바라보도록 회전
-                Vector3 directionToPlayer = _playerCamera.position - hint.transform.position;
-                
-                // Y축 회전만 적용 (수평 회전만)
-                directionToPlayer.y = 0;
-                
-                if (directionToPlayer != Vector3.zero)
-                {
-                    Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
-                    hint.transform.rotation = lookRotation;
-                }
-            }
-        }
     }
     
     /// <summary>
