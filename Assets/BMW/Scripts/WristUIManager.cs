@@ -227,6 +227,13 @@ public class WristUIManager : MonoBehaviour
     {
         SelectedMenu = "CloseButton";
 
+        if (IsCurrentAnimState("ManualClose") || IsCurrentAnimState("AudioClose") ||
+        IsCurrentAnimState("HomeBackClose") || IsCurrentAnimState("WristClose"))
+        {
+            if (isDebug) Debug.Log("Already playing close animation. Ignore duplicate trigger.");
+            return;
+        }
+
         if (isWristUI) animator.SetTrigger("WristClose");
         else if (isManualUI) animator.SetTrigger("ManualClose");
         else if (isAudioUI) animator.SetTrigger("AudioClose");
@@ -265,11 +272,13 @@ public class WristUIManager : MonoBehaviour
     {
         SelectedMenu = "ManualUIButton";
         if (isDebug) Debug.Log("The Manual Menu has been activated.");
+
         pagesNum = 1;
         isWristUI = false;
         WristUI.SetActive(isWristUI);
         isManualUI = true;
         ManualUI.SetActive(isManualUI);
+        if (isManualUI) animator.SetTrigger("ManualOpen");
 
         ManualPageText.text = pagesNum.ToString();
         Manual2Page.SetActive(false);
@@ -309,6 +318,7 @@ public class WristUIManager : MonoBehaviour
         WristUI.SetActive(isWristUI);
         isAudioUI = true;
         AudioUI.SetActive(isAudioUI);
+        if (isAudioUI) animator.SetTrigger("AudioOpen");
     }
 
     // Called when BGM slider value changes
@@ -355,6 +365,7 @@ public class WristUIManager : MonoBehaviour
         WristUI.SetActive(isWristUI);
         isHomeBackUI = true;
         HomeBackUI.SetActive(isHomeBackUI);
+        if (isHomeBackUI) animator.SetTrigger("HomeBackOpen");
     }
 
     // Handles main back button logic (scene transition)
@@ -363,6 +374,19 @@ public class WristUIManager : MonoBehaviour
         if (gameManager != null)
         {
             if (isDebug) Debug.Log("gameManager found.");
+            animator.SetTrigger("HomeBackClose");
+
+            animator.ResetTrigger("WristOpen");
+            animator.ResetTrigger("WristClose");
+            animator.ResetTrigger("ManualOpen");
+            animator.ResetTrigger("ManualClose");
+            animator.ResetTrigger("AudioOpen");
+            animator.ResetTrigger("AudioClose");
+            animator.ResetTrigger("HomeBackOpen");
+            animator.ResetTrigger("HomeBackClose");
+            animator.ResetTrigger("HomeBackClose");
+            animator.ResetTrigger("WristBack");
+
             gameManager.TransitionToScene(0);
         }
         else
@@ -604,9 +628,38 @@ public class WristUIManager : MonoBehaviour
         if (isDebug) Debug.Log("reaction");
     }
 
-    private IEnumerator CloseDelayedUI(float delay)
+    private IEnumerator CloseDelayedUI(float maxWait = 2.0f)
     {
-        yield return new WaitForSeconds(delay);
+        float elapsed = 0f;
+
+        string closeState =
+            isManualUI ? "ManualClose" :
+            isAudioUI ? "AudioClose" :
+            isHomeBackUI ? "HomeBackClose" :
+            "WristClose";
+
+        while (!IsCurrentAnimState(closeState) && elapsed < maxWait)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        while (GetCurrentAnimNormalizedTime() < 0.95f && elapsed < maxWait)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        animator.ResetTrigger("WristOpen");
+        animator.ResetTrigger("WristClose");
+        animator.ResetTrigger("ManualOpen");
+        animator.ResetTrigger("ManualClose");
+        animator.ResetTrigger("AudioOpen");
+        animator.ResetTrigger("AudioClose");
+        animator.ResetTrigger("HomeBackOpen");
+        animator.ResetTrigger("HomeBackClose");
+        animator.ResetTrigger("HomeBackClose");
+        animator.ResetTrigger("WristBack");
 
         closeUICoroutine = null;
 
@@ -624,6 +677,21 @@ public class WristUIManager : MonoBehaviour
         ToggleCamera();
         isYGrap = false;
 
-        if (isDebug) Debug.Log("The WristUI has been disabled.");
+        if (isDebug) Debug.Log("The WristUI has been disabled after animation finished.");
     }
+
+    private bool IsCurrentAnimState(string stateName, int layer = 0)
+    {
+        if (animator == null) return false;
+        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(layer);
+        return info.IsName(stateName);
+    }
+
+    private float GetCurrentAnimNormalizedTime(int layer = 0)
+    {
+        if (animator == null) return 0f;
+        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(layer);
+        return info.normalizedTime;
+    }
+
 }
