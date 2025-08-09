@@ -9,7 +9,7 @@ public class PhotoCaptureAndJudge : MonoBehaviour
     [Header("Tutorial Settings")] public bool useTutorial = true; // Use tutorial mode
 
     [Header("Flash Effect")] public CanvasGroup flashCanvasGroup; // Flash effect
-    public float flashDuration = 0.2f;
+    public float flashDuration = 0.5f;
 
     [Header("Audio")] public AudioClip shutterClip; // Shutter sound
     public float startTimeInSeconds = 0f; // Shutter start time
