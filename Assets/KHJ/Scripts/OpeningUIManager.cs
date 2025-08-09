@@ -152,29 +152,41 @@ public class OpeningUIManager : MonoBehaviour
     /// </summary>
     private void SetupToggleEvents()
     {
-        // 먼저 영어 토글을 확실히 false로 설정
-        if (_EnglishToggle) _EnglishToggle.isOn = false;
+        // 최초 실행 여부 확인 (기본값 -1로 설정하여 최초 실행 감지)
+        int currentLanguage = PlayerPrefs.GetInt("language", -1);
     
-        // 강제로 한국어 설정
-        if (_languageSelector)
+        // 최초 실행인 경우에만 한국어로 설정
+        if (currentLanguage == -1)
         {
-            _languageSelector.SetKorean();
+            currentLanguage = 0; // 한국어로 설정
+            PlayerPrefs.SetInt("language", currentLanguage);
+            PlayerPrefs.Save();
+            Debug.Log("First time launch - Setting Korean as default");
         }
 
-        // Toggle 상태 명확히 설정 (영어 먼저, 한국어 나중에)
-        int currentLanguage = PlayerPrefs.GetInt("language", 0);
+        // 저장된 언어 설정에 따라 토글 상태 설정
         if (currentLanguage == 0) // Korean
         {
-            if (_EnglishToggle) _EnglishToggle.isOn = false;  // 영어 먼저 false
-            if (_KoreanToggle) _KoreanToggle.isOn = true;     // 한국어 나중에 true
+            if (_EnglishToggle) _EnglishToggle.isOn = false;
+            if (_KoreanToggle) _KoreanToggle.isOn = true;
+        
+            if (_languageSelector)
+            {
+                _languageSelector.SetKorean();
+            }
         }
         else // English
         {
-            if (_KoreanToggle) _KoreanToggle.isOn = false;    // 한국어 먼저 false
-            if (_EnglishToggle) _EnglishToggle.isOn = true;   // 영어 나중에 true
+            if (_KoreanToggle) _KoreanToggle.isOn = false;
+            if (_EnglishToggle) _EnglishToggle.isOn = true;
+        
+            if (_languageSelector)
+            {
+                _languageSelector.SetEnglish();
+            }
         }
 
-        // 그 다음에 이벤트 리스너 등록
+        // 이벤트 리스너 등록
         if (_KoreanToggle && !_koreanToggleListenerRegistered)
         {
             _KoreanToggle.onValueChanged.AddListener(OnLanguageToggleChanged);

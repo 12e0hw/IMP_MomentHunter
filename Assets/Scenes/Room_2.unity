@@ -11663,6 +11663,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5346420981771147580, guid: f8130dadf1956eb46a646f73f8296020, type: 3}
+      propertyPath: m_MovementType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7708928153051064288, guid: f8130dadf1956eb46a646f73f8296020, type: 3}
       propertyPath: m_Name
       value: Board_456
