@@ -64,7 +64,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private MissionText _missionText;
     [SerializeField] private OpeningUIManager _openingUIManager;
     [SerializeField] private GameObject _failUI;
-
+    
+    [Header("Mission5 Components")]
+    [SerializeField] private Letter _mission5Letter;
+    [SerializeField] private TransformAnimator _mission5Animator;
+    
     [Header("Fade System")]
     [SerializeField] private Animation _fadeUI;
     [SerializeField] private string _fadeOutClipName = "A_FadeOut";
@@ -260,6 +264,8 @@ public class GameManager : MonoBehaviour
                 _missionText.ActivateHintObject(1);
                 break;
             case MissionState.Mission6:
+                if (_mission5Letter) _mission5Letter.ShowLetter();
+                if (_mission5Animator) _mission5Animator.AnimateTransform();
                 _missionText.ActivateHintObject(2);
                 break;
             case MissionState.Ending:
