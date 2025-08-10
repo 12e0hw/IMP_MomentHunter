@@ -8,6 +8,9 @@ public class BillboardUI : MonoBehaviour
     [SerializeField] private bool lockY = false; // Y축 회전 고정 여부
     [SerializeField] private bool reverseDirection = false; // 반대 방향을 바라볼지 여부
     
+    [SerializeField] private float updateInterval = 0.033f; // 30fps
+    private float nextUpdateTime;
+    
     private void Start()
     {
         // 카메라가 할당되지 않은 경우 메인 카메라를 자동으로 찾음
@@ -26,6 +29,9 @@ public class BillboardUI : MonoBehaviour
     {
         if (!targetCamera) return;
         
+        if (Time.time < nextUpdateTime) return;
+        nextUpdateTime = Time.time + updateInterval;
+    
         BillboardToCamera();
     }
     
