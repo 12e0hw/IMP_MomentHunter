@@ -24897,6 +24897,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1781293802973005689, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
+      propertyPath: m_text
+      value: '#1 The warm morning routine still lingers here.'
+      objectReference: {fileID: 0}
     - target: {fileID: 1799326119237116538, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -24919,11 +24923,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1889756285784702480, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1950
+      value: 2096
       objectReference: {fileID: 0}
     - target: {fileID: 1889756285784702480, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1100
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 1889756285784702480, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_LocalScale.x
@@ -24939,11 +24943,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1889756285784702480, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -50
+      value: -110
       objectReference: {fileID: 0}
     - target: {fileID: 1889756285784702480, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1956038433364064529, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_LocalScale.x
@@ -24992,6 +24996,11 @@ PrefabInstance:
     - target: {fileID: 2148692276464299826, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598422872260503643, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
+      propertyPath: m_text
+      value: "#2 \r#2 Interview notices, resignation letters, loan statements\u2014documents
+        I couldn\u2019t manage to gather until the end."
       objectReference: {fileID: 0}
     - target: {fileID: 2803474624836345829, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -25112,7 +25121,7 @@ PrefabInstance:
     - target: {fileID: 4126156010194290257, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a935fbfef4c665446a9a8ce06fe6a79e, type: 3}
+      objectReference: {fileID: 21300000, guid: b779ee1f1b3129c4383b2de0ae31daa1, type: 3}
     - target: {fileID: 4220297373338071057, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5
@@ -25176,6 +25185,14 @@ PrefabInstance:
     - target: {fileID: 4220297373338071057, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -172
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383177475446081577, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -120
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383177475446081577, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4387731781837305744, guid: 4b19b8b4966c1f845b67417370ab7a4d, type: 3}
       propertyPath: m_IsActive
@@ -31487,6 +31504,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 940402899}
+    - target: {fileID: 1682831870755567250, guid: 5de3ce0087566274996284a6e1a9b3bd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -244.60652
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682831870755567250, guid: 5de3ce0087566274996284a6e1a9b3bd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 35.899403
+      objectReference: {fileID: 0}
     - target: {fileID: 1776230153022324819, guid: 5de3ce0087566274996284a6e1a9b3bd, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -31542,6 +31567,22 @@ PrefabInstance:
     - target: {fileID: 6878770177454781593, guid: 5de3ce0087566274996284a6e1a9b3bd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7114982779271497435, guid: 5de3ce0087566274996284a6e1a9b3bd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -265
+      objectReference: {fileID: 0}
+    - target: {fileID: 7114982779271497435, guid: 5de3ce0087566274996284a6e1a9b3bd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 141
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121511786513903057, guid: 5de3ce0087566274996284a6e1a9b3bd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -18.706524
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121511786513903057, guid: 5de3ce0087566274996284a6e1a9b3bd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 138.1994
       objectReference: {fileID: 0}
     - target: {fileID: 7368136777057331471, guid: 5de3ce0087566274996284a6e1a9b3bd, type: 3}
       propertyPath: _playerCamera
