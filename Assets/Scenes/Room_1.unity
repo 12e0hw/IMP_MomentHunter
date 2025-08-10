@@ -36182,14 +36182,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1595582682}
-    - target: {fileID: 1682831870755567250, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -199
-      objectReference: {fileID: 0}
-    - target: {fileID: 1682831870755567250, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 41
-      objectReference: {fileID: 0}
     - target: {fileID: 3642200292966137287, guid: 504628a345f7013479313ce8e873e403, type: 3}
       propertyPath: m_Name
       value: KHJ_Room1
@@ -36238,26 +36230,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1595582682}
-    - target: {fileID: 7114982779271497435, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114982779271497435, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -219
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114982779271497435, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 146
-      objectReference: {fileID: 0}
-    - target: {fileID: 7121511786513903057, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 7121511786513903057, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 143
-      objectReference: {fileID: 0}
     - target: {fileID: 7368136777057331471, guid: 504628a345f7013479313ce8e873e403, type: 3}
       propertyPath: '_hint_E.Array.data[0]'
       value: 
@@ -36338,18 +36310,6 @@ PrefabInstance:
       propertyPath: '_feedback_K.Array.data[6]'
       value: 
       objectReference: {fileID: 928751421}
-    - target: {fileID: 7368136777057331471, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: _BoardFeedback_E.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7368136777057331471, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: _BoardFeedback_K.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7368136777057331471, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: _missionContent_QQ.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 7368136777057331471, guid: 504628a345f7013479313ce8e873e403, type: 3}
       propertyPath: '_BoardFeedback_E.Array.data[0]'
       value: 
@@ -36463,13 +36423,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 972912702}
     - target: {fileID: 8700689161218897976, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: _failUI
+      propertyPath: _failCanvas
       value: 
-      objectReference: {fileID: 64148684}
-    - target: {fileID: 8772191662380716991, guid: 504628a345f7013479313ce8e873e403, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 64148688}
+    - target: {fileID: 8700689161218897976, guid: 504628a345f7013479313ce8e873e403, type: 3}
+      propertyPath: _failUI_Korean
+      value: 
+      objectReference: {fileID: 1246615922}
+    - target: {fileID: 8700689161218897976, guid: 504628a345f7013479313ce8e873e403, type: 3}
+      propertyPath: _failUI_English
+      value: 
+      objectReference: {fileID: 763395604}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -47438,7 +47402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1177664305804567740, guid: 9c643d6e9ac43754ab85c1bbe66231be, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5431655969799481199, guid: 9c643d6e9ac43754ab85c1bbe66231be, type: 3}
       propertyPath: m_LocalPosition.x
