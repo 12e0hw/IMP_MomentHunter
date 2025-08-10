@@ -164,6 +164,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6695727293027145088, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7000619519677081538, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -199.1
@@ -201,12 +205,24 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _BoardFeedback_E.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _BoardFeedback_K.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: _missionContent_E.Array.size
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: _missionContent_K.Array.size
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
+      propertyPath: _missionContent_QQ.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7897008411829155153, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_AnchoredPosition.x

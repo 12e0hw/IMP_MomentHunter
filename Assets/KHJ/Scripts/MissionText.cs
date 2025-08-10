@@ -120,11 +120,11 @@ public class MissionText : MonoBehaviour
         {
             for (int i = 0, j = 0; i < targetArray.Length; i++)
             {
-                if (targetArray3[j] && index != 0 && i <= index)
+                if (j < targetArray3.Length && targetArray3[j] && index != 0 && i <= index)
                     targetArray3[j].SetActive(false);
-                if (targetArray2[i] && i < index)
+                if (j < targetArray2.Length && targetArray2[i] && i < index)
                     targetArray2[i].SetActive(true);
-                if (targetArray[i] && i >= index)
+                if (j < targetArray.Length && targetArray[i] && i >= index)
                     targetArray[i].SetActive(i == index);
                 if (i != 0) j++;
             }
@@ -133,11 +133,11 @@ public class MissionText : MonoBehaviour
         {
             for (int i = 3, j = 2; i < targetArray.Length; i++)
             {
-                if (targetArray3[j] && index != 3 && i <= index)
+                if (j < targetArray3.Length && targetArray3[j] && index != 3 && i <= index)
                     targetArray3[j].SetActive(false);
-                if (targetArray2[i] && i < index)
+                if (j < targetArray2.Length && targetArray2[i] && i < index)
                     targetArray2[i].SetActive(true);
-                if (targetArray[i] && i >= index)
+                if (j < targetArray.Length && targetArray[i] && i >= index)
                     targetArray[i].SetActive(i == index);
                 if (i != 3) j++;
             }
