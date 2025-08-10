@@ -7,7 +7,7 @@ public class TurnDetector : MonoBehaviour
     public InputActionProperty leftStick;   // (-1~1, -1~1)
 
     [Header("Thresholds")]
-    public float requiredYawDegrees = 30f;  
+    public float requiredYawDegrees = 15f;
 
     float accumYaw;
 
