@@ -1,22 +1,27 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(XRGrabInteractable))]
 public class ObjectSoundController : MonoBehaviour
 {
-    public AudioClip grabSound;
-    public AudioClip collisionSound;
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip grabSound;
+    [SerializeField] private AudioClip collisionSound;
 
-    [Range(0f, 1f)]
-    public float grabSoundVolume = 1.0f;
-    [Range(0f, 1f)]
-    public float collisionSoundVolume = 1.0f;
+    [Header("Local Volume")]
+    [Range(0f, 1f)][SerializeField] private float grabSoundVolume = 1.0f;
+    [Range(0f, 1f)][SerializeField] private float collisionSoundVolume = 1.0f;
 
-    [Header("Grab Sound Loop ¼³Á¤")]
-    public bool loopGrabSound = false;
+    [Header("Loop Grab Sound")]
+    [SerializeField] private bool loopGrabSound = false;
 
+    [Header("Collision Cooldown")]
+    [SerializeField] private float collisionCooldown = 3f;
+
+    private Dictionary<GameObject, float> lastCollisionTimes = new Dictionary<GameObject, float>();
     private AudioSource audioSource;
     private XRGrabInteractable grabInteractable;
     private bool collisionSoundEnabled = false;
@@ -34,24 +39,42 @@ public class ObjectSoundController : MonoBehaviour
         grabInteractable.selectExited.AddListener(OnRelease);
     }
 
+    private void OnEnable()
+    {
+        if (DataManager.Data != null)
+        {
+            DataManager.OnSfxVolumeChanged += OnSfxVolumeChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (DataManager.Data != null)
+        {
+            DataManager.OnSfxVolumeChanged -= OnSfxVolumeChanged;
+        }
+    }
+
     private void OnGrab(SelectEnterEventArgs args)
     {
         collisionSoundEnabled = true;
         isGrabbed = true;
+
+        float masterSfx = GetMasterSfxVolume();
 
         if (grabSound != null)
         {
             if (loopGrabSound)
             {
                 audioSource.clip = grabSound;
-                audioSource.volume = grabSoundVolume;
+                audioSource.volume = grabSoundVolume * masterSfx;
                 audioSource.loop = true;
                 audioSource.Play();
             }
             else
             {
                 audioSource.loop = false;
-                audioSource.PlayOneShot(grabSound, grabSoundVolume);
+                audioSource.PlayOneShot(grabSound, grabSoundVolume * masterSfx);
             }
         }
     }
@@ -71,7 +94,38 @@ public class ObjectSoundController : MonoBehaviour
     {
         if (collisionSound != null && collisionSoundEnabled && !isGrabbed)
         {
-            audioSource.PlayOneShot(collisionSound, collisionSoundVolume);
+            GameObject otherObject = collision.gameObject;
+            float currentTime = Time.time;
+            float masterSfx = GetMasterSfxVolume();
+
+            if (!lastCollisionTimes.ContainsKey(otherObject) || currentTime - lastCollisionTimes[otherObject] >= collisionCooldown)
+            {
+                audioSource.PlayOneShot(collisionSound, collisionSoundVolume * masterSfx);
+                lastCollisionTimes[otherObject] = currentTime;
+            }
+        }
+    }
+
+    private void OnSfxVolumeChanged(float newVolume)
+    {
+        if (loopGrabSound && audioSource.isPlaying)
+        {
+            audioSource.volume = grabSoundVolume * newVolume;
+        }
+    }
+
+    private float GetMasterSfxVolume()
+    {
+        if (DataManager.Data != null)
+            return DataManager.Data.GetSfxVolume();
+        return 1.0f;
+    }
+
+    public void UpdateLoopGrabSoundVolume()
+    {
+        if (loopGrabSound && audioSource.isPlaying)
+        {
+            audioSource.volume = grabSoundVolume * GetMasterSfxVolume();
         }
     }
 
@@ -79,5 +133,10 @@ public class ObjectSoundController : MonoBehaviour
     {
         grabInteractable.selectEntered.RemoveListener(OnGrab);
         grabInteractable.selectExited.RemoveListener(OnRelease);
+
+        if (DataManager.Data != null)
+        {
+            DataManager.OnSfxVolumeChanged -= OnSfxVolumeChanged;
+        }
     }
 }
