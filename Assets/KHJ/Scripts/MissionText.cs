@@ -22,8 +22,14 @@ public class MissionText : MonoBehaviour
     // [SerializeField] private GameObject[] _missionContentObjects; // Mission content game objects
 
     // 미션 설명 UI
+    [SerializeField] private GameObject[] _missionContent_QQ;
+
     [SerializeField] private GameObject[] _missionContent_K;
     [SerializeField] private GameObject[] _missionContent_E;
+
+    [Header("Board Feedback GameObject Array")]
+    [SerializeField] private GameObject[] _BoardFeedback_K;
+    [SerializeField] private GameObject[] _BoardFeedback_E;
 
     [Header("Feedback GameObject Array")]    // 피드백 UI
     [SerializeField] private GameObject[] _feedback_K;
@@ -78,7 +84,7 @@ public class MissionText : MonoBehaviour
     /// <summary>
     /// Activates/deactivates mission objects by index
     /// </summary>
-    /// <param name="index">Index of the mission objects to activate</param>
+    /// <param name="index">Index of the mission objects to activate</param>   
     public void ActivateMissionObjects(int index)
     {
         // Deactivate all mission title objects
@@ -107,11 +113,34 @@ public class MissionText : MonoBehaviour
         
         bool isEnglish = LanguageSwitcher.IsEnglish;
         var targetArray = isEnglish ? _missionContent_E : _missionContent_K;
+        var targetArray2 = isEnglish ? _BoardFeedback_E : _BoardFeedback_K;
+        var targetArray3 = _missionContent_QQ;
 
-        for (int i = 0; i < targetArray.Length; i++)
+        if (index <= 2)
         {
-            if (targetArray[i])
-                targetArray[i].SetActive(i == index);
+            for (int i = 0, j = 0; i < targetArray.Length; i++)
+            {
+                if (targetArray3[j] && index != 0 && i <= index)
+                    targetArray3[j].SetActive(false);
+                if (targetArray2[i] && i < index)
+                    targetArray2[i].SetActive(true);
+                if (targetArray[i] && i >= index)
+                    targetArray[i].SetActive(i == index);
+                if (i != 0) j++;
+            }
+        }
+        else
+        {
+            for (int i = 3, j = 2; i < targetArray.Length; i++)
+            {
+                if (targetArray3[j] && index != 3 && i <= index)
+                    targetArray3[j].SetActive(false);
+                if (targetArray2[i] && i < index)
+                    targetArray2[i].SetActive(true);
+                if (targetArray[i] && i >= index)
+                    targetArray[i].SetActive(i == index);
+                if (i != 3) j++;
+            }
         }
     }
     
