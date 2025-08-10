@@ -1,12 +1,4 @@
-using TMPro;
-using Unity.Tutorials.Core.Editor;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
-using UnityEngine.Windows;
-using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class PhotoUICloseManager : MonoBehaviour
 {
