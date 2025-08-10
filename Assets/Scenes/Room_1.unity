@@ -691,6 +691,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3083109078941123926, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e231932d85f9f5041a233e02f11f4845, type: 2}
     - target: {fileID: 3128354142242247732, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -955,6 +959,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5205144639556197814, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e231932d85f9f5041a233e02f11f4845, type: 2}
     - target: {fileID: 5221514288339134321, guid: 69fcda3cee266ae499bc77edbf3778ed, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -10102,6 +10110,7 @@ MonoBehaviour:
   targetCamera: {fileID: 1595582682}
   lockY: 0
   reverseDirection: 1
+  updateInterval: 0.033
 --- !u!1 &315240640 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8513990815340961691, guid: e1be2e5bb9a4406448b4df0bd194f606, type: 3}
@@ -11536,6 +11545,7 @@ MonoBehaviour:
   targetCamera: {fileID: 1595582682}
   lockY: 0
   reverseDirection: 1
+  updateInterval: 0.033
 --- !u!1001 &347312290
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13119,6 +13129,7 @@ MonoBehaviour:
   targetCamera: {fileID: 1595582682}
   lockY: 0
   reverseDirection: 1
+  updateInterval: 0.033
 --- !u!114 &413159509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13134,6 +13145,7 @@ MonoBehaviour:
   targetCamera: {fileID: 1595582682}
   lockY: 0
   reverseDirection: 1
+  updateInterval: 0.033
 --- !u!4 &413585221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1030990731, guid: abc00000000000554766084010937081, type: 3}
@@ -24101,6 +24113,7 @@ MonoBehaviour:
   targetCamera: {fileID: 1595582682}
   lockY: 0
   reverseDirection: 1
+  updateInterval: 0.033
 --- !u!1 &777968375
 GameObject:
   m_ObjectHideFlags: 0
@@ -40717,6 +40730,7 @@ MonoBehaviour:
   targetCamera: {fileID: 1595582682}
   lockY: 0
   reverseDirection: 1
+  updateInterval: 0.033
 --- !u!1001 &1260614008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47424,7 +47438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1177664305804567740, guid: 9c643d6e9ac43754ab85c1bbe66231be, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5431655969799481199, guid: 9c643d6e9ac43754ab85c1bbe66231be, type: 3}
       propertyPath: m_LocalPosition.x
