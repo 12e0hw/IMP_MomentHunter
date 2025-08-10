@@ -30,11 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1495427979653420939, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -178.7
+      value: -244.60652
       objectReference: {fileID: 0}
     - target: {fileID: 1495427979653420939, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 49.8
+      value: 35.899403
       objectReference: {fileID: 0}
     - target: {fileID: 1674178081146851416, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_IsActive
@@ -170,19 +170,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7000619519677081538, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -199.1
+      value: -265
       objectReference: {fileID: 0}
     - target: {fileID: 7000619519677081538, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 154.9
+      value: 141
       objectReference: {fileID: 0}
     - target: {fileID: 7011819045855972552, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 47.2
+      value: -18.706524
       objectReference: {fileID: 0}
     - target: {fileID: 7011819045855972552, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 152.1
+      value: 138.1994
       objectReference: {fileID: 0}
     - target: {fileID: 7339367817659353110, guid: 23c00551d37edad40b6d69a6984ee84f, type: 3}
       propertyPath: _useHealthAnim
@@ -277,7 +277,7 @@ Animation:
   m_GameObject: {fileID: 8060114850038867997}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: 1f0ef04705ce50843a7a1600f7e43915, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 1f0ef04705ce50843a7a1600f7e43915, type: 2}
   m_WrapMode: 0

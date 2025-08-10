@@ -219,7 +219,7 @@ public class MissionText : MonoBehaviour
 
     public void PlayUseHealthAnim()
     {
-        _useHealthAnim.Play("A_UseHealth");
+        _useHealthAnim.Play();
     }
     
     /// <summary>
