@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Read-only array defining required mission object counts for each mission
     /// </summary>
-    private readonly int[] missionObjectCountsReadOnly = { 0, 2, 6, 2, 2, 1, 1, 0 }; // Read-only array
+    private readonly int[] missionObjectCountsReadOnly = { 0, 2, 6, 6, 2, 1, 1, 0 }; // Read-only array
 
     // Inspector display for verification (non-editable)
     [Space]
