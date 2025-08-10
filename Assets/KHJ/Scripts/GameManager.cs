@@ -63,7 +63,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Canvas _mainCanvas;
     [SerializeField] private MissionText _missionText;
     [SerializeField] private OpeningUIManager _openingUIManager;
-    [SerializeField] private GameObject _failUI;
+    
+    [Header("Fail UI Components")]
+    [SerializeField] private Canvas _failCanvas;
+    [SerializeField] private GameObject _failUI_Korean;
+    [SerializeField] private GameObject _failUI_English;
     
     [Header("Mission5 Components")]
     [SerializeField] private Letter _mission5Letter;
@@ -133,7 +137,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SetMainCanvasActive(true);
-        if (_failUI) _failUI.SetActive(false);
+        SetFailUIActive(false);
 
         // Handle victory state transition with delay
         if (_gameState == GameState.Victory) StartCoroutine(TransitionToSceneWithDelay(0, 10f));
@@ -190,7 +194,7 @@ public class GameManager : MonoBehaviour
             case GameState.Defeat:
                 _isDead = true;
                 Debug.Log("Defeat");
-                if (_failUI) _failUI.SetActive(true);
+                SetFailUIActive(true);
                 if (AudioManager) AudioManager.PlayAudio(1);
                 SetMissionState(MissionState.Ending);
 
@@ -199,6 +203,37 @@ public class GameManager : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+    
+    /// <summary>
+    /// Sets the fail UI active/inactive based on current language
+    /// 현재 언어에 맞는 Fail UI 활성화/비활성화
+    /// </summary>
+    /// <param name="isActive">Whether to show or hide the fail UI</param>
+    private void SetFailUIActive(bool isActive)
+    {
+        if (!_failCanvas) return;
+
+        _failCanvas.gameObject.SetActive(isActive);
+
+        if (isActive)
+        {
+            bool isEnglish = LanguageSwitcher.IsEnglish;
+            
+            // 한국어 버전 처리
+            if (_failUI_Korean)
+                _failUI_Korean.SetActive(!isEnglish);
+            
+            // 영어 버전 처리
+            if (_failUI_English)
+                _failUI_English.SetActive(isEnglish);
+        }
+        else
+        {
+            // Fail UI 비활성화 시 모든 자식 UI도 비활성화
+            if (_failUI_Korean) _failUI_Korean.SetActive(false);
+            if (_failUI_English) _failUI_English.SetActive(false);
         }
     }
 
