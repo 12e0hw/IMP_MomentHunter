@@ -40,11 +40,6 @@ public class MissionText : MonoBehaviour
     [SerializeField] private GameObject[] _hint_E;  // 영어 힌트 배열
     
     /// <summary>
-    /// Currently active hint objects for billboard rotation
-    /// </summary>
-    private GameObject[] _currentActiveHints;
-    
-    /// <summary>
     /// Initialize mission UI and health display on start
     /// </summary>
     private void Start()
@@ -71,7 +66,6 @@ public class MissionText : MonoBehaviour
         if (currentState == MissionState.None || currentState == MissionState.Ending)
         {
             // SetMissionUIActive(false);
-            _currentActiveHints = null; // 빌보드 업데이트 중지
         }
         else
         {
@@ -158,9 +152,6 @@ public class MissionText : MonoBehaviour
             if (targetArray[i])
                 targetArray[i].SetActive(i == index);
         }
-        
-        // 빌보드를 위한 현재 활성 힌트 배열 업데이트
-        _currentActiveHints = targetArray;
     }
 
     /// <summary>
