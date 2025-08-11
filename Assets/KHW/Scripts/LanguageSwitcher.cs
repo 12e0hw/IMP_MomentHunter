@@ -42,7 +42,7 @@ public class LanguageSwitcher : MonoBehaviour
         Debug.Log($"Language applied: {(isEnglish ? "English" : "Korean")}");
     }
 
-    void Start()
+    void Awake()
     {
         int lang = PlayerPrefs.GetInt("language", 0);
         ApplyLanguage(lang);

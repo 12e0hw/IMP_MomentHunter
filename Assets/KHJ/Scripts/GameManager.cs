@@ -141,8 +141,12 @@ public class GameManager : MonoBehaviour
 
         // Handle victory state transition with delay
         if (_gameState == GameState.Victory) StartCoroutine(TransitionToSceneWithDelay(0, 10f));
-        
-        if(_missionText) _missionText.ActivateHintObject(0);
+
+        if (_missionText)
+        {
+            _missionText.UpdateMissionText();
+            _missionText.ActivateHintObject(0);
+        }
     }
 
     /// <summary>
